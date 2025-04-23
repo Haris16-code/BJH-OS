@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculator</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Stylesheet -->
+<style>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color: #7d56f3;
+}
+.container {
+  width: min(60%, 28.12em);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+.container * {
+  border: none;
+  outline: none;
+}
+.input-wrapper {
+  background-color: #ffffff;
+  padding: 1.87em 1.5em;
+  border-radius: 0.5em;
+  box-shadow: 0 0.93em 1.25em rgba(0, 0, 0, 0.3);
+  margin-bottom: 3.12em;
+  display: grid;
+  grid-template-columns: 9fr 3fr;
+  gap: 1em;
+}
+input,
+button {
+  font-weight: 500;
+  border-radius: 0.31em;
+}
+input {
+  background-color: #eeeeff;
+  color: #080808;
+  padding: 1.2em 1.25em;
+  font-size: 0.87em;
+}
+button {
+  color: #ffffff;
+  background-color: #7d56f3;
+}
+.output-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.output-wrapper div {
+  height: 6.25em;
+  width: 6.25em;
+  background-color: #ffffff;
+  border-radius: 0.31em;
+  color: #080808;
+  display: grid;
+  place-items: center;
+  padding: 1.25em 0;
+  box-shadow: 0 0.93em 1.25em rgba(0, 0, 0, 0.3);
+}
+span {
+  font-size: 1.87em;
+  font-weight: 500;
+}
+p {
+  font-size: 0.87em;
+  color: #707070;
+  font-weight: 400;
+}
+</style>  </head>
+  <body>
+    <div class="container">
+      <div class="input-wrapper">
+        <input type="date" id="date-input" />
+        <button id="calc-age-btn">Calculate</button>
+      </div>
+      <div class="output-wrapper">
+        <div>
+          <span id="years">-</span>
+          <p>Years</p>
+        </div>
+        <div>
+          <span id="months">-</span>
+          <p>Months</p>
+        </div>
+        <div>
+          <span id="days">-</span>
+          <p>Days</p>
+        </div>
+      </div>
+    </div>
+    <!-- Script -->
+    <script>const ageCalculate = () => {
+  const today = new Date();
+  const inputDate = new Date(document.getElementById("date-input").value);
+
+  const birthDetails = {
+    date: inputDate.getDate(),
+    month: inputDate.getMonth() + 1,
+    year: inputDate.getFullYear(),
+  };
+
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
+  const currentDate = today.getDate();
+
+  if (isFutureDate(birthDetails, currentYear, currentMonth, currentDate)) {
+    alert("Not Born Yet");
+    displayResult("-", "-", "-");
+    return;
+  }
+
+  const { years, months, days } = calculateAge(
+    birthDetails,
+    currentYear,
+    currentMonth,
+    currentDate
+  );
+
+  displayResult(days, months, years);
+};
+
+const isFutureDate = (birthDetails, currentYear, currentMonth, currentDate) => {
+  return (
+    birthDetails.year > currentYear ||
+    (birthDetails.year === currentYear &&
+      (birthDetails.month > currentMonth ||
+        (birthDetails.month === currentMonth &&
+          birthDetails.date > currentDate)))
+  );
+};
+
+const calculateAge = (birthDetails, currentYear, currentMonth, currentDate) => {
+  let years = currentYear - birthDetails.year;
+  let months, days;
+
+  if (currentMonth < birthDetails.month) {
+    years--;
+    months = 12 - (birthDetails.month - currentMonth);
+  } else {
+    months = currentMonth - birthDetails.month;
+  }
+
+  if (currentDate < birthDetails.date) {
+    months--;
+    const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+    const daysInLastMonth = getDaysInMonth(lastMonth, currentYear);
+    days = daysInLastMonth - (birthDetails.date - currentDate);
+  } else {
+    days = currentDate - birthDetails.date;
+  }
+  return { years, months, days };
+};
+
+const getDaysInMonth = (month, year) => {
+  const isLeapYear = year % 4 === 0 && (year % 100 != 0 || year % 400 === 0);
+  const getDaysInMonth = [
+    31,
+    isLeapYear ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
+  return getDaysInMonth[month - 1];
+};
+
+const displayResult = (bdate, bMonth, bYear) => {
+  document.getElementById("years").textContent = bYear;
+  document.getElementById("months").textContent = bMonth;
+  document.getElementById("days").textContent = bdate;
+};
+
+document.getElementById("calc-age-btn").addEventListener("click", ageCalculate);</script>
+  </body>
+</html>

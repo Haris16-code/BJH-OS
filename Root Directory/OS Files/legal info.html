@@ -1,0 +1,115 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><h2>Legal Information</h2>
+<h3>This operating system is created by Muhammad Haris. All files are arrange and recoded by Muhammad Haris. All Update is created by Muhammad Haris</h3>
+<h3>Battery status license</h3>
+MIT License
+
+Copyright (c) 2022 Bedimcode
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+<h2>Images Credit</h2>
+<ol>
+<li>
+<a href="https://www.freepik.com/">https://www.freepik.com/</a>
+</li>
+<h2>Apps Credit</h2>
+<ol>
+<li><a href="https://codingartistweb.com/">https://codingartistweb.com/</a></li>
+<li><a href="http://geekforgeeks.org/">http://geekforgeeks.org/</a></li>
+</ol>
+<h3>All apps and gaes are recoded by Muhammad Haris (Developer of  BJH OS)</h3>

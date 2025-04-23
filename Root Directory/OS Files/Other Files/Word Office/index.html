@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title id="pageTitle">BJH OS Office</title>
+        <link rel="icon" href="logo.png" type="image/x-icon"/>
+        <link rel="stylesheet" href="style.css"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      <!--Fallback font awesome-->
+      <script src="https://kit.fontawesome.com/970a0290cd.js" crossorigin="anonymous"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Chewy&family=Didact+Gothic&family=Fredoka+One&family=Grandstander:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Lato:ital,wght@0,400;0,900;1,400;1,700;1,900&family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Patrick+Hand&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Schoolbell&display=swap" rel="stylesheet">
+ 
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]-->
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<!--[endif]-->
+    </head>
+    <body>
+        <div class="header" id="ToolBar">
+           <img width="25" src="logo.png" style="margin-bottom: -4px; margin-right: 9px;">
+           <input type="text" id="title" placeholder="New Document 1" onchange="myFunction()">
+           <input type="text" style="display: none;" placeholder="Document code" class="fontinput" style="width: 75px;" title="Document code">
+           <br>
+            <div class="dropdown">
+              <button class="dropbtn"><i class="fa-solid fa-bars"></i></button>
+              <div class="dropdown-content">
+                 <a href="javascript:void(0)" onclick="location.reload();"><i class="fa-solid fa-plus"></i> New</a>
+                 <a href="#"><i class="fa-solid fa-folder"></i> Open</a>
+                 <a onclick="window.print()" href="javascript:void(0);"><i class="fa-solid fa-print"></i> Print</a>
+                 <a href="javascript:void(0);" onclick="saveDoc()"><i class="fa-solid fa-floppy-disk"></i> Save</a>
+                 <a href="#" class="cmt" style="cursor: not-allowed;" title="Please don't touch this! This function is currently not available"><i class="fa-solid fa-comment"></i> Comments (beta)</a>
+              </div>
+            </div>
+               <button class="btn" id="btnUndo" title="Undo (Ctrl+Z)"><i class="fa-solid fa-rotate-left"></i></button>
+               <button class="btn" id="btnRedo" title="Redo (Ctrl+Y)"><i class="fa-solid fa-rotate-right"></i></button>
+               <button class="btn" onclick="print();" title="Print document (Ctrl+P)"><i class="fa-solid fa-print"></i></button>
+               <button class="btn" id="btnDelete" title="Delete (Del)"><i class="fa-solid fa-trash"></i></button>
+               <input type="color" id="colorInput" title="Color Picker">
+               <button class="btn" id="colorBtn" onclick="color()"><i class="fa-solid fa-paint-roller"></i></button>
+               <select id="fontInput" class="fontinput" onchange="font();">
+                  <option value="Calibri" style="font-family: Calibri;">Calibri</option>
+                  <option value="Arial" style="font-family: Arial;">Arial</option>
+                  <option value="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">System Font</option>
+                  <option value="Helvetica" style="font-family: Helvetica;">Helvetica</option>
+                  <option value="HYWenHei" style="font-family: HYWenHei;">HYWenHei</option>
+                  <option value="Didact Gothic" style="font-family: Didact Gothic;">Didact Gothic</option>
+                  <option value="Times New Roman" style="font-family: Times New Roman;">Times New Roman</option>
+                  <option value="Pixelato" style="font-family: Pixelato">Pixelato</option>
+                  <option value="Sans serif" style="font-family: sans-serif;">Sans serif</option>
+                  <option value="Rubik" style="font-family: Rubik;">Rubik</option>
+                  <option value="Netflix Sans" style="font-family: Netflix Sans;">Netflix Sans</option>
+                  <option value="Courier New" style="font-family: Courier New;">Courier New</option>
+                  <option value="Lato" style="font-family: Lato;">Lato</option>
+                  <option value="Roboto" style="font-family: Roboto;">Roboto</option>
+                  <option value="Grandstander" style="font-family: Grandstander;">Grandstander</option>
+                  <option value="Poppins" style="font-family: Poppins;">Poppins</option>
+                  <option value="Nunito" style="font-family: Nunito;">Nunito</option>
+                  <option value="Barlow Condensed" style="font-family: Barlow Condensed;">Barlow Condensed</option>
+                  <option value="Chewy" style="font-family: Chewy">Chewy</option>
+                  <option value="Schoolbell" style="font-family: Schoolbell;">Schoolbell</option>
+                  <option value="Fredoka One" style="font-family: Fredoka One">Fredoka One</option>
+                  <option value="Verdana" style="font-family: Verdana;">Verdana</option>
+                  <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+                  <option value="Patrick Hand" style="font-family: Patrick Hand">Patrick Hand</option>
+                  <option value="Palatino" style="font-family: Palatino;">Palatino</option>
+                  <option value="Garamond" style="font-family: Garamond;">Garamond</option>
+                  <option value="KONE Information" style="font-family: KONE Information;">KONE Information</option>
+                  <option value="Comic Sans MS" style="font-family: Comic Sans MS;">Comic Sans MS</option>
+                  <option value="Arial Black" style="font-family: Arial Black;">Arial Black</option>
+                  <option value="Tahoma" style="font-family: Tahoma;">Tahoma</option>
+               </select>
+               <input type="number" id="fontsizeInput" class="fontinput" value="20" style="width: 40px;" maxlength="7">
+               <button class="btn" id="sizeOK" onclick="size()"><i class="fa-solid fa-check"></i></button>
+               <button class="btn" id="btnBold" title="Bold (Ctrl+B)"><i class="fa-solid fa-bold"></i></button> 
+               <button class="btn" id="btnItalic" title="Italic (Ctrl+I)"><i class="fa-solid fa-italic"></i></button> 
+               <button class="btn" id="btnUnderline" title="Underline (Ctrl+U)"><i class="fa-solid fa-underline"></i></button> 
+               <button class="btn" id="btnStrike" title="Strikethrough"><i class="fa-solid fa-strikethrough"></i></button>
+               <button class="btn" id="btnSuperscript" title="Superscript"><i class="fa-solid fa-superscript"></i></button>
+               <button class="btn" id="btnSubscript" title="Subscript"><i class="fa-solid fa-subscript"></i></button>
+               <!--<button class="btn" id="btnSpacing" title="Adjust spacing"><i class="fa-regular fa-line-height"></i></button>-->
+               <!--<button class="btn" id="btnAddPage" title="Add new page"><i class="fa-solid fa-file-circle-plus"></i></button>-->
+               <button class="btn" id="btnRemoveFormat" title="Clear format"><i class="fa-solid fa-spray-can-sparkles"></i></button> 
+               <button class="btn" id="btnLeft" title="Align to Left"><i class="fa-solid fa-align-left"></i></button>
+               <button class="btn" id="btnCenter" title="Align to Center"><i class="fa-solid fa-align-center"></i></button> 
+               <button class="btn" id="btnRight" title="Align to Right"><i class="fa-solid fa-align-right"></i></button> 
+        </div>
+           <div id="page" style="margin-top: 8.5%;">
+            <div class="contenteditor" id="editor" style="align-self:center;" contenteditable="true" spellcheck="true" translate="none">
+            </div>
+            <div id="out-click"></div>
+           </div>
+           <div id="adjust" class="modal">
+              <div class="modal-content">
+                 <span class="close">&times;</span>
+                 <h2>Adjust Spacing</h2>
+                 <p>Adjust spacing in documents to make it tidy.</p>
+                 <hr>
+                 <p id="spacing-left">Spacing left: 1px</p>
+                 <input type="range" max="650" value="1" step="1" id="space-left-range">
+                 <p id="spacing-right">Spacing right: 1px</p>
+                 <input type="range" max="650" value="1" step="1" id="space-right-range">
+              </div>
+           </div>
+           <!--lame asshole menu TwT-->
+           <ul id="menu">
+             <li class="menu-item" onclick="cut()"><i class="fa-solid fa-scissors"></i> Cut</li>
+             <li class="menu-item" id="btnCopy"><i class="fa-solid fa-copy"></i> Copy</li>
+             <li class="menu-item" id="btnPaste"><i class="fa-solid fa-clipboard"></i> Paste</li>
+             <hr style="color: #fff; width: 164px;">
+             <li class="menu-item" id="Bold"><i class="fa-solid fa-bold"></i> Bold</li>
+             <li class="menu-item" id="Italic"><i class="fa-solid fa-italic"></i> Italic</li>
+             <li class="menu-item" id="Underline"><i class="fa-solid fa-underline"></i> Underline</li>
+             <li class="menu-item" id="Strike"><i class="fa-solid fa-strikethrough"></i> Strikethrough</li>
+           </ul>
+        <script type="text/javascript" src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </body>
+</html>

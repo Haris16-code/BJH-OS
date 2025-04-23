@@ -1,0 +1,55 @@
+ body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .draggable-window {
+    position: absolute;
+    width: auto;
+    height: auto;
+    max-width: 90%; /* Limit maximum width of the window */
+    max-height: 90%; /* Limit maximum height of the window */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: move;
+  }
+
+  .draggable-window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px 10px 0 0;
+  }
+
+  .draggable-window-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .draggable-window-buttons {
+    display: flex;
+    gap: 5px;
+  }
+
+  .draggable-content {
+    padding: 10px;
+    color: #ffffff;
+  }
+
+  .button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 18px;
+  }

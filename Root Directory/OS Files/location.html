@@ -1,0 +1,156 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html>
+
+<head>
+  <title>Geolocation API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #location {
+      font-size: 18px;
+      margin-top: 20px;
+      color: #333;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #location.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Find your Current location</h1>
+  <button onclick="getlocation()">Click me</button>
+  <div id="location"></div>
+  <script>
+    function getlocation() {
+      var x = document.getElementById("location");
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition)
+      } else {
+        alert("Sorry! Your browser does not support Geolocation.")
+      }
+    }
+
+    function showPosition(position) {
+      var locationElement = document.getElementById("location");
+      var locationText = "Your current location is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
+      locationElement.innerHTML = locationText;
+      locationElement.classList.add("visible");
+    }
+  </script>
+</body>
+
+</html>

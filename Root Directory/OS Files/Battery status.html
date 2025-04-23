@@ -1,0 +1,122 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script>
+</html><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--=============== REMIXICONS ===============-->
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="assets/css/styles.css">
+
+        <title>battery percentage</title>
+    </head>
+    <body>
+        <!--=============== BATTERY ===============-->
+        <section class="battery">
+            <div class="battery__card">
+                <div class="battery__data">
+                    <p class="battery__text">Battery</p>
+                    <h1 class="battery__percentage">
+                        20%
+                    </h1>
+
+                    <p class="battery__status">
+                        Low battery <i class="ri-plug-line"></i>
+                    </p>
+                </div>
+
+                <div class="battery__pill">
+                    <div class="battery__level">
+                        <div class="battery__liquid"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!--=============== MAIN JS ===============-->
+        <script src="Other Files/battery-level-indicator-main/assets/js/main.js"></script>
+    </body>
+</html>

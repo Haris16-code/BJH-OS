@@ -1,0 +1,38 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+
+/*=============== VARIABLES CSS ===============*/
+:root{
+    /*========== Colors ==========*/
+    /*Color mode HSL(hue, saturation, lightness)*/
+    --gradient-color-red: linear-gradient(90deg, 
+                          hsl(7, 89%, 46%) 15%,
+                          hsl(11, 93%, 68%) 100%);
+    --gradient-color-orange: linear-gradient(90deg, 
+                           hsl(22, 89%, 46%) 15%,
+                           hsl(54, 90%, 45%) 100%);
+    --gradient-color-yellow: linear-gradient(90deg, 
+                           hsl(54, 89%, 46%) 15%,
+                           hsl(92, 90%, 45%) 100%);
+    --gradient-color-green: linear-gradient(90deg, 
+                          hsl(92, 89%, 46%) 15%,
+                          hsl(92, 90%, 68%) 100%);
+    --text-color: #fff;
+    --body-color: hsl(0, 0%, 11%);
+    --container-color: hsl(0, 0%, 9%);
+
+    /*========== Font and typography ==========*/
+    /*.5rem = 8px | 1rem = 16px ...*/
+    --body-font: 'Rubik', sans-serif;
+
+    --biggest-font-size: 2.5rem;
+    --normal-font-size: .938rem;
+    --smaller-font-size: .75rem;
+
+    // Responsive typography
+    @media screen and (min-width: 968px){
+        --biggest-font-size: 2.75rem;
+        --normal-font-size: 1rem;
+        --smaller-font-size: .813rem;
+    }
+}

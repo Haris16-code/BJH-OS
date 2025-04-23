@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BJH OS Update Check</title>
+    <style>
+        /* Import IBM Plex Sans font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=IBM Plex Sans:wght@300;400;500;700&display=swap');
+    
+        /* Styling for the update alert box */
+        #updateAlert {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            z-index: 1000;
+        }
+    
+        #updateAlert h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+            font-family: "IBM Plex Sans", sans-serif;
+            font-weight: 700; /* Bold style */
+        }
+    
+        #updateAlert p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            font-family: "IBM Plex Sans", sans-serif;
+            font-weight: 600; /* Regular style */
+        }
+    
+        #updateAlert button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            font-family: "IBM Plex Sans", sans-serif;
+            font-weight: 500; /* Medium style */
+        }
+    
+        #updateNowButton {
+            background-color: #28a745;
+            color: #fff;
+            font-family: "IBM Plex Sans", sans-serif;
+            font-weight: 500; /* Medium style */
+        }
+    
+        #dismissButton, #remindLaterButton {
+            background-color: #dc3545;
+            color: #fff;
+            margin-left: 10px;
+            font-family: "IBM Plex Sans", sans-serif;
+            font-weight: 400; /* Regular style */
+        }
+    
+        /* Styling for the Check for Update button */
+        #checkUpdateButton, #reminderButton {
+            margin: 100px;
+            padding: 100px 100px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: "IBM Plex Sans", sans-serif;
+            font-weight: 500; /* Medium style */
+        }
+    
+        /* Styling for reminder select */
+        #reminderSelect {
+            display: none;
+            margin: 20px;
+            font-family: "IBM Plex Sans", sans-serif;
+            font-weight: 400; /* Regular style */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Check for Update and Reminder Buttons -->
+    <button id="checkUpdateButton" onclick="manualCheckForUpdates()">Check for Update Manually</button>
+    <button id="reminderButton" onclick="toggleReminderSelect()">Set Reminder for Update</button>
+    <select id="reminderSelect" onchange="setReminderInterval(this.value)">
+        <option value="0">Select Reminder Time</option>
+        <option value="1">1 Minute</option>
+        <option value="5">5 Minutes</option>
+        <option value="10">10 Minutes</option>
+        <option value="15">15 Minutes</option>
+        <option value="20">20 Minutes</option>
+        <option value="30">30 Minutes</option>
+        <option value="45">45 Minutes</option>
+        <option value="60">60 Minutes</option>
+        <option value="1">1 Hour</option>
+        <option value="6">6 Hours</option>
+        <option value="12">12 Hours</option>
+        <option value="24">24 Hours</option>
+    </select>
+
+    <!-- Update Alert Box -->
+    <div id="updateAlert">
+        <h3>New Update Available!</h3>
+        <p id="updateVersion"></p>
+        <p id="updateNotes"></p>
+        <button id="updateNowButton" onclick="downloadUpdate()">Update Now</button>
+        <button id="dismissButton" onclick="dismissAlert()">Dismiss</button>
+        <button id="remindLaterButton" onclick="setReminderFromLocalStorage()">Remind Me Later</button>
+    </div>
+
+    <script>
+        const currentVersion = "4.4"; // Current version of BJH OS
+        let reminderInterval;
+
+        // Load reminder time from local storage
+        window.onload = function() {
+            const savedInterval = localStorage.getItem('reminderInterval');
+            if (savedInterval) {
+                setReminderInterval(savedInterval); // Set the reminder based on saved value
+            }
+        };
+
+        // Function to automatically check for updates periodically
+        function autoCheckForUpdates() {
+            fetchUpdateData(false);
+        }
+
+        // Function to manually check for updates when the button is clicked
+        function manualCheckForUpdates() {
+            fetchUpdateData(true);
+        }
+
+        // Core function to fetch update data and show alert if an update is available
+        function fetchUpdateData(showAlertIfUpToDate) {
+            fetch('https://raw.githubusercontent.com/Haris16-code/BJH-OS-Server/refs/heads/main/latestVersion.json')
+                .then(response => response.json())
+                .then(data => {
+                    const latestVersion = data.version;
+                    const updateNotes = data.updateNotes;
+                    const downloadLink = data.downloadLink; // Retrieves the download link from JSON
+
+                    if (currentVersion !== latestVersion) {
+                        showUpdateAlert(latestVersion, updateNotes, downloadLink);
+                    } else if (showAlertIfUpToDate) {
+                        alert("BJH OS is already up-to-date!");
+                    }
+                })
+                .catch(error => console.error('Error checking for updates:', error));
+        }
+
+        // Function to show the update alert
+        function showUpdateAlert(latestVersion, updateNotes, downloadLink) {
+            document.getElementById('updateVersion').textContent = `Version: ${latestVersion}`;
+            document.getElementById('updateNotes').textContent = updateNotes;
+            document.getElementById('updateNowButton').setAttribute("onclick", `window.location.href='${downloadLink}'`);
+            document.getElementById('updateAlert').style.display = 'block';
+        }
+
+        // Function to dismiss the update alert
+        function dismissAlert() {
+            document.getElementById('updateAlert').style.display = 'none';
+        }
+
+        // Toggle the display of the reminder selection dropdown
+        function toggleReminderSelect() {
+            const select = document.getElementById("reminderSelect");
+            select.style.display = select.style.display === "none" ? "block" : "none";
+        }
+
+        // Set the reminder interval based on user's selection and save it in local storage
+        function setReminderInterval(minutes) {
+            if (reminderInterval) clearInterval(reminderInterval);
+            if (minutes > 0) {
+                reminderInterval = setInterval(fetchUpdateData, minutes * 60 * 1000, true);
+                localStorage.setItem('reminderInterval', minutes); // Save to local storage
+                alert(`Reminder set for every ${minutes} minute(s).`);
+            } else {
+                localStorage.removeItem('reminderInterval'); // Clear reminder if 0 is selected
+            }
+        }
+
+        // Set a reminder based on the saved value in local storage
+        function setReminderFromLocalStorage() {
+            const savedInterval = localStorage.getItem('reminderInterval');
+            if (savedInterval) {
+                setReminderInterval(savedInterval); // Set reminder to the saved value
+                dismissAlert(); // Dismiss alert after setting reminder
+            } else {
+                alert("Please set a reminder time first.");
+            }
+        }
+
+        // Initial automatic check for updates
+        autoCheckForUpdates();
+
+        // Optional: Set an interval to check automatically every 24 hours
+        setInterval(autoCheckForUpdates, 24 * 60 * 60 * 1000); // Check every 24 hours
+    </script>
+
+</body>
+</html>

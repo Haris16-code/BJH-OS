@@ -1,0 +1,166 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Device Status</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin: 20px 0;
+      opacity: 0;
+      transform: translateY(-30px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    h1 a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    h1 a:hover {
+      color: #0056b3;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><a href="Battery status.html">Battery Status</a></h1>
+    <h1><a href="OS and browser checker.html">Check OS and Browser Name</a></h1>
+    <h1>Device Status: Official</h1>
+  </div>
+
+  <script>
+    // Animate elements when the page loads
+    window.addEventListener("load", () => {
+      const headings = document.querySelectorAll("h1, h2");
+      headings.forEach((heading, index) => {
+        setTimeout(() => {
+          heading.style.opacity = "1";
+          heading.style.transform = "translateY(0)";
+        }, 300 * (index + 1));
+      });
+
+      // Device Name Checker
+      const deviceName = getDeviceName(); // Call the function to get the device name
+      const deviceStatus = document.createElement("h1");
+      deviceStatus.textContent = `Device Name: ${deviceName}`;
+      document.querySelector(".container").appendChild(deviceStatus);
+    });
+
+    // Function to get the device name
+    function getDeviceName() {
+      const ua = navigator.userAgent;
+      if (ua.includes("iPhone")) return "iPhone";
+      if (ua.includes("iPad")) return "iPad";
+      if (ua.includes("Samsung")) return "Samsung";
+      if (ua.includes("Huawei Y625")) return "Huawei Y625";
+      // Add more devices as needed
+      return "Unknown Device";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Navbar</title>
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Stylesheet -->
+    <style>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+nav {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #2c8eec;
+  padding: 1em;
+}
+nav a {
+  text-decoration: none;
+  text-transform: capitalize;
+  color: #ffffff;
+}
+#logo {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+label {
+  display: none;
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+  display: flex;
+  gap: 1em;
+}
+ul a {
+  padding: 0.5em;
+}
+ul a:hover {
+  background-color: #333333;
+  border-radius: 0.5em;
+}
+.active {
+  border-bottom: 2px solid #ffffff;
+}
+@media screen and (max-width: 600px) {
+  label {
+    display: block;
+  }
+  ul {
+    font-size: 1.2em;
+    position: absolute;
+    left: -100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #333333;
+    gap: 2em;
+    top: 60px;
+    width: 100%;
+    height: calc(100vh - 60px);
+    transition: 0.5s;
+  }
+  input[type="checkbox"]:checked ~ ul {
+    left: 0;
+  }
+  ul a:hover {
+    background-color: #2c8eec;
+  }
+}
+</style>
+  </head>
+  <body>
+    <nav>
+      <a href="clock app.html" id="logo">Clock</a>
+      <input type="checkbox" id="hamburger" />
+      <label for="hamburger">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+      <ul>
+        <li>
+          <a href="clock app.html" class="active">Clock</a>
+        </li>
+        <li>
+          <a href="alarm.html">Alarm</a>
+        </li>
+<li>
+          <a href="stopwatch.html">StopWatch</a>
+        </li>
+        
+        
+          
+      </ul>
+    </nav>
+  </body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stopwatch</title>
+    <!--Google Font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <style>
+*,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.container{
+    background-color: #141313;
+    width: 40%;
+    min-width: 500px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    padding: 60px 0;
+    border-radius: 10px;
+}
+.timerDisplay{
+    position: relative;
+    width: 110%;
+    background: linear-gradient(
+        -135deg,
+        #0048ce,
+        #008bfd
+    );
+    left: -5%;
+    padding: 40px 0;
+    font-family: 'Roboto mono',monospace;
+    color: #ffffff;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0,139,253,0.25);
+}
+.buttons{
+    width: 80%;
+    margin: 60px auto 0 auto;
+    display: flex;
+    justify-content: space-around;
+}
+.buttons button{
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #141313;
+    border: none;
+    font-family: 'Poppins',sans-serif;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="timerDisplay">
+            00 : 00 : 00 : 000
+        </div>
+        <div class="buttons">
+            <button id="startTimer">Start</button>
+            <button id="pauseTimer">Pause</button>
+            <button id="resetTimer">Reset</button>
+        </div>
+    </div>
+    <!--Script-->
+    <script>
+let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+let timerRef = document.querySelector('.timerDisplay');
+let int = null;
+
+document.getElementById('startTimer').addEventListener('click', ()=>{
+    if(int!==null){
+        clearInterval(int);
+    }
+    int = setInterval(displayTimer,10);
+});
+
+document.getElementById('pauseTimer').addEventListener('click', ()=>{
+    clearInterval(int);
+});
+
+document.getElementById('resetTimer').addEventListener('click', ()=>{
+    clearInterval(int);
+    [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+    timerRef.innerHTML = '00 : 00 : 00 : 000 ';
+});
+
+function displayTimer(){
+    milliseconds+=10;
+    if(milliseconds == 1000){
+        milliseconds = 0;
+        seconds++;
+        if(seconds == 60){
+            seconds = 0;
+            minutes++;
+            if(minutes == 60){
+                minutes = 0;
+                hours++;
+            }
+        }
+    }
+    let h = hours < 10 ? "0" + hours : hours;
+    let m = minutes < 10 ? "0" + minutes : minutes;
+    let s = seconds < 10 ? "0" + seconds : seconds;
+    let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+
+    timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
+}
+</script>
+</body>
+</html>

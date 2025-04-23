@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+}
+
+.box{
+margin: auto;  
+margin-top: calc((100vh - 15rem)/2);
+height: 15rem;
+width: 15rem;
+background-color: yellow;;
+animation: scale 2s infinite
+/* animation-fill-mode: forwards; */
+
+}
+
+.box-2{
+height: 10rem;
+width: 10rem;
+border-radius: 50%;
+position: fixed;
+background-color: red;
+/* opacity: .7; */
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+animation: fader 1s infinite;
+
+}
+
+
+@keyframes scale {
+
+    0%{
+        transform: scale(1);
+        border-radius: 0%;
+    }
+    50%{
+        transform: scale(1.5);
+        border-radius: 50%;
+    }
+    100%{
+        transform: scale(1);
+        border-radius: 0%;
+    }
+
+
+}
+
+@keyframes fader {
+
+0%{
+    opacity: 1;
+}
+50%{
+    opacity: 0;
+}
+100%{
+    opacity: 1;
+}
+
+}
+
+
+</style>
+<body>
+<div class="box"></div>
+<div class="box-2"></div>
+</body>
+</html>

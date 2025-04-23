@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <input type="text" id="name" placeholder="db name" />
+    <input type="number" id="version" placeholder="db version" />
+
+    <button id="create">create</button>
+
+    <hr />
+    <input type="text" id="notes" placeholder="add note" />
+    <button id="add">Add note</button>
+
+    <script>
+      /*----------------Selectors---------------*/
+
+      let dbName = document.querySelector("#name");
+      let dbVersion = document.querySelector("#version");
+      let btnCreate = document.querySelector("button#create");
+
+      let btnAdd = document.querySelector("button#add");
+      let note = document.querySelector("#notes");
+
+      let db, v, dbAccess;
+
+      btnAdd.addEventListener("click", function () {
+        let val = note.value;
+
+        if (!dbAccess) {
+          alert("No access ! please create a database");
+          return;
+        }
+
+        // dbname -Notes --> cs --> object store
+
+        let tx = dbAccess.transaction("cs", "readwrite"); // dbstorename , mode --> this is a transaction
+
+        let csObjectStore = tx.objectStore("cs"); //opening obj store
+
+        let data = {
+          nId: Date.now(),
+          noteValue: val,
+        };
+        csObjectStore.add(data);
+      });
+
+      btnCreate.addEventListener("click", function () {
+        db = dbName.value;
+        v = dbVersion.value;
+
+        let request = indexedDB.open(db, v); // request to brower to open a database with name and version
+
+        // Adding event handlers on request -- success, upgradeneeded , error
+
+        request.addEventListener("success", function () {
+          dbAccess = request.result;
+          alert("db is created ");
+          viewNotes();
+        });
+
+        request.addEventListener("upgradeneeded", function () {
+          // only trigged if db doesnt exist or exist but version is upgraded
+
+          alert("upgrade successful ! ");
+
+          /* Upgrade result gives --> access to database */
+
+          let db= request.result;
+          db.createObjectStore("cs", { keyPath: "nId" }); // createobjStore event can be only done in upgradneeded event
+          // also this line 52 will throw error if version is changed but not the "cs " as its the same so we have to check it manually
+
+          request.addEventListener("error", function () {
+            alert("something went wrong !! ");
+          });
+        });
+      });
+
+      function viewNotes() {
+        /*------To print basically all the values stored in store - "cs" in the console -----*/
+
+        /* -------- Taking an assumtion that we have access to the database ---*/
+
+        let tx = dbAccess.transaction("cs", "readonly"); // open kra transaction
+        let csStoreObject = tx.objectStore("cs"); // open krke store nikal liya
+
+        /*--------- while reading data we get cursor to get the data from database------------*/
+
+        let request = csStoreObject.openCursor();
+
+        // jb cursor kholde succesfully
+        request.addEventListener("success", function () {
+          let cursor = request.result;
+
+          if (cursor) {
+            console.log(cursor.value);
+            cursor.continue(); //---> continues and goes to the same request value and print the success value
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

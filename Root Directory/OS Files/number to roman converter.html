@@ -1,0 +1,216 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number To Roman Converter</title>
+    <!-- Stylesheet -->
+    <style>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color: #4470f3;
+}
+.container {
+  background-color: #ffffff;
+  width: min(90%, 450px);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  padding: 3em 2em;
+  border-radius: 0.8em;
+}
+.input-wrapper {
+  display: grid;
+  grid-template-columns: 9fr 3fr;
+  gap: 1em;
+}
+input {
+  padding: 1em 0.5em;
+  color: #262e45;
+  border: 2px solid #e3e4ef;
+}
+input:focus {
+  border-color: #4470f3;
+}
+button {
+  border: none;
+  background-color: #4470f3;
+  color: #ffffff;
+}
+input,
+button {
+  font-size: 1em;
+  outline: none;
+  border-radius: 0.5em;
+}
+#error {
+  background-color: #fc4747;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 0.5em;
+}
+#output {
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: 600;
+  color: #262e45;
+  margin-top: 2em;
+}
+#output span {
+  font-size: 0.9em;
+}
+</style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="input-wrapper">
+        <input type="number" id="input" placeholder="Enter Number Here..." />
+        <button type="submit" id="submit">Convert</button>
+      </div>
+      <p id="output">
+        <span>Enter The Number & Hit Convert</span>
+      </p>
+      <p id="error"></p>
+    </div>
+    <!-- Script -->
+    <script>let input = document.getElementById("input");
+let button = document.getElementById("submit");
+let errorMessage = document.getElementById("error");
+let output = document.getElementById("output");
+
+const romanObject = {
+  M: 1000,
+  CM: 900,
+  D: 500,
+  CD: 400,
+  C: 100,
+  XC: 90,
+  L: 50,
+  XL: 40,
+  XXX: 30,
+  XX: 20,
+  X: 10,
+  IX: 9,
+  V: 5,
+  IV: 4,
+  I: 1,
+};
+
+button.addEventListener("click", () => {
+  inputToRoman(input.value);
+  input.value = "";
+});
+
+function inputToRoman(num) {
+  let number = parseInt(num);
+
+  if (num.trim().length == 0) {
+    errorMessage.innerHTML = "Invalid Input";
+    output.innerHTML = "";
+    return false;
+  }
+  if (number > 4999 || number < 1) {
+    errorMessage.innerHTML = "Input Out Of Range";
+    output.innerHTML = "";
+    return false;
+  }
+  errorMessage.innerHTML = "";
+  output.innerHTML = "";
+
+  let result = "";
+  let romanValues = Object.keys(romanObject);
+  romanValues.forEach((key) => {
+    while (romanObject[key] <= number) {
+      number -= romanObject[key];
+      result += key;
+    }
+  });
+  output.innerHTML = result;
+}</script>
+  </body>
+</html>

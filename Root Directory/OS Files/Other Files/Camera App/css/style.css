@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+.video-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: black;
+}
+
+video {
+  height: 100%;
+  width: 100%;
+}
+
+#record,
+#capture {
+  position: fixed;
+  right: 2rem;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  border: none;
+  background-color: black;
+  border: 5px solid white;
+  z-index: 3;
+}
+
+#record div,
+#capture div {
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+  margin: auto;
+}
+
+#record div {
+  background-color: red;
+}
+
+#capture div {
+  background-color: white;
+}
+#record {
+  top: 40vh;
+}
+
+#capture {
+  top: 50vh;
+  margin-top: 10px;
+}
+
+.capture-animation{
+  animation: inOut .5s ;
+}
+
+.record-animation{
+  animation: inOut .6s infinite ; ;
+}
+
+@keyframes inOut {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1);
+  }
+
+}
+
+.filter-container{
+  height: 24rem;
+  width: 5rem;
+  /* background-color: red; */
+  position: fixed;
+  left: 2rem;
+  top: calc((100vh - 25rem)/2);
+  z-index: 3;
+  cursor: pointer;
+}
+
+.filters{
+border: 1.5px solid white;
+width: 100%;
+height: calc(24rem / 6);
+background-image: url(/images/filterimg.jpg);
+background-size: cover;
+background-blend-mode: soft-light;
+
+}
+
+.filter-div{
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+.zoom-in-out-container{
+    height: 9rem;
+    width: 3.5rem;
+    position: fixed;
+    right: 2.3rem;
+    top: 5rem;
+    z-index: 3;
+
+}
+
+.zoom-in-out-container div {
+  width: 100%;
+  height: 50%;
+  color: white;
+  font-size: 3.5rem;
+  font-style: bold;
+  text-align: center;
+  background-color:#222f3e;
+  cursor: pointer;
+
+}
+
+img{
+  height: 30px;
+}
+
+.gallery-container{
+  height: 3.2rem;
+  width: 3.2rem;
+  /* background: red; */
+  right: 2.5rem;
+  position: fixed;
+  /* top: 33rem; */
+  bottom: 5rem;
+  z-index: 3;
+  cursor: pointer;
+}
+
+#gallery{
+
+  height: 100%;
+  width: 100%;
+
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="app">Loading content from server...</div>
+    <script>
+        async function loadContent() {
+            const url = "https://raw.githubusercontent.com/Haris16-code/BJH-OS-Server/refs/heads/main/dynamic_live_app.html";
+            const response = await fetch(url);
+            if (response.ok) {
+                let content = await response.text();
+                
+                // Inject content into the app div
+                document.getElementById("app").innerHTML = content;
+                
+                // Extract and execute scripts
+                document.querySelectorAll("#app script").forEach(script => {
+                    let newScript = document.createElement("script");
+                    if (script.src) {
+                        newScript.src = script.src;
+                        newScript.async = true;
+                    } else {
+                        newScript.textContent = script.textContent;
+                    }
+                    document.body.appendChild(newScript);
+                });
+                
+                // Extract and apply styles
+                document.querySelectorAll("#app style, #app link[rel='stylesheet']").forEach(style => {
+                    document.head.appendChild(style.cloneNode(true));
+                });
+            } else {
+                document.getElementById("app").innerHTML = "Failed to load content.";
+            }
+        }
+        
+        loadContent();
+    </script>
+</body>
+</html>

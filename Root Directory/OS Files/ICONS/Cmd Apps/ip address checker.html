@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IP Address Finder</title>
+  <style>
+    /* Set a background color */
+    body {
+      background-color: #f7f7f7;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Center the content */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Style the IP display */
+    .ip-display {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="ip-display">
+      <h2>Your IP Address:</h2>
+      <p id="ipAddress">Loading...</p>
+    </div>
+  </div>
+
+  <script>
+    // Fetch the user's IP address from an external service
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        const ipAddress = data.ip;
+        const ipAddressElement = document.getElementById('ipAddress');
+        ipAddressElement.textContent = ipAddress;
+      })
+      .catch(error => {
+        console.error('Error fetching IP address:', error);
+      });
+  </script>
+</body>
+</html>

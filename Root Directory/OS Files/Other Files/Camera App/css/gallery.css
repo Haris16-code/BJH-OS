@@ -1,0 +1,102 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+*{
+
+ box-sizing: border-box;
+}
+
+body{
+
+    margin: 0;
+    background-color: #34495e;
+
+}
+.container-main{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    padding: 2rem;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    
+}
+
+.media-card{
+
+    height: 20rem;
+    width: 18rem;
+    /* background-color: red; */
+    padding-bottom: 18px;
+
+}
+
+.media-container{
+    height: 80%; 
+    width: 100%;
+    border: 1px solid;
+}
+
+.action-container{
+    height: 20%;
+    width: 100%;
+    border: 1px solid;
+}
+
+.action-container button{
+
+    width: 100%;
+    height: 50%;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    border: none;
+
+}
+
+.media-gallery{
+    height: 101%;
+    width: 100%;
+}
+
+.media-download{
+    
+    background-color: rgb(16, 138, 16);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    
+}
+.media-delete{
+
+    background-color: #e74c3c;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.backbutton{
+    position: fixed;
+    bottom: 3rem;
+    right: 4rem;
+    background-color: red;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 20px;
+}
+
+#back-btn{
+
+    height: 100%;
+    width: 100%;
+    padding: 2px;
+}
+
+.gallery-title{
+    background-color: #FFCE00;
+    height: 10vh;
+    width: 100%;
+    font-size:2.5rem;
+    color: #222f3e;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+
+}

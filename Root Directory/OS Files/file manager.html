@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open File Explorer</title>
+    <style>
+        .startAppsbutton {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .startAppsbutton:hover {
+            background-color: #45a049;
+        }
+
+        .startAppsbutton img {
+            width: 20px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Open File Explorer</h1>
+    <p>Click the "File Explorer" button below to open the file explorer</p>
+    
+    <!-- The button for opening the file explorer -->
+    <button class="startAppsbutton" onclick="openFileExplorer()">
+        <img src="Assets/Windows_11_Explorer.png" alt="">
+        File Explorer
+    </button>
+
+    <!-- The hidden file input element -->
+    <input type="file" id="fileInput" style="display: none;">
+
+    <script>
+        function openFileExplorer() {
+            var fileInput = document.getElementById("fileInput");
+            fileInput.click(); // Trigger the file input element
+        }
+
+        // Listen for changes to the selected file
+        document.getElementById("fileInput").addEventListener("change", function(event) {
+            var selectedFile = event.target.files[0];
+            if (selectedFile) {
+                alert("You selected the file: " + selectedFile.name);
+            }
+        });
+    </script>
+</body>
+</html>

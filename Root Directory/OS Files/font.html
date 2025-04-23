@@ -1,0 +1,149 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!--Font Script-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings Page</title>
+</head>
+<body>
+  <h1>Settings Page</h1>
+  <p>Select a font style:</p>
+  <select id="fontSelect">
+    <option value="Arial, sans-serif">Arial</option>
+    <option value="Georgia, serif">Georgia</option>
+    <option value="Verdana, Geneva, sans-serif">Verdana</option>
+    <option value="Courier New, Courier, monospace">Courier New</option>
+    <option value="Poppins, sans-serif">Poppins</option>
+<option value="Century Gothic, sans-serif">Century Gothic</option>
+<option value="Comic Sans MS, cursive">Comic Sans MS</option>
+      <option value="Impact, sans-serif">Impact</option>
+      <option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
+      <option value="Lucida Console, monospace">Lucida Console</option>
+      <option value="Palatino Linotype, serif">Palatino Linotype</option>
+      <option value="Lucida Sans Unicode, sans-serif">Lucida Sans Unicode</option>
+      <option value="Garamond, serif">Garamond</option>
+      <option value="Book Antiqua, serif">Book Antiqua</option>
+      <option value="Candara, sans-serif">Candara</option>
+      <option value="Franklin Gothic Medium, sans-serif">Franklin Gothic Medium</option>
+      <option value="Arial Black, sans-serif">Arial Black</option>
+      <option value="Cambria, serif">Cambria</option>
+      <option value="Lucida Sans, sans-serif">Lucida Sans</option>
+<option value="Tahoma, sans-serif">Tahoma</option>
+
+      <option value="Brush Script MT, cursive">Brush Script MT</option>
+      <option value="Rockwell, serif">Rockwell</option>
+      <option value="Papyrus, fantasy">Papyrus</option>
+      <option value="Arial Narrow, sans-serif">Arial Narrow</option>
+      <option value="Baskerville, serif">Baskerville</option>
+      <option value="MS Sans Serif, sans-serif">MS Sans Serif</option>
+      <option value="Wide Latin, serif">Wide Latin</option>
+      <option value="Segoe UI, sans-serif">Segoe UI</option>
+      <option value="Palatino, serif">Palatino</option>
+      <option value="Century, serif">Century</option>
+      <option value="Franklin Gothic Book, sans-serif">Franklin Gothic Book</option>
+
+      <option value="Bookman Old Style, serif">Bookman Old Style</option>
+      <option value="Lucida Handwriting, cursive">Lucida Handwriting</option>
+      <option value="Berlin Sans FB, sans-serif">Berlin Sans FB</option>
+      <option value="Bell MT, serif">Bell MT</option>
+      <option value="Comic Sans MS, cursive">Comic Sans MS</option>
+  </select>
+  <button onclick="changeFont()">Apply</button>
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Redirect to the index.html page after applying the font
+      window.location.href = '../../Setup.html';
+    }
+  </script>
+</body>
+</html>
+<!--Font script ended-->

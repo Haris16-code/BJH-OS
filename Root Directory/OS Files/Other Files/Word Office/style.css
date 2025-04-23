@@ -1,0 +1,585 @@
+/**********************************
+Copyright (c) 2021 ajax CSS styling
+by zeankundev
+Source code ready to use
+Apache Licence v2.0
+This software is protected with
+GNU General Public Lisence
+***********************************/
+
+/* font declaration */
+/* netflix sans */
+@font-face {
+  font-family: Netflix Sans;
+  src: url('./font/netflixsans-bold-webfont.woff2') format('woff2'),
+       url('./font/netflixsans-light-webfont.woff2') format('woff2');
+}
+@font-face {
+  font-family: HYWenHei;
+  src: url('./font/ja-jp.woff2') format('woff2');
+}
+
+body {
+  font-family: system-ui;
+  background-color: #121212;
+  user-select: none;
+}
+.contenteditor {
+  background-color: #FFFFFF;
+  font-family: system-ui;
+  padding:75px;
+  font-size: 15px;
+  text-decoration-color: #000000;
+}
+#ToolBar {
+  background: #1d1d1d;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+h1 {
+    font-family: system-ui;
+    font-size: 48px;
+    font-style: bold;
+    color: #FFFFFF
+}
+p {
+  font-family: system-ui;
+}
+h2 {
+  font-family: system-ui;
+  color: #FFFFFF
+  font-size: 18px;
+}
+h3 {
+  font-family: system-ui;
+  color: #FFFFFF;
+  font-size: 18px;
+}
+#colorInput {
+  margin: 15px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px solid #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #ffffff;
+}
+::-webkit-scrollbar-track {
+  background: #232323;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #232323;
+  width: 14px;
+  height: 14px;
+  transition: all 0.4s ease;
+}
+::-webkit-scrollbar-track:active {
+  background: #232323;
+  width: 14px;
+  height: 14px;
+  transition: all 0.4s ease;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+#editor {
+    width: 794px;
+    font-size: 20px;
+    min-height: 1123px;
+    height: fit-content;
+    display: block;
+    border: 2px solid lightblue;
+    margin-top: 50px;
+    margin:auto;
+    user-select: text;
+}
+.header {
+  background-color: #232323;
+  position: fixed;
+  display: block;
+  width: 100%;
+  top: 0;
+  padding: 10px;
+}
+.btn {
+  background-color: #1d1d1d; /* Blue background */
+  border: none; /* Remove borders */
+  color: #f5f5f5;
+  margin-left: 10px;
+  font-family: system-ui; /* White text */
+  padding: 10px; /* Some padding */
+  font-size: 18px; /* Set a font size */
+  cursor: default; /* Mouse pointer on hover */
+}
+
+.btnchange {
+  background-color: #232323; /* Blue background */
+  border: none; /* Remove borders */
+  color: #f5f5f5;
+  font-family: system-ui; /* White text */
+  padding: 12px 16px; /* Some padding */
+  font-size: 20px; /* Set a font size */
+  cursor: default; /* Mouse pointer on hover */
+}
+
+/* The Font Input Picker */
+.fontinput {
+  font-size: 20px;
+  border-radius: 5px;
+  background-color: #232323;
+  width: 250px;
+  color: #f5f5f5;
+  font-family: system-ui;
+  outline: none;
+  border-style: solid;
+}
+
+.footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  box-sizing: border-box;
+  background-color: #232323;
+  padding-top: 2px;
+  box-shadow: 0px -7px 5px -5px #333;
+}
+
+#title {
+  color: #fefefe; 
+  font-family: system-ui; 
+  font-size: 24px; 
+  background-color: #1d1d1d; 
+  width: 95%; 
+  border-style: none;
+  border: none;
+  user-select: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+#title:hover {
+  color: #fefefe; 
+  font-family: system-ui; 
+  font-size: 24px; 
+  background-color: #292929;
+  border-radius:5px; 
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: #363636;
+  border-radius: 5px;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+/* Dropdown Button */
+.dropbtn {
+  background-color: #1d1d1d;
+  color: white;
+  font-family: system-ui;
+  padding: 16px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus, .dropbtn::after {
+  background-color: #363636;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.cmt, .cmt:hover, .cmt:after {
+  border-bottom-left-radius: 20px; 
+  border-bottom-right-radius: 20px;
+}
+.tooltip .tooltiptext {
+  width: 120px;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+.tooltip .tooltiptext {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+  opacity: 1;
+}
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;  /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+/* Dropdown Button */
+.dropbtn {
+  background-color: #1d1d1d;
+  color: #f5f5f5;
+  padding: 16px;
+  font-size: 18px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #363636;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: #f5f5f5;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #545454; transition: all 0.2s ease;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content { transition: all 0.2s ease; display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #363636;}
+
+input[type="color" i] {
+  width: 31px;
+  height: 31px;
+  background-color: #232323;
+  cursor: default;
+  color:black, white;
+}
+input[type="color" i]:hover {
+  width: 31px;
+  height: 31px;
+  background-color: #353535;
+  transition: all 0.2s ease;
+  cursor: default;
+  color:black, white;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #232323; /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  font-family: system-ui;
+  color: #FFFFFF;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #FFFFFF;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: gray;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* Modal Header */
+.modal-header {
+  padding: 2px 16px;
+  background-color: #00a2e8;
+  color: white;
+}
+
+/* Modal Body */
+.modal-body {padding: 2px 16px;}
+/* Modal body white text */
+.modal-body p {color: #f2f2f2}
+
+/* Modal Footer */
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #00a2e8;
+  color: white;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #232323;
+  color: #ffffff;
+  margin: auto;
+  font-size: 13px;
+  padding: 0;
+  width: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+{box-sizing: border-box;}
+
+/* Button used to open the chat form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup chat - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 200px;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+/* The switch button */
+.switch {
+  background-color: #f2f2f2;
+  color: #0d0d0d;
+  font-size: 12px;
+  border-radius: 16px;
+}
+/* When it hovers, do the thing, badass */
+.switch:hover {
+  background-color: #d9d9d9;
+  color: #0d0d0d;
+  font-size: 16px;
+  border-radius: 18px;
+}
+/* Page content */
+.content {
+  padding: 0px;
+}
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 102px;
+}
+#menu {
+  display: block;
+  background-color: #232323;
+  padding: 10px 0px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 30px lightgrey;
+  position: absolute;
+  transform-origin: center;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+#menu.show {
+  opacity: 1;
+  transform: scale(1);
+  transform-origin: top left;
+}
+
+.menu-item {
+  display: block;
+  padding: 5pt;
+  transition: 0.1s;
+  font-size: 15px;
+  color: #f5f5f5;
+}
+
+.menu-item:hover {
+  background-color: #363636;
+  cursor: pointer;
+}
+
+#out-click {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: none;
+}
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+.altAccess {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.access {
+  display: none;
+  position: absolute;
+  background-color: #232323;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.access a {
+  color: #f2f2f2;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.access a:hover {background-color: #363636}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display:block;
+}
+
+.accessbtn {
+  background-color: #232323; /* Blue background */
+  border: none; /* Remove borders */
+  color: #f5f5f5;
+  font-family: system-ui; /* White text */
+  padding: 12px 16px; /* Some padding */
+  font-size: 20px; /* Set a font size */
+  cursor: default; /* Mouse pointer on hover */
+}
+
+.altAccess:hover .access {display: block;}

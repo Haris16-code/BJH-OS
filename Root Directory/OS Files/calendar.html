@@ -1,0 +1,287 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Dynamic Calendar JavaScript | CodingNepal</title>
+  <style>
+    /* Import Google font - Poppins */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      justify-content: center;
+      min-height: 100vh;
+      background: #9B59B6;
+    }
+    .wrapper {
+      width: 450px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+    }
+    .wrapper header {
+      display: flex;
+      align-items: center;
+      padding: 25px 30px 10px;
+      justify-content: space-between;
+      transition: background-color 0.3s ease;
+    }
+    header .icons {
+      display: flex;
+    }
+    header .icons span {
+      height: 38px;
+      width: 38px;
+      margin: 0 1px;
+      cursor: pointer;
+      color: #878787;
+      text-align: center;
+      line-height: 38px;
+      font-size: 1.9rem;
+      user-select: none;
+      border-radius: 50%;
+      background: #f2f2f2;
+      transition: background-color 0.3s ease;
+    }
+    .icons span:last-child {
+      margin-right: -10px;
+    }
+    header .icons span:hover {
+      background: #ddd;
+    }
+    header .current-date {
+      font-size: 1.45rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .calendar {
+      padding: 20px;
+    }
+    .calendar ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      text-align: center;
+      transition: opacity 0.3s ease;
+    }
+    .calendar .weeks {
+      margin-bottom: 20px;
+    }
+    .calendar li {
+      color: #333;
+      width: calc(100% / 7);
+      font-size: 1.07rem;
+      transition: color 0.3s ease;
+    }
+    .calendar .weeks li {
+      font-weight: 500;
+      cursor: default;
+    }
+    .calendar .days li {
+      z-index: 1;
+      cursor: pointer;
+      position: relative;
+      margin-top: 30px;
+      transition: transform 0.2s ease;
+    }
+    .days li.inactive {
+      color: #aaa;
+    }
+    .days li.active {
+      color: #fff;
+    }
+    .days li::before {
+      position: absolute;
+      content: "";
+      left: 50%;
+      top: 50%;
+      height: 40px;
+      width: 40px;
+      z-index: -1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: #f2f2f2;
+      transition: background-color 0.3s ease;
+    }
+    .days li.active::before {
+      background: #9B59B6;
+    }
+    .days li:not(.active):hover::before {
+      background: #ddd;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Font Link for Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined">
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <p class="current-date"></p>
+      <div class="icons">
+        <span id="prev" class="material-icons-outlined">chevron_left</span>
+        <span id="next" class="material-icons-outlined">chevron_right</span>
+      </div>
+    </header>
+    <div class="calendar">
+      <ul class="weeks">
+        <li>Sun</li>
+        <li>Mon</li>
+        <li>Tue</li>
+        <li>Wed</li>
+        <li>Thu</li>
+        <li>Fri</li>
+        <li>Sat</li>
+      </ul>
+      <ul class="days"></ul>
+    </div>
+  </div>
+  <script>
+    const daysTag = document.querySelector(".days"),
+      currentDate = document.querySelector(".current-date"),
+      prevNextIcon = document.querySelectorAll(".icons span");
+
+    // getting new date, current year and month
+    let date = new Date(),
+      currYear = date.getFullYear(),
+      currMonth = date.getMonth();
+
+    // storing full name of all months in array
+    const months = [
+      "January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"
+    ];
+
+    const renderCalendar = () => {
+      let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), // getting first day of month
+        lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
+        lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // getting last day of month
+        lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // getting last date of previous month
+      let liTag = "";
+
+      for (let i = firstDayofMonth; i > 0; i--) { // creating li of previous month last days
+        liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
+      }
+
+      for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
+        // adding active class to li if the current day, month, and year matched
+        let isToday = i === date.getDate() && currMonth === new Date().getMonth() &&
+          currYear === new Date().getFullYear() ? "active" : "";
+        liTag += `<li class="${isToday}">${i}</li>`;
+      }
+
+      for (let i = lastDayofMonth; i < 6; i++) { // creating li of next month first days
+        liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
+      }
+      currentDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
+      daysTag.innerHTML = liTag;
+    }
+    renderCalendar();
+
+    prevNextIcon.forEach(icon => { // getting prev and next icons
+      icon.addEventListener("click", () => { // adding click event on both icons
+        // if clicked icon is previous icon then decrement current month by 1 else increment it by 1
+        currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
+
+        if (currMonth < 0 || currMonth > 11) { // if current month is less than 0 or greater than 11
+          // creating a new date of current year & month and pass it as date value
+          date = new Date(currYear, currMonth, new Date().getDate());
+          currYear = date.getFullYear(); // updating current year with new date year
+          currMonth = date.getMonth(); // updating current month with new date month
+        } else {
+          date = new Date(); // pass the current date as date value
+        }
+        renderCalendar(); // calling renderCalendar function
+      });
+    });
+  </script>
+</body>
+</html>

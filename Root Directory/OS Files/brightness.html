@@ -1,0 +1,153 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script>
+</html><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings Page</title>
+<style>
+  body {    
+    margin: 0;
+    padding: 0;
+  }
+  #container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #22438C;    
+  }
+  .main {
+    width: 500px;
+    background: #FFF;
+    border-radius: 10px;
+    padding: 40px;
+  }
+  #brightness-range {
+    width: 100%;
+    -webkit-appearance: none;
+    background: #E40404;
+    height: 10px;
+    outline: none;
+    cursor: pointer;    
+  }
+  #brightness-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: #22438C;    
+  }
+</style>
+</head>
+<body>
+<script>
+  function setBrightness() {
+    const container = document.getElementById('container');
+    const brightnessRange = document.getElementById('brightness-range');
+    const val = brightnessRange.value;
+    container.style.filter = `brightness(${val}%)`;
+
+    // Store the brightness value in localStorage
+    localStorage.setItem('brightness', val);
+  }
+
+  // Read the brightness value from localStorage on page load
+  document.addEventListener('DOMContentLoaded', function () {
+    const storedBrightness = localStorage.getItem('brightness');
+    if (storedBrightness) {
+      const container = document.getElementById('container');
+      container.style.filter = `brightness(${storedBrightness}%)`;
+      const brightnessRange = document.getElementById('brightness-range');
+      brightnessRange.value = storedBrightness;
+    }
+  });
+</script>
+
+  <div id="container">
+    <div class="main">
+      <input type="range" id="brightness-range" min="10" max="100" value="100" onchange="setBrightness()">
+    </div>
+  </div>
+</body>    
+</html>

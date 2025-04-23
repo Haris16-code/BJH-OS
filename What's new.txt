@@ -1,0 +1,5 @@
+1. BJH OS Tool 32 Bit Directory not found error in Install App is fixed. Now you can install apps in BJH OS Very easily.
+2. In BJH OS Tool 32 Bit Option 5 Help is added. Now you can get the help about how to properly use BJH OS Tool 32 Bit.
+3. We Can optimize the BJH OS and we make it size 23 MB less that the Previous update. We can remove the unused folders and temporary files of BJH OS.
+4. Now we add another app named as BJH OS Live App this app is directly linked with BJH OS Server and it get the latest app from BJH OS Server. The main purpose of this app is that we upload new app for user and user can test it without downloading it. Also more this helps us a lot when we need to public BJH OS beta apps for users to test it.
+5. We can replace the apps which is in taskbar the apps are File Manager, Browser and Paint with the real app now you can also use these apps by click the icons these apps on taskbar. 

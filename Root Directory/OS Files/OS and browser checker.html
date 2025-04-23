@@ -1,0 +1,170 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detect User Browser and OS</title>
+   
+    
+    <!-- Stylesheet -->
+    <style>
+    * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #328cf3;
+}
+#container {
+  position: absolute;
+  background-color: #ffffff;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 90vw;
+  max-width: 600px;
+  padding: 40px 20px;
+  border-radius: 5px;
+
+  font-size: 5vmin;
+  color: #051a32;
+  font-weight: 600;
+  line-height: 1.8em;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(5, 26, 50, 0.18);
+}
+#container span {
+  font-weight: 400;
+  color: #4b5969;
+}
+</style>
+  </head>
+  <body>
+    <div id="container">
+      Browser Details: <span id="browser-details"></span><br />
+      OS: <span id="os-details"></span>
+    </div>
+    <!-- Script -->
+    <script>//References
+let browserDetailsRef = document.getElementById("browser-details");
+let osDetailsRef = document.getElementById("os-details");
+var browserList = [
+  { name: "Firefox", value: "Firefox" },
+  { name: "Opera", value: "OPR" },
+  { name: "Edge", value: "Edg" },
+  { name: "Chrome", value: "Chrome" },
+  { name: "Safari", value: "Safari" },
+];
+var os = [
+  { name: "Android And BJH-OS", value: "Android" },
+  { name: "iPhone And BJH-OS", value: "iPhone" },
+  { name: "iPad And BJH-OS", value: "Mac" },
+  { name: "Macintosh And BJH-OS", value: "Mac" },
+  { name: "Linux And BJH-OS", value: "Linux" },
+  { name: "Windows And BJH-OS", value: "Win" },
+];
+
+let broswerChecker = () => {
+  //Useragent contains browser details and OS  details but we need to separate them
+  let userDetails = navigator.userAgent;
+  for (let i in browserList) {
+    //check if the string contains any value from the array
+    if (userDetails.includes(browserList[i].value)) {
+      //extract browser name and version from the string
+      browserDetailsRef.innerHTML = browserList[i].name || "Unknown Browser";
+      break;
+    }
+  }
+  for (let i in os) {
+    //check if string contains any value from the object
+    if (userDetails.includes(os[i].value)) {
+      //displau name of OS from the object
+      osDetailsRef.innerHTML = os[i].name;
+      break;
+    }
+  }
+};
+
+window.onload = broswerChecker();</script>
+  </body>
+</html>

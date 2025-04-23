@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dark Mode Setup</title>
+<style>
+  /* ... (your CSS styles) ... */
+</style>
+</head>
+<body>
+<script>
+  // Read the dark mode state from localStorage on page load
+  document.addEventListener('DOMContentLoaded', function () {
+    const darkModeState = localStorage.getItem('darkMode');
+    const body = document.body;
+    
+    if (darkModeState === 'true') {
+      body.classList.add('dark-mode');
+    } else {
+      body.classList.remove('dark-mode');
+    }
+  });
+</script>
+
+  <div id="container">
+    <div class="main">
+      <h1>Dark Mode Setup</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Brightness Control App - Setup</title>
+</head>
+<body>
+  <h1>Brightness Control Setup</h1>
+  <div id="brightnessApp"></div>
+  
+  <script>
+    const brightnessApp = document.getElementById('brightnessApp');
+    
+    // Load the saved brightness level from local storage or use a default value
+    const savedBrightness = localStorage.getItem('brightness') || 50;
+    
+    // Apply the saved brightness level to the app's appearance
+    brightnessApp.style.backgroundColor = `rgba(255, 255, 255, ${savedBrightness / 100})`;
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+  
+
+  <script>
+    const storedPassword = localStorage.getItem('password');
+
+    if (storedPassword) {
+      const enteredPassword = prompt('Enter the password to access Setup.html:');
+      if (enteredPassword !== storedPassword) {
+        alert('Incorrect password. You do not have access to this page.');
+        window.close(); // Close the tab if the password is incorrect.
+      }
+    }
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BJH OS</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+                                            <!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  background-image: url('Root Directory/OS Files/ICONS/wallpaper.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 100%;
+}
+</style>
+</head>
+<body>
+
+</body>
+</html>
+
+
+  </head>
+  <body>
+    <div class="container">
+<div>
+   <iframe src="https://bjh-os-apps-market.w3spaces.com/bjh-os-live-news-show-iframe.html" style="border:0px #ffffff none;" name="myiFrame" scrolling="no" frameborder="1" marginheight="0px" marginwidth="0px" height="100px" width="500px" allowfullscreen></iframe><span style="background-color: white; font-size: 25px;"></span>
+   <h2>Apps</h2>
+   <a download="" href="Root Directory/OS Files/clock.html" style="font-size: 25px;"><img alt="Clock" height="77" src="Root Directory/OS Files/ICONS/clock icon.png" width="77" />&nbsp;</a>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Clock&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+<a download="" href="Root Directory/OS Files/camera.html" style="font-size: 25px;"><img alt="Camera" height="77" src="Root Directory/OS Files/ICONS/camera icon.png" width="77" />&nbsp;</a>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Camera&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+      <div><a download="" href="Root Directory/OS Files/calculator.html" style="font-size: 25px;"><img alt="Calculator" height="67" src="Root Directory/OS Files/ICONS/calculator icon.png" width="77" />&nbsp;</a></div>
+      <div>
+         <span style="background-color: white; font-size: 25px;">Calculator</span>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><br /></div>
+         <div><a download="" href="Root Directory/OS Files/notepad.html" style="font-size: 25px;"><img alt="Notepad" height="67" src="Root Directory/OS Files/ICONS/notepad icon.png" width="77" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">NotePad</span></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+<div><a download="" href="Root Directory/OS Files/Battery status.html" style="font-size: 25px;"><img alt="Battery Status" height="52" src="Root Directory/OS Files/ICONS/battery icon.png" width="60" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Battery Status&nbsp;</span></div>
+<div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+         <div><span style="background-color: white; font-size: 25px;"></span><a download="" href="https://bjh-os.blogspot.com/p/wallpaper.html" style="font-size: 25px;"><img alt="Wallpaper" height="62" src="Root Directory/OS Files/ICONS/wallpaper icon.png" width="72" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Wallpaper&nbsp;</span></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+<a download="" href="Root Directory/OS Files/weather.html" style="font-size: 25px;"><img alt="Weather" height="77" src="Root Directory/OS Files/ICONS/weather icon.png" width="77" />&nbsp;</a>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Weather&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+         <div><span style="background-color: white; font-size: 25px;"></span><a download="" href="Root Directory/OS Files/calendar.html" style="font-size: 25px;"><img alt="Calendar" height="62" src="Root Directory/OS Files/ICONS/calendar icon.png" width="72" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Calendar&nbsp;</span></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+&ensp;<a download="" href="Root Directory/OS Files/screen recorder.html" style="font-size: 25px;"><img alt="Screen Recorder" height="77" src="Root Directory/OS Files/ICONS/screen recorder icon.png" width="77" />&nbsp;</a>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Screen Recorder&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+<a download="" href="Root Directory/OS Files/media player.html" style="font-size: 25px;"><img alt="Media Player" height="77" src="Root Directory/OS Files/ICONS/media player icon.png" width="77" />&nbsp;</a>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Media Player&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+<a download="" href="Root Directory/OS Files/image editor.html" style="font-size: 25px;"><img alt="Image Editor" height="77" src="Root Directory/OS Files/ICONS/image editor icon.png" width="77" />&nbsp;</a>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Image Editor&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+         <div><a download="" href="Root Directory/OS Files/paint.html" style="font-size: 25px;"><img alt="Paint" height="63" src="Root Directory/OS Files/ICONS/paint icon.png" width="72" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Paint&nbsp;</span></div>
+  <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+<div>&ensp;<a download="" href="Root Directory/OS Files/command prompt.html" style="font-size: 25px;"><img alt="Command Prompt(CMD)" height="77" src="Root Directory/OS Files/ICONS/cmd icon.png" width="77" />&nbsp;</a></div>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Command Prompt(CMD)&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+         
+         <div><a download="" href="Root Directory/OS Files/color picker.html" style="font-size: 25px;"><img alt="Color picker" height="58" src="Root Directory/OS Files/ICONS/color picker icon.png" width="66" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Color picker</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><a download="" href="Root Directory/OS Files/Html Compiler.html" style="font-size: 25px;"><img alt="Html Compiler" height="56" src="Root Directory/OS Files/ICONS/html compiler icon.png" width="64" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Html Compiler</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><a download="" href="Root Directory/OS Files/Python Compiler.html" style="font-size: 25px;"><img alt="Python Compiler" height="61" src="Root Directory/OS Files/ICONS/python compiler icon.png" width="70" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Python Compiler</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><a download="" href="https://bjh-os.blogspot.com/p/latest-news-bjh-os.html" style="font-size: 25px;"><img alt="Latest News" height="57" src="Root Directory/OS Files/ICONS/latest news icon.png" width="66" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Latest News&nbsp;</span></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><a download="" href="https://bjh-os-apps-market.w3spaces.com/bjh-os-new-app-market.html" style="font-size: 25px;"><img alt="Apps Market" height="60" src="Root Directory/OS Files/ICONS/bjh os store.png" width="69" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Apps Market</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         
+         <div><a download="" href="Root Directory/OS Files/text to speech converter.html" style="font-size: 25px;"><img alt="Text to speech converter" height="55" src="Root Directory/OS Files/ICONS/text to speech icon.png" width="63" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Text to speech converter</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><a download="" href="Root Directory/OS Files/software update.html" style="font-size: 25px;"><img alt="System Update" height="55" src="Root Directory/OS Files/ICONS/system update.png" width="63" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Software Update</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><a download="" href="Root Directory/OS Files/settings.html" style="font-size: 25px;"><img alt="Settings" height="63" src="Root Directory/OS Files/ICONS/settings icon.png" width="71" />&nbsp;</a></div>
+         <div>
+            <span style="background-color: white; font-size: 25px;">Settings</span>
+            <h2>Networked Apps (Internet Required)</h2>
+            <a download="" href="https://www.google.com/" style="font-size: 25px;"><img alt="Google" height="63" src="Root Directory/OS Files/ICONS/google icon.png" width="72" />&nbsp;</a>
+         </div>
+         <div><span style="background-color: white; font-size: 25px;">Google</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><a download="" href="https://www.youtube.com/" style="font-size: 25px;"><img alt="Youtube" height="56" src="Root Directory/OS Files/ICONS/youtube icon.png" width="63" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Youtube</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><a download="" href="https://web.whatsapp.com/" style="font-size: 25px;"><img alt="Whatsapp" height="59" src="Root Directory/OS Files/ICONS/whatsapp icon.png" width="68" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Whatsapp&nbsp;</span></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><a download="" href="https://facebook.com/" style="font-size: 25px;"><img alt="Facebook" height="61" src="Root Directory/OS Files/ICONS/facebook icon.png" width="76" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Facebook</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><a download="" href="https://instagram.com/" style="font-size: 25px;"><img alt="Instagram" height="58" src="Root Directory/OS Files/ICONS/instagram icon.png" width="66" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Instagram&nbsp;</span></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><a download="" href="https://twitter.com/" style="font-size: 25px;"><img alt="Twitter" height="61" src="Root Directory/OS Files/ICONS/twitter icon.png" width="69" />&nbsp;</a></div>
+         <div>
+            <span style="background-color: white; font-size: 25px;">Twitter</span>
+            <h2>Games (No Internet Required)</h2>
+
+<div><span style="background-color: white; font-size: 25px;">&nbsp;</span><a download="" href="Emoji game for bjh-os/Emoji Game Setup.html" style="font-size: 25px;"><img alt="emoji game" height="54" src="Emoji game for bjh-os/emoji icon.jfif" width="62" />&nbsp;</a></div><div><span style="background-color: white; font-size: 25px;">Emoji Game</span></div>
+<div>
+ <div><span style="background-color: white; font-size: 25px;"></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+            <a download="" href="Root Directory/OS Files/gravity game.html" style="font-size: 25px;"><img alt="Gravity Game" height="56" src="Root Directory/OS Files/ICONS/game icon.png" width="64" />&nbsp;</a>
+         </div>
+         <div><span style="background-color: white; font-size: 25px;">Gravity Game</span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;">&nbsp;</span><a download="" href="Root Directory/OS Files/Other Files/Snake Game/snake game.html" style="font-size: 25px;"><img alt="snake game" height="54" src="Root Directory/OS Files/ICONS/snake game icon.png" width="62" />&nbsp;</a></div>
+         <div>
+            <span style="background-color: white; font-size: 25px;">Snake Game</span>
+<div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;">&nbsp;</span><a download="" href="Root Directory/OS Files/Other Files/Hangman Game/hangman game.html" style="font-size: 25px;"><img alt="hangman" height="54" src="Root Directory/OS Files/ICONS/hangman icon.png" width="62" />&nbsp;</a></div>
+         <div>
+            <span style="background-color: white; font-size: 25px;">Hangman Game</span>
+            <div>
+               <h2>Downloaded Apps And Games</h2>
+
+             <h3>NO GAME OR APP DOWNLOADED</H3>
+        <!--PASTE APP  OR GAME CODE HERE-->
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+    </div>
+  </body>
+</html>    </div>
+  </div>
+</body>    
+</html>

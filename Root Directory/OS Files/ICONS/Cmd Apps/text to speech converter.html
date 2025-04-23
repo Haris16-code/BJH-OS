@@ -1,0 +1,200 @@
+<!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text To Speech Converter</title>
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <style>
+    * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  height: 100vh;
+  background: linear-gradient(#7694fe, #4c7df8);
+}
+.container {
+  background-color: #ebf2ff;
+  width: 90%;
+  max-width: 37.5em;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  border-radius: 0.5em;
+  padding: 2em;
+  box-shadow: 0 1.87em 3.75em rgba(2, 14, 44, 0.2);
+}
+textarea {
+  font-size: 1em;
+  width: 100%;
+  border-radius: 0.5em;
+  padding: 1em;
+  resize: none;
+  border: 0.12em solid #040454;
+}
+#submit {
+  font-size: 1.2em;
+  display: block;
+  width: 50%;
+  position: relative;
+  margin: auto;
+  padding: 1em;
+  border: none;
+  background: linear-gradient(#7694fe, #4c7df8);
+  color: #ebf2ff;
+  border-radius: 0.3em;
+  cursor: pointer;
+  margin-top: 2em;
+}
+.controls {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
+.controls button {
+  display: block;
+  width: 3em;
+  height: 3em;
+  font-size: 1em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  color: #4c7df8;
+  border: 0.12em solid #4c7df8;
+  background-color: transparent;
+}
+</style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="controls">
+        <button class="btn" id="resume">
+          <i class="fa-solid fa-play"></i>
+        </button>
+        <button class="btn" id="pause">
+          <i class="fa-solid fa-pause"></i>
+        </button>
+      </div>
+      <textarea
+        placeholder="Enter some text here.."
+        id="txt"
+        rows="6"
+      ></textarea>
+      <button id="submit" type="submit">Submit</button>
+    </div>
+    <script>
+    let text = document.getElementById("txt");
+
+let submitBtn = document.getElementById("submit");
+let resumeBtn = document.getElementById("resume");
+let pauseBtn = document.getElementById("pause");
+let audioMessage;
+
+submitBtn.addEventListener("click", () => {
+  //set the text
+  audioMessage.text = text.value;
+  //speak the text
+  window.speechSynthesis.speak(audioMessage);
+});
+
+resumeBtn.addEventListener("click", () => {
+  pauseBtn.style.display = "block";
+  resumeBtn.style.display = "none";
+  //resume the audio if it is paused
+  if (speechSynthesis.pause) {
+    speechSynthesis.resume();
+  }
+});
+
+pause.addEventListener("click", () => {
+  pauseBtn.style.display = "none";
+  resumeBtn.style.display = "block";
+  //pause if speaking
+  speechSynthesis.speaking ? speechSynthesis.pause() : "";
+});
+
+window.onload = () => {
+  resumeBtn.style.display = "none";
+  if ("speechSynthesis" in window) {
+    audioMessage = new SpeechSynthesisUtterance();
+  } else {
+    alert("Speech Synthese is not supported");
+  }
+};
+</script>
+  </body>
+</html>

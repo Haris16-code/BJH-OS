@@ -1,0 +1,331 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drawing App</title>
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Stylesheet -->
+    <style>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+#paintArea {
+  position: relative;
+  border: 8px solid #788eff;
+  height: 70vh;
+  width: 100%;
+}
+.options {
+  height: 30vh;
+  background-color: #788eff;
+  padding: 30px;
+}
+.tools-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.tools-row h5 {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+.tools-row button {
+  padding: 12px 0;
+  border-radius: 25px;
+  border: none;
+  background-color: #ffffff;
+  font-size: 18px;
+  color: #788eff;
+}
+input[type="range"] {
+  height: 40px;
+}
+input[type="color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 70px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 8px;
+  border: 3px solid #000000;
+}
+input[type="color"]::moz-color-swatch {
+  border-radius: 8px;
+  border: 3px solid #000000;
+}
+</style>
+  </head>
+  <body>
+    <div id="paintArea">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="options">
+      <div class="tools" id="tools-section">
+        <div class="tools-row">
+          <div class="tools-wrapper">
+            <h5><span id="tool-type"></span> Size:</h5>
+            <input type="range" id="pen-slider" value="4" />
+          </div>
+          <div class="tools-wrapper">
+            <h5>Pen Color:</h5>
+            <input type="color" id="color-input" />
+          </div>
+          <div class="tools-wrapper">
+            <h5>Background Color:</h5>
+            <input type="color" id="color-background" />
+          </div>
+        </div>
+        <div class="tools-row">
+          <button id="button-clear">Clear</button>
+          <button id="button-pen">Pen</button>
+          <button id="button-erase">Erase</button>
+        </div>
+      </div>
+    </div>
+    <!-- Script-->
+    <script>//Initial references
+let colorsRef = document.getElementsByClassName("colors");
+let canvas = document.getElementById("canvas");
+let backgroundButton = document.getElementById("color-background");
+let colorButton = document.getElementById("color-input");
+let clearButton = document.getElementById("button-clear");
+let eraseButton = document.getElementById("button-erase");
+let penButton = document.getElementById("button-pen");
+let penSize = document.getElementById("pen-slider");
+let toolType = document.getElementById("tool-type");
+//eraser = false and drawing=false initially as user hasn't started using both
+let erase_bool = false;
+let draw_bool = false;
+//context for canvas
+let context = canvas.getContext("2d");
+//Initially mouse X and Y positions are 0
+let mouseX = 0;
+let mouseY = 0;
+//get left and top of canvas
+let rectLeft = canvas.getBoundingClientRect().left;
+let rectTop = canvas.getBoundingClientRect().top;
+
+//Inital Features
+
+const init = () => {
+  context.strokeStyle = "black";
+  context.lineWidth = 1;
+  //Set canvas height to parent div height
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  //Set range title to pen size
+  toolType.innerHTML = "Pen";
+  //Set background and color inputs initially
+  canvas.style.backgroundColor = "#ffffff";
+  backgroundButton.value = "#ffffff";
+  penButton.value = context.strokeStyle;
+};
+
+//Detect touch device
+const is_touch_device = () => {
+  try {
+    //We try to create TouchEvent (it would fail for desktops and throw error)
+    document.createEvent("TouchEvent");
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+//Exact x and y position of mouse/touch
+const getXY = (e) => {
+  mouseX = (!is_touch_device() ? e.pageX : e.touches?.[0].pageX) - rectLeft;
+  mouseY = (!is_touch_device() ? e.pageY : e.touches?.[0].pageY) - rectTop;
+};
+
+const stopDrawing = () => {
+  context.beginPath();
+  draw_bool = false;
+};
+
+//User has started drawing
+const startDrawing = (e) => {
+  //drawing = true
+  draw_bool = true;
+  getXY(e);
+  //Start Drawing
+  context.beginPath();
+  context.moveTo(mouseX, mouseY);
+};
+
+//draw function
+const drawOnCanvas = (e) => {
+  if (!is_touch_device()) {
+    e.preventDefault();
+  }
+  getXY(e);
+  //if user is drawing
+  if (draw_bool) {
+    //create a line to x and y position of cursor
+    context.lineTo(mouseX, mouseY);
+    context.stroke();
+    if (erase_bool) {
+      //destination-out draws new shapes behind the existing canvas content
+      context.globalCompositeOperation = "destination-out";
+    } else {
+      context.globalCompositeOperation = "source-over";
+    }
+  }
+};
+
+//Mouse down/touch start inside canvas
+canvas.addEventListener("mousedown", startDrawing);
+canvas.addEventListener("touchstart", startDrawing);
+
+//Start drawing when mouse.touch moves
+canvas.addEventListener("mousemove", drawOnCanvas);
+canvas.addEventListener("touchmove", drawOnCanvas);
+
+//when mouse click stops/touch stops stop drawing and begin a new path
+
+canvas.addEventListener("mouseup", stopDrawing);
+canvas.addEventListener("touchend", stopDrawing);
+
+//When mouse leaves the canvas
+canvas.addEventListener("mouseleave", stopDrawing);
+
+//Button for pen mode
+
+penButton.addEventListener("click", () => {
+  //set range title to pen size
+  toolType.innerHTML = "Pen";
+  erase_bool = false;
+});
+
+//Button for eraser mode
+eraseButton.addEventListener("click", () => {
+  erase_bool = true;
+  //set range title to erase size
+  toolType.innerHTML = "Eraser";
+});
+
+//Adjust Pen size
+penSize.addEventListener("input", () => {
+  //set width to range value
+  context.lineWidth = penSize.value;
+});
+
+//Change color
+colorButton.addEventListener("change", () => {
+  //set stroke color
+  context.strokeStyle = colorButton.value;
+});
+
+//Change Background
+backgroundButton.addEventListener("change", () => {
+  canvas.style.backgroundColor = backgroundButton.value;
+});
+
+//Clear
+clearButton.addEventListener("click", () => {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  canvas.style.backgroundColor = "#fff";
+  backgroundButton.value = "#fff";
+});
+
+window.onload = init();</script>
+  </body>
+</html>

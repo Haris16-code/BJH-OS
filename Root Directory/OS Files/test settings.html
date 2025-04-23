@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 10 Settings App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f3f3f3;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #0078D7;
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar ul li {
+            padding: 15px 20px;
+            cursor: pointer;
+        }
+        .sidebar ul li:hover,
+        .sidebar ul li.active {
+            background-color: #005a9e;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .footer {
+            background-color: #005a9e;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li class="active" onclick="showSection('system')">System</li>
+                <li onclick="showSection('devices')">Devices</li>
+                <li onclick="showSection('network')">Network & Internet</li>
+                <li onclick="showSection('personalization')">Personalization</li>
+               <!-- <li onclick="showSection('apps')">Apps</li> -->
+                <li onclick="showSection('privacy')">Privacy</li>
+                <li onclick="showSection('update')">Update</li>
+            </ul>
+            <div class="footer">
+                <p>BJH OS Settings</p>
+            </div>
+        </aside>
+        <main class="content">
+            <section id="system" class="section active">
+                <h2>System</h2>
+                <a download="" href="Root Directory/OS Files/clock.html" style="font-size: 25px;"><img alt="Clock" height="77" src="Root Directory/OS Files/ICONS/clock icon.png" width="77" />&nbsp;</a>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Clock&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+<a download="" href="Root Directory/OS Files/camera.html" style="font-size: 25px;"><img alt="Camera" height="77" src="Root Directory/OS Files/ICONS/camera icon.png" width="77" />&nbsp;</a>
+   <div>
+      <span style="background-color: white; font-size: 25px;">Camera&nbsp;</span>
+      <div><br /></div>
+      <div><br /></div>
+      <div><br /></div>
+      <div><a download="" href="Root Directory/OS Files/calculator.html" style="font-size: 25px;"><img alt="Calculator" height="67" src="Root Directory/OS Files/ICONS/calculator icon.png" width="77" />&nbsp;</a></div>
+      <div>
+         <span style="background-color: white; font-size: 25px;">Calculator</span>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><span style="background-color: white; font-size: 25px;"><br /></span></div>
+         <div><br /></div>
+         <div><a download="" href="Root Directory/OS Files/notepad.html" style="font-size: 25px;"><img alt="Notepad" height="67" src="Root Directory/OS Files/ICONS/notepad icon.png" width="77" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">NotePad</span></div>
+         <div><br /></div>
+         <div><br /></div>
+         <div><br /></div>
+<div><a download="" href="Root Directory/OS Files/Battery status.html" style="font-size: 25px;"><img alt="Battery Status" height="52" src="Root Directory/OS Files/ICONS/battery icon.png" width="60" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Battery Status&nbsp;</span></div>
+<div><br /></div>
+            </section>
+            <section id="devices" class="section">
+                <h2>Devices</h2>
+               <div class="container">
+        <a id="printerLink" download="" href="Root Directory/OS Files/Battery status.html">
+            <img alt="Printer Icon" height="52" src="Root Directory/OS Files/ICONS/printer_icon.png" width="60" />
+        </a>
+        <span>Printer</span>
+    </div>
+    <script>
+        document.getElementById('printerLink').addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default action
+
+            // Open the print dialog
+            window.print();
+        });
+    </script>
+            </section>
+            <section id="network" class="section">
+                <h2>Network & Internet</h2>
+                <div><a download="" href="Root Directory/OS Files/Battery status.html" style="font-size: 25px;"><img alt="📶 Internet Connection Detector" height="52" src="Root Directory/OS Files/ICONS/battery icon.png" width="60" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">📶 Internet Connection Detector&nbsp;</span></div>
+<div><br /></div>
+            </section>
+            <section id="personalization" class="section">
+                <h2>Personalization</h2>
+                <div><a download="" href="Root Directory/OS Files/Battery status.html" style="font-size: 25px;"><img alt="Password" height="52" src="Root Directory/OS Files/ICONS/battery icon.png" width="60" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Password&nbsp;</span></div>
+<div><br /></div>
+            </section>
+            
+            <section id="privacy" class="section">
+                <h2>Privacy</h2>
+                  <div><a download="" href="Root Directory/OS Files/Battery status.html" style="font-size: 25px;"><img alt="Permissions" height="52" src="Root Directory/OS Files/ICONS/battery icon.png" width="60" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">Permissions&nbsp;</span></div>
+<div><br /></div>
+            </section>
+            <section id="update" class="section">
+                <h2>Update</h2>
+                <div><a download="" href="Root Directory/OS Files/software update.html" style="font-size: 25px;"><img alt="System Update" height="55" src="Root Directory/OS Files/ICONS/system update.png" width="63" />&nbsp;</a></div>
+         <div><span style="background-color: white; font-size: 25px;">System Update</span></div>
+            </section>
+        </main>
+    </div>
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            const sidebarItems = document.querySelectorAll('.sidebar ul li');
+
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+
+            sidebarItems.forEach(item => {
+                if (item.innerText.toLowerCase().includes(sectionId)) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

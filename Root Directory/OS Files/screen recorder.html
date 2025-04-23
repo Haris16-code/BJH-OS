@@ -1,0 +1,254 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended--><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screen Recorder</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f1f1f1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.video-container {
+  margin-top: 20px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  animation: fadeInOut 2s ease infinite;
+}
+
+.loading-text {
+  font-size: 24px;
+  color: #007bff;
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="controls">
+      <button id="startBtn" class="btn">Start Recording</button>
+      <button id="stopBtn" class="btn" disabled>Stop Recording</button>
+    </div>
+    <div class="video-container">
+      <video id="recordedVideo" controls></video>
+    </div>
+  </div>
+  
+  <script>let mediaRecorder;
+let recordedChunks = [];
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const recordedVideo = document.getElementById('recordedVideo');
+const videoContainer = document.querySelector('.video-container');
+
+startBtn.addEventListener('click', startRecording);
+stopBtn.addEventListener('click', stopRecording);
+
+async function startRecording() {
+  const stream = await navigator.mediaDevices.getDisplayMedia({
+    video: { mediaSource: 'screen' },
+    audio: true
+  });
+
+  mediaRecorder = new MediaRecorder(stream);
+  mediaRecorder.ondataavailable = handleDataAvailable;
+  mediaRecorder.onstop = handleRecordingStop;
+
+  recordedChunks = [];
+  mediaRecorder.start();
+  
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+
+  showLoadingOverlay();
+}
+
+function handleDataAvailable(event) {
+  if (event.data.size > 0) {
+    recordedChunks.push(event.data);
+  }
+}
+
+function stopRecording() {
+  mediaRecorder.stop();
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+
+  hideLoadingOverlay();
+}
+
+function handleRecordingStop() {
+  const blob = new Blob(recordedChunks, { type: 'video/webm' });
+  const url = URL.createObjectURL(blob);
+  recordedVideo.src = url;
+}
+
+function showLoadingOverlay() {
+  const loadingOverlay = document.createElement('div');
+  loadingOverlay.classList.add('loading-overlay');
+
+  const loadingText = document.createElement('span');
+  loadingText.classList.add('loading-text');
+  loadingText.textContent = 'Recording...';
+
+  loadingOverlay.appendChild(loadingText);
+  videoContainer.appendChild(loadingOverlay);
+}
+
+function hideLoadingOverlay() {
+  const loadingOverlay = document.querySelector('.loading-overlay');
+  if (loadingOverlay) {
+    loadingOverlay.remove();
+  }
+}
+</script>
+</body>
+</html>

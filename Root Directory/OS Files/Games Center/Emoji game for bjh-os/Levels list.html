@@ -1,0 +1,92 @@
+<div class="container">
+  <h1>Select level:</h1>
+<h2>More levels are added with update</h2>
+  <ul class="levels">
+
+    <li><a href="emojis.html">Level 1</a></li>
+    <li><a href="Level 2.html">Level 2</a></li>
+   <li> <a href="level 3.html">Level 3</a></li>
+   <li> <a href="level 4.html">Level 4</a></li>
+   <li> <a href="level 5.html">Level 5</a></li>
+  </ul>    
+</div>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+html, body {
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Lobster, Georgia, serif;
+  color: #545454;
+}
+
+.container {
+  padding: 0 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin: 0 0 0.8em;
+  
+  @media screen and (min-width: 400px) {
+    font-size: 3rem;
+  }
+}
+
+.levels {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0 -15px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+    
+  > li {
+    margin: 0 15px 30px;
+    padding: 5px;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #f6f6f6;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.1);
+    position: relative;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+        
+    &:hover {
+      color: #fff;
+      background-color: #99ce2a;
+      transform: scale(1.04);
+    }
+    
+    @media screen and (min-width: 480px) {
+      width: 180px;
+      height: 180px;
+    }
+    
+  }
+  
+  
+}
+</style>

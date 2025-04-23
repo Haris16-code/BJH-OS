@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <style>
+     *{
+        box-sizing: border-box; 
+
+     }
+     body{
+         margin: 0;
+         overflow: hidden;  
+     }
+ </style>   
+<canvas></canvas>
+<script>
+let canvas = document.querySelector("canvas");
+canvas.height  = window.innerHeight;
+canvas.width = window.innerWidth;
+
+let ctx = canvas.getContext("2d"); // mode 2d or 3d
+
+/*
+ctx.beginPath(); // To initiate path
+ctx.moveTo(100,300); // move to path (postion, position)
+ctx.lineTo(300, 400); // plot to path (postion, position)
+ctx.strokeStyle = "blue";   
+ctx.lineWidth=20;
+ctx.stroke(); // plot stroke upto lineupto
+ctx.beginPath();  // for new path else will take previous path recent color value and can't be identified
+ctx.moveTo(300,400);
+ctx.lineTo(600,200);
+ctx.strokeStyle = "red"; // diff color to make it identical
+ctx.stroke();
+
+ctx.fillStyle="red"; //color of fill reactangle - no stroke needed in rect
+ctx.fillRect(50,100,300,400); // to create a reactangle (x,y, width, height); 
+
+*/
+
+
+let image = document.createElement("img");
+image.src="img.png";
+
+image.addEventListener("load",function(){ //on load
+
+    ctx.drawImage(image, 0 , 0); // drawimage (imagehtml, coordinates)
+
+})
+
+
+
+
+
+</script>
+</body>
+</html>

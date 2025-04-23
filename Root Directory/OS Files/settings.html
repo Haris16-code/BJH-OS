@@ -1,0 +1,159 @@
+<button id="backButton">Go Back</button>
+<style>
+#backButton {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+}
+</style>
+<script>document.getElementById("backButton").addEventListener("click", function() {
+window.history.go(-1);
+});</script><!--Font Script-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3, h4, h5, h6, p {
+      margin-bottom: 15px;
+    }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Script -->
+  <script>
+    function changeFont() {
+      const fontSelect = document.getElementById('fontSelect');
+      const selectedFont = fontSelect.value;
+
+      // Store the selected font in localStorage
+      localStorage.setItem('selectedFont', selectedFont);
+
+      // Apply the font to the entire page
+      document.body.style.fontFamily = selectedFont;
+
+      // Update the font style on linked pages
+      const links = document.querySelectorAll('a');
+      for (const link of links) {
+        link.style.fontFamily = selectedFont;
+      }
+    }
+
+    // Read the selected font from localStorage on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const storedFont = localStorage.getItem('selectedFont');
+      if (storedFont) {
+        document.body.style.fontFamily = storedFont;
+        // Set the selected font in the dropdown (optional)
+        const fontSelect = document.getElementById('fontSelect');
+        fontSelect.value = storedFont;
+      }
+    });
+  </script>
+</body>
+</html>
+<!--Font script ended-->
+<h2>Settings</h2>
+<p></p>
+<p>
+   <b><span face="Arial, sans-serif" style="color: #3d85c6; font-size: 13.5pt;">&nbsp;DEVICE</span></b>
+   <span style="color: black; font-size: 13.5pt;">
+      <o:p></o:p>
+   </span>
+</p>
+<p><b><u>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</u></span></b></p>
+<p class="MsoNormal" style="-webkit-text-stroke-width: 0px; font-variant-caps: normal; font-variant-ligatures: normal; orphans: 2; text-decoration-color: initial; text-decoration-style: initial; text-decoration-thickness: initial; widows: 2; word-spacing: 0px;">
+   <!--[if gte vml 1]>
+   <v:shapetype id="_x0000_t75" coordsize="21600,21600"
+      o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f"
+      stroked="f">
+      <v:stroke joinstyle="miter"/>
+      <v:formulas>
+         <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+         <v:f eqn="sum @0 1 0"/>
+         <v:f eqn="sum 0 0 @1"/>
+         <v:f eqn="prod @2 1 2"/>
+         <v:f eqn="prod @3 21600 pixelWidth"/>
+         <v:f eqn="prod @3 21600 pixelHeight"/>
+         <v:f eqn="sum @0 0 1"/>
+         <v:f eqn="prod @6 1 2"/>
+         <v:f eqn="prod @7 21600 pixelWidth"/>
+         <v:f eqn="sum @8 21600 0"/>
+         <v:f eqn="prod @7 21600 pixelHeight"/>
+         <v:f eqn="sum @10 21600 0"/>
+      </v:formulas>
+      <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+      <o:lock v:ext="edit" aspectratio="t"/>
+   </v:shapetype>
+   <v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:45pt;
+      height:47.4pt'>
+      <v:imagedata src="#"
+         o:title="download"/>
+   </v:shape>
+
+   <![endif]--><!--[if !vml]--><p class="MsoNormal"><a href="font.html" style="margin-left: 1em; margin-right: 1em; text-align: center;"><img alt="" data-original-height="225" data-original-width="225" height="53" src="ICONS/font icon.png" width="53" /></a>&nbsp;<span style="; font-size: large;"><b>Fonts</b></span></p>
+<p class="MsoNormal"><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p><a href="brightness.html"><img alt="brightness" height="43" src="ICONS/brightness icon.png" v:shapes="_x0000_i1025" width="43" /></a><!--[endif]--><span style="mso-spacerun: yes;">&nbsp;</span><b style="mso-bidi-font-weight: normal;"><span style="font-size: 15pt; line-height: 107%;">Screen Brightness</span></b>
+   <o:p></o:p>
+</p>
+<p class="MsoNormal"><span style="color: #d0e0e3;"><u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></span>
+   <span style="mso-spacerun: yes;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+</p>
+
+<p class="MsoNormal"><a href="audio control.html" style="margin-left: 1em; margin-right: 1em; text-align: center;"><img alt="" data-original-height="225" data-original-width="225" height="53" src="ICONS/sound icon.png" width="53" /></a>&nbsp;<span style="; font-size: large;"><b>Sound</b></span></p>
+<p class="MsoNormal"><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p class="MsoNormal"><a href="Battery status.html" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="225" data-original-width="225" height="51" src="ICONS/battery icon.png" width="51" /></a>&nbsp;<span style=" font-size: large;"><b>Battery</b></span></p>
+<p class="MsoNormal"><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p class="MsoNormal"><a href="https://bjh-os.blogspot.com/p/wallpaper.html" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="225" data-original-width="225" height="51" src="ICONS/wallpaper icon.png" width="51" /></a>&nbsp;<span style=" font-size: large;"><b>Wallpaper</b></span></p>
+<p class="MsoNormal"><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p><b><span face="Arial, sans-serif" style="color: #3d85c6; font-size: 13.5pt;">&nbsp;PERSONAL</span></b></p>
+<p></p>
+<p><b><span face="Arial, sans-serif" style="color: #3d85c6; font-size: 13.5pt;"><u>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</u></span></b></p>
+<p></p>
+
+<p class="MsoNormal"><a href="password.html" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="200" data-original-width="200" height="53" src="ICONS/password icon.png" width="53" /></a>&nbsp;<b><span style="font-size: large;">BJH OS Password</span></b></p>
+<p class="MsoNormal"><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p class="MsoNormal"><a href="location.html" style="margin-left: 1em; margin-right: 1em; text-align: center;"><img alt="" data-original-height="225" data-original-width="225" height="53" src="ICONS/location icon.png" width="53" /></a><b><span style="font-size: large;">Location</span></b></p>
+<p class="MsoNormal"><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p class="MsoNormal"><a href="security.html" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="200" data-original-width="200" height="53" src="ICONS/security icon.png" width="53" /></a>&nbsp;<b><span style="font-size: large;">Security</span></b></p>
+<p class="MsoNormal"><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p></p>
+<p><b><span face="Arial, sans-serif" style="color: #3d85c6; font-size: 13.5pt;">ACCOUNTS</span></b></p>
+<p><b><span face="Arial, sans-serif" style="color: #3d85c6; font-size: 13.5pt;"><u>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</u></span></b></p>
+<p><a href="https://myaccount.google.com/?utm_source=sign_in_no_continue&amp;pli=1" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="128" data-original-width="128" height="63" src="ICONS/google icon.png" width="63" /></a>&nbsp;<span style="font-size: large;"><b>Google</b></span></p>
+<p><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p><u style="color: #d0e0e3; text-align: center;"><a href="https://www.whatsapp.com/" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="225" data-original-width="224" height="71" src="ICONS/whatsapp icon.png" width="70" /></a></u><span style="text-align: center;"><b><span style="font-size: large;">WHATSAPP</span></b></span></p>
+<p><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p><a href="add account.html" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="225" data-original-width="225" height="73" src="ICONS/add icon.png" width="73" /></a>&nbsp;<span style="font-size: large;"><b>Add account</b></span></p>
+<p><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p><span face="Arial, sans-serif" style="color: #3d85c6;"><span style="font-size: 18px;"><b>SYSTEM</b></span></span></p>
+<p><b><span face="Arial, sans-serif" style="color: #3d85c6; font-size: 13.5pt;"><u>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</u></span></b></p>
+<p><a href="software update.html" style="font-family: Arial, sans-serif; font-size: 13.5pt; font-weight: bold; margin-left: 1em; margin-right: 1em; text-align: center;"><img alt="" data-original-height="225" data-original-width="225" height="53" src="ICONS/system update icon.png" width="53" /></a>&nbsp;<b><span style="font-size: large;">System Updates</span></b></p>
+<p><u style="color: #d0e0e3;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</u></p>
+<p><a href="about device.html" style="margin-left: 1em; margin-right: 1em; text-align: center;"><img alt="" data-original-height="225" data-original-width="225" height="62" src="ICONS/about icon.png" width="62" /></a><b><span style="font-size: large;">About device</span></b><u style="color: #d0e0e3;"><br /></u></p>
+<p></p>

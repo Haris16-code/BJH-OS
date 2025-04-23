@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BJH OS Package/App Installer</title>
+    <style>body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #fileInput {
+            display: none;
+        }
+        #errorContainer {
+            color: red;
+            margin-bottom: 10px;
+        }
+        #installedAppsContainer {
+            display: none;
+            margin-top: 20px;
+        }
+        .appItem {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .appFileName {
+            cursor: pointer;
+            color: #007BFF;
+            text-decoration: underline;
+        }
+        .uninstallButton {
+            cursor: pointer;
+            color: #FF0000;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+        #openFileButton {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #openFileButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>BJH OS Package/App Installer</h1>
+    <h5>If the file is a .zip file, extract it, open the folder, and select the .html file you downloaded from BJH OS App Market or follow the instructions where you downloaded it.</h5>
+    <input type="file" id="fileInput" accept=".html">
+    <button id="openFileButton">Open BJH OS App/Package File</button>
+    <div id="errorContainer"></div>
+
+    <div id="installedAppsContainer">
+        <h2>Installed Apps:</h2>
+        <div id="appsList"></div>
+    </div>
+
+    <script>
+        // Function to check if the page has stored content
+        function checkStoredContent() {
+            const appsListElement = document.getElementById("appsList");
+            const keys = Object.keys(localStorage);
+
+            if (keys.length > 0) {
+                document.getElementById("installedAppsContainer").style.display = "block";
+                keys.forEach(key => {
+                    if (key !== "installedAppFileName") {
+                        const appContent = localStorage.getItem(key);
+                        const fileName = localStorage.getItem(key + "FileName");
+
+                        if (appContent && fileName) {
+                            const appItem = document.createElement("div");
+                            appItem.classList.add("appItem");
+                            appItem.innerHTML = `
+                                <span class="appFileName">${fileName.replace(".html", "")}</span>
+                                <span class="uninstallButton" data-key="${key}">Uninstall</span>
+                            `;
+                            appsListElement.appendChild(appItem);
+
+                            appItem.querySelector(".appFileName").addEventListener("click", function () {
+                                const newTab = window.open();
+                                newTab.document.open();
+                                newTab.document.write(appContent);
+                                newTab.document.close();
+                            });
+
+                            appItem.querySelector(".uninstallButton").addEventListener("click", function () {
+                                const appKey = this.getAttribute("data-key");
+                                localStorage.removeItem(appKey);
+                                localStorage.removeItem(appKey + "FileName");
+                                appsListElement.removeChild(appItem);
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
+        // Check for stored content when the page loads
+        checkStoredContent();
+
+        document.getElementById("openFileButton").addEventListener("click", function () {
+            document.getElementById("fileInput").click();
+        });
+
+        document.getElementById("fileInput").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+
+            if (!file) {
+                document.getElementById("errorContainer").textContent = "No file selected.";
+                return;
+            }
+
+            if (file.type !== "text/html") {
+                document.getElementById("errorContainer").textContent = "Parse Error. Please select an HTML file.";
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const htmlContent = e.target.result;
+                const fileName = file.name;
+
+                // Check if the sign code is present in the HTML content
+                if (htmlContent.includes("<!--546869732069732061207369676E656420424A48204F53204170702E205369676E6564204279204861726973-->")) {
+                    document.getElementById("errorContainer").textContent = ""; // Clear any previous error message
+
+                    const key = "installedApp_" + Date.now();
+
+                    localStorage.setItem(key, htmlContent);
+                    localStorage.setItem(key + "FileName", fileName);
+
+                    // Reload the page to display the newly installed app
+                    location.reload();
+                } else {
+                    const confirmInstall = confirm("BJH OS Security detected that This app is not signed by BJH OS. So may be this can contain virus. Do you still want to install this third-party app?");
+                    if (confirmInstall) {
+                        document.getElementById("errorContainer").textContent = ""; // Clear any previous error message
+
+                        const key = "installedApp_" + Date.now();
+
+                        localStorage.setItem(key, htmlContent);
+                        localStorage.setItem(key + "FileName", fileName);
+
+                        // Reload the page to display the newly installed app
+                        location.reload();
+                    } else {
+                        document.getElementById("errorContainer").textContent = "Installation Blocked.";
+                    }
+                }
+            };
+
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+
+</html>

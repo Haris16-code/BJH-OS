@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Wallpaper</title>
+</head>
+<body>
+    <h1>Set Wallpaper</h1>
+    <input type="file" accept="image/*" id="imageInput">
+    <button onclick="setWallpaper()">Set Wallpaper</button>
+
+    <script>
+        function setWallpaper() {
+            const inputElement = document.getElementById('imageInput');
+            const file = inputElement.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const imageDataUrl = e.target.result;
+                    localStorage.setItem('wallpaper', imageDataUrl);
+                    alert('Wallpaper set successfully!');
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select an image.');
+            }
+        }
+    </script>
+</body>
+</html>
