@@ -48,9 +48,8 @@ Hi everyone! I'm a college student my Name is Muhammad Haris and I made a web-ba
 To make managing BJH OS even easier, I developed a Python-based utility called **BJH OS TOOL**. It lets you:
 
 - Install BJH OS updates
-- Upload apps and games
-- Add wallpapers and cursors
-- Flash system data to supported ESP boards
+- Install apps and games
+- Install wallpapers and cursors
 ## How to use BJH OS TOOL in Windows?
 # BJH OS TOOL Installation Guide
 
