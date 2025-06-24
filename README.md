@@ -33,7 +33,7 @@ Hi everyone! 👋 I'm a college student — my name is **Muhammad Haris** and I 
 
 ## 🛠️ How to Run BJH OS
 
-1. **⬇️ Download the ZIP** from the [BJH OS MAIN REPOSITORY](https://github.com/Haris685/BJH-OS)  
+1. **⬇️ Download the ZIP** from the [BJH OS MAIN REPOSITORY](https://github.com/Haris16-code/BJH-OS)  
 2. **🗂️ Extract** the ZIP file  
 3. Open the extracted `BJH-OS` folder  
 4. **🖱️ Double-click** the file named `Setup.html`  
