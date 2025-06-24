@@ -54,75 +54,67 @@ It lets you:
 
 ---
 
-## 🪟 How to use BJH OS TOOL on Windows?
-
-### ⚙️ BJH OS TOOL Installation Guide
-
-Instructions for both **64-bit** and **32-bit** versions.
-
----
-
 ## 🖥️ BJH OS TOOL 64-Bit
 
-### 1️⃣ Install BJH OS Update  
-- Download latest update ZIP  
+### 🛠️ Install BJH OS Update  
+- Download the latest update ZIP  
 - Extract it  
 - Open **BJH OS TOOL 64-Bit**  
 - Click **Install Update**  
-- Select extracted folder  
+- Select the extracted folder  
 - Refresh BJH OS
 
-### 2️⃣ Install Cursor  
-- Download SVG cursor  
+### 🖱️ Install Cursor  
+- Download an SVG cursor  
 - Click **Install Cursor**  
-- Select `.svg` file  
+- Select the `.svg` file  
 - Refresh BJH OS
 
-### 3️⃣ Install Wallpaper  
-- Download JPG/PNG image  
+### 🖼️ Install Wallpaper  
+- Download a JPG or PNG image  
 - Click **Install Wallpaper**  
-- Select image  
+- Select the image  
 - Refresh BJH OS
 
-### 4️⃣ Install Apps/Games  
+### 🎮 Install Apps/Games  
 - Download from App Market  
-- Extract files  
+- Extract the files  
 - Click **Install App**  
-- Select app folder  
-- Open from BJH OS Home Screen
+- Select the app folder  
+- Open it from BJH OS home screen
 
 ---
 
 ## 🖥️ BJH OS TOOL 32-Bit
 
 ### ▶️ Run Tool  
-Double-click to start
+- Double-click to start
 
-### 1️⃣ Install BJH OS Update  
-Provide folder path:
+### 🛠️ Install BJH OS Update  
+- Provide the folder path for the update
 
-Examples:  
+**Examples:**  
 - Absolute: `C:\Users\YourName\Downloads\bjh_update`  
 - Relative: `.\Downloads\bjh_update`
 
-### 2️⃣ Install Cursor (SVG)  
-Provide full path to `.svg`:
+### 🎯 Install Cursor (SVG)  
+- Provide the full path to the `.svg` file
 
-Examples:  
+**Examples:**  
 - Absolute: `C:\Users\YourName\Downloads\custom_cursor.svg`  
 - Relative: `.\Downloads\custom_cursor.svg`
 
-### 3️⃣ Install Wallpaper  
-Provide full path to image:
+### 🖼️ Install Wallpaper (Image)  
+- Provide the full path to `.jpg` or `.png` image
 
-Examples:  
+**Examples:**  
 - Absolute: `C:\Users\YourName\Pictures\custom_wallpaper.jpg`  
 - Relative: `.\Pictures\custom_wallpaper.jpg`
 
-### 4️⃣ Install App  
-Provide folder path (must include `index.html`):
+### 📦 Install App  
+- Provide the directory path that contains `index.html`
 
-Examples:  
+**Examples:**  
 - Absolute: `C:\Users\YourName\Downloads\Western-aim-game-main`  
 - Relative: `.\Downloads\Western-aim-game-main`
 
@@ -130,20 +122,21 @@ Examples:
 
 ## 📁 General Notes on File Paths
 
-- 🧭 **Absolute Path:** Full from drive root  
-- 🧮 **Relative Path:** From current folder
+- 🧭 **Absolute Path:** Full path from the root of the filesystem  
+- 🧮 **Relative Path:** Path relative to your current directory
 
-Examples:  
+**Examples:**  
 - Absolute: `C:\Users\YourName\Documents\myfile.jpg`  
 - Relative: `.\Documents\myfile.jpg`
 
-✅ Ensure files/folders exist before proceeding.
+✅ Ensure the file or folder exists before proceeding.
 
 ---
 
 ## ⌨️ Entering Paths in Windows
 
-When prompted, type or paste the full file/folder path. Include the correct extension:
+When prompted, paste or type the full path of the file or folder.  
+Be sure to include the correct file extension:
 
 ```bash
 C:\Users\YourName\Downloads\myfile.jpg
