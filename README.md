@@ -1,143 +1,150 @@
-# BJH OS
+# 💻 BJH OS
 
-Hi everyone! I'm a college student my Name is Muhammad Haris and I made a web-based operating system named **BJH OS**.
+Hi everyone! 👋 I'm a college student — my name is **Muhammad Haris** and I made a **web-based operating system** named **BJH OS** 🌐💡
 
-**BJH OS** is a browser-based operating system developed using **pure HTML, CSS, and JavaScript** — no frameworks, no backend dependencies. It’s designed to give you the feel of a real desktop OS, but in your web browser.
+**BJH OS** is a **browser-based operating system** developed using **pure HTML, CSS, and JavaScript** — no frameworks, no backend dependencies ⚙️🚫. It’s designed to give you the feel of a real desktop OS, but in your web browser 🖥️✨
 
 ---
 
-## Key Features
+## 🚀 Key Features
 
-- **Custom Desktop Environment**  
+- **🖼️ Custom Desktop Environment**  
   Draggable, resizable windows with a familiar desktop layout.
 
-- **Built-in Apps**  
+- **📦 Built-in Apps**  
   Includes File Manager, Notes, Chat App (*ChatLink*), Settings, and more.
 
-- **Modular Architecture**  
+- **🧩 Modular Architecture**  
   Easily add new themes, wallpapers, and apps.
 
-- **Persistent Data**  
+- **💾 Persistent Data**  
   Uses `localStorage` to save your preferences and data between sessions.
 
-- **Powerful Web Terminal**  
-  Perform advanced tasks, run commands, and control the OS using a built-in terminal interface — ideal for devs and power users.
+- **🧑‍💻 Powerful Web Terminal**  
+  Run commands and control the OS with a built-in terminal — ideal for devs and power users.
 
-- **Remote Alerts and Update System**  
-  Displays alerts and update notices fetched from a remote JSON configuration.
+- **🌐 Remote Alerts & Update System**  
+  Displays alerts and updates fetched from a remote JSON config.
 
-- **IoT Integration (In Progress)**  
-  Working on ESP8266/ESP32 support for real-world interactions and sensor monitoring.
-
----
-
-## How to Run BJH OS
-
-1. **Download the ZIP** file of BJH OS from the [BJH OS MAIN REPOSITORY]https://github.com/Haris685/BJH-OS)
-2. **Extract** the ZIP file.
-3. Open the extracted `BJH-OS` folder.
-4. **Double-click** the file named `Setup.html`.
-5. BJH OS will launch automatically in your default browser.
-
-> No installation required. Just open and go!
+- **📡 IoT Integration (In Progress)**  
+  Working on ESP8266/ESP32 support for real-world sensor interaction.
 
 ---
 
-## BJH OS Tool
+## 🛠️ How to Run BJH OS
 
-To make managing BJH OS even easier, I developed a Python-based utility called **BJH OS TOOL**. It lets you:
+1. **⬇️ Download the ZIP** from the [BJH OS MAIN REPOSITORY](https://github.com/Haris685/BJH-OS)  
+2. **🗂️ Extract** the ZIP file  
+3. Open the extracted `BJH-OS` folder  
+4. **🖱️ Double-click** the file named `Setup.html`  
+5. BJH OS will launch in your default browser 🌍🚀  
 
-- Install BJH OS updates
-- Install apps and games
-- Install wallpapers and cursors
-## How to use BJH OS TOOL in Windows?
-# BJH OS TOOL Installation Guide
-
-This guide covers instructions for both **BJH OS TOOL 64-Bit** and **BJH OS TOOL 32-Bit** versions.
+> 🧑‍💻 No installation required — just open and go!
 
 ---
 
-## BJH OS TOOL 64-Bit
+## 🧰 BJH OS TOOL
 
-### 1. Install BJH OS Update
-- Download the latest update ZIP file.
-- Extract it.
-- Open **BJH OS TOOL 64 Bit**.
-- Click **Install Update**.
-- Select the extracted update folder.
-- Refresh BJH OS to apply the update.
+To make managing BJH OS even easier, I developed a Python-based utility called **BJH OS TOOL** 🐍🛠️  
+It lets you:
 
-### 2. Install Cursor
-- Download an SVG cursor from the Customization Market or Google.
-- Open the tool and click **Install Cursor**.
-- Select the `.svg` file.
-- Refresh BJH OS to apply.
-
-### 3. Install Wallpaper
-- Download a JPG or PNG wallpaper.
-- Open the tool and click **Install Wallpaper**.
-- Select the image file.
-- Refresh BJH OS to apply.
-
-### 4. Install Apps/Games
-- Download the app/game from the BJH OS App Market.
-- Extract the files.
-- Open the tool and click **Install App**.
-- Select the folder that contains the app.
-- Open the app from your BJH OS home screen.
+- 📦 Install BJH OS updates  
+- 🎮 Install apps and games  
+- 🖼️ Install wallpapers and cursors
 
 ---
 
-## BJH OS TOOL 32-Bit
+## 🪟 How to use BJH OS TOOL on Windows?
 
-### Run Tool
-Double-click the file:
-### 1. Install BJH OS Update
-- Provide the folder path where the update files are located.
+### ⚙️ BJH OS TOOL Installation Guide
 
-**Examples:**
-- Absolute Path: `C:\Users\YourName\Downloads\bjh_update`
-- Relative Path: `.\Downloads\bjh_update`
-
-### 2. Install Cursor (SVG)
-- Provide the full file path to the SVG cursor.
-
-**Examples:**
-- Absolute Path: `C:\Users\YourName\Downloads\custom_cursor.svg`
-- Relative Path: `.\Downloads\custom_cursor.svg`
-
-### 3. Install Wallpaper (Image)
-- Provide the full file path to the image (JPEG, PNG).
-
-**Examples:**
-- Absolute Path: `C:\Users\YourName\Pictures\custom_wallpaper.jpg`
-- Relative Path: `.\Pictures\custom_wallpaper.jpg`
-
-### 4. Install App
-- Provide the directory path containing the app files, including an `index.html`.
-
-**Examples:**
-- Absolute Path: `C:\Users\YourName\Downloads\Western-aim-game-main`
-- Relative Path: `.\Downloads\Western-aim-game-main`
+This guide includes instructions for both **64-bit** and **32-bit** versions.
 
 ---
 
-## General Notes on File Paths
+## 🖥️ BJH OS TOOL 64-Bit
 
-- **Absolute Path:** Full path from root of filesystem.
-- **Relative Path:** Path relative to your current directory.
+### 1️⃣ Install BJH OS Update  
+- ⬇️ Download the latest update ZIP  
+- 🗂️ Extract it  
+- 🔧 Open **BJH OS TOOL 64-Bit**  
+- 📁 Click **Install Update**  
+- 📂 Select the extracted update folder  
+- 🔄 Refresh BJH OS
 
-**Examples:**
-- Absolute: `C:\Users\YourName\Documents\myfile.jpg`
+### 2️⃣ Install Cursor  
+- 🎯 Download an SVG cursor  
+- 🔧 Click **Install Cursor**  
+- 📄 Select the `.svg` file  
+- 🔄 Refresh BJH OS
+
+### 3️⃣ Install Wallpaper  
+- 🖼️ Download a JPG or PNG image  
+- 🔧 Click **Install Wallpaper**  
+- 📷 Select the image  
+- 🔄 Refresh BJH OS
+
+### 4️⃣ Install Apps/Games  
+- 🎮 Download from BJH OS App Market  
+- 🗂️ Extract the files  
+- 🔧 Click **Install App**  
+- 📂 Select the app folder  
+- 🖱️ Open from BJH OS Home Screen
+
+---
+
+## 🖥️ BJH OS TOOL 32-Bit
+
+### ▶️ Run Tool  
+Double-click to start
+
+### 1️⃣ Install BJH OS Update  
+- 📁 Provide folder path for update
+
+**Examples:**  
+- Absolute: `C:\Users\YourName\Downloads\bjh_update`  
+- Relative: `.\Downloads\bjh_update`
+
+### 2️⃣ Install Cursor (SVG)  
+- 🎯 Provide full path to `.svg` file
+
+**Examples:**  
+- Absolute: `C:\Users\YourName\Downloads\custom_cursor.svg`  
+- Relative: `.\Downloads\custom_cursor.svg`
+
+### 3️⃣ Install Wallpaper (Image)  
+- 🖼️ Provide path to `.jpg` or `.png` file
+
+**Examples:**  
+- Absolute: `C:\Users\YourName\Pictures\custom_wallpaper.jpg`  
+- Relative: `.\Pictures\custom_wallpaper.jpg`
+
+### 4️⃣ Install App  
+- 📦 Provide folder path that includes `index.html`
+
+**Examples:**  
+- Absolute: `C:\Users\YourName\Downloads\Western-aim-game-main`  
+- Relative: `.\Downloads\Western-aim-game-main`
+
+---
+
+## 📁 General Notes on File Paths
+
+- **🧭 Absolute Path:** Full path from your drive root  
+- **🧮 Relative Path:** From your current directory
+
+**Examples:**  
+- Absolute: `C:\Users\YourName\Documents\myfile.jpg`  
 - Relative: `.\Documents\myfile.jpg`
 
-Ensure the file or folder exists before proceeding.
+✅ Make sure the file/folder exists before proceeding.
 
 ---
 
-## Entering Paths in Windows
+## ⌨️ Entering Paths in Windows
 
-When prompted, paste or type the full path of the file or folder. Make sure to include the correct file extension:
+When prompted, paste or type the full file or folder path.  
+Be sure to include the correct file extension:
 
 ```bash
 C:\Users\YourName\Downloads\myfile.jpg
