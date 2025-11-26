@@ -140,3 +140,17 @@ Be sure to include the correct file extension:
 
 ```bash
 C:\Users\YourName\Downloads\myfile.jpg
+
+# Join the BJH OS Community on Discord! 🎉
+
+We are building an active community around **BJH OS**, where you can:
+
+- Get help with installation and troubleshooting
+- Share feedback and suggestions
+- Upload apps or games for the BJH OS Apps Market
+- Chat with other BJH OS users and developers
+- Participate in fun events, contests, and discussions
+
+Whether you are a **developer, tester, or BJH OS fan**, there’s a place for you here!  
+
+👉 **Join us now:** [BJH OS Discord Community](https://discord.gg/SdDSUtCbX8)
