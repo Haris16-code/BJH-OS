@@ -138,10 +138,12 @@ It lets you:
 When prompted, paste or type the full path of the file or folder.  
 Be sure to include the correct file extension:
 
-```bash
-C:\Users\YourName\Downloads\myfile.jpg
+- C:\Users\YourName\Downloads\myfile.jpg
 
-# Join the BJH OS Community on Discord! 🎉
+## 💻 BJH OS Discord Community
+
+Join the **BJH OS Community** on Discord and connect with fellow users, developers, and enthusiasts! 🎉  
+[Join Now!](https://discord.gg/SdDSUtCbX8)
 
 We are building an active community around **BJH OS**, where you can:
 
@@ -151,6 +153,4 @@ We are building an active community around **BJH OS**, where you can:
 - Chat with other BJH OS users and developers
 - Participate in fun events, contests, and discussions
 
-Whether you are a **developer, tester, or BJH OS fan**, there’s a place for you here!  
-
-👉 **Join us now:** [BJH OS Discord Community](https://discord.gg/SdDSUtCbX8)
+Whether you are a **developer, tester, or BJH OS fan**, there’s a place for you here! 
