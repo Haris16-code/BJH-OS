@@ -143,7 +143,7 @@ Be sure to include the correct file extension:
 ## 💻 BJH OS Discord Community
 
 Join the **BJH OS Community** on Discord and connect with fellow users, developers, and enthusiasts! 🎉  
-[Join Now!](https://discord.gg/SdDSUtCbX8)
+**[Join Now!](https://discord.gg/SdDSUtCbX8)**
 
 We are building an active community around **BJH OS**, where you can:
 
