@@ -1,198 +1,401 @@
-<button id="backButton">Go Back</button>
-<style>
-#backButton {
-background-color: #4CAF50;
-color: white;
-padding: 10px 20px;
-border: none;
-cursor: pointer;
-font-size: 16px;
-}
-</style>
-<script>document.getElementById("backButton").addEventListener("click", function() {
-window.history.go(-1);
-});</script>
-<!--Font Script-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <title>About BJH OS</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Stylesheet -->
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+    :root {
+      --bg: #0f111a;
+      --card: #1c1f2b;
+      --accent: #4a90e2;
+      --text: #fff;
+      --muted: #a0a0a0;
+      --shadow: rgba(0,0,0,0.6);
     }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
+    * { box-sizing: border-box; margin:0; padding:0; font-family: 'Poppins', sans-serif; }
+    body { background: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; }
+    .container { max-width: 900px; width: 100%; background: var(--card); border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px var(--shadow); overflow: hidden; }
+
+    .hero { display: flex; gap: 20px; align-items: center; margin-bottom: 30px; }
+    .logo { width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg,#0ea5e9,#7c3aed); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 28px; color: var(--text); }
+    .hero-text { display: flex; flex-direction: column; }
+    .hero-text h1 { font-size: 26px; margin-bottom: 6px; }
+    .hero-text p { color: var(--muted); font-size: 15px; }
+
+    .card { background: #252944; border-radius: 15px; padding: 20px; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+    .row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .row:last-child { border-bottom: none; }
+    .label { font-size: 14px; color: var(--muted); }
+    .value { font-weight: 600; font-size: 15px; }
+    a.link { color: var(--accent); text-decoration: none; transition: 0.3s; }
+    a.link:hover { text-decoration: underline; }
+
+    .features { margin-bottom: 30px; }
+    .features h2 { margin-bottom: 15px; color: var(--accent); }
+    .features ul { list-style-type: disc; margin-left: 20px; line-height: 1.7; color: var(--text); }
+    .features ul li { margin-bottom: 10px; }
+
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .btn { background: var(--accent); color: var(--text); padding: 12px 20px; border-radius: 12px; font-weight: 600; text-decoration: none; transition: 0.3s; }
+    .btn:hover { background: #357ab7; }
+
+    .legal { margin-top: 20px; font-size: 13px; color: var(--muted); text-align: center; }
+
+    @media(max-width:700px){
+      .hero { flex-direction: column; align-items: flex-start; gap: 15px; }
+      .logo { width: 70px; height: 70px; font-size: 24px; }
     }
-    h1, h2, h3, h4, h5, h6, p {
-      margin-bottom: 15px;
-    }
-    select {
-      font-size: 16px;
-      padding: 5px;
-      margin-right: 10px;
-    }
+
+    .loading { color: var(--muted); font-size: 13px; }
   </style>
-</head>
-<body>
-
-
-  <!-- Script -->
   <script>
-    function changeFont() {
-      const fontSelect = document.getElementById('fontSelect');
-      const selectedFont = fontSelect.value;
-
-      // Store the selected font in localStorage
-      localStorage.setItem('selectedFont', selectedFont);
-
-      // Apply the font to the entire page
-      document.body.style.fontFamily = selectedFont;
-
-      // Update the font style on linked pages
-      const links = document.querySelectorAll('a');
-      for (const link of links) {
-        link.style.fontFamily = selectedFont;
+    // Get system information with better detection
+    function getSystemInfo() {
+      // ========== CPU DETECTION ==========
+      const cores = navigator.hardwareConcurrency || 'Unknown';
+      let cpuInfo = 'Unknown';
+      let cpuThreads = 'Unknown';
+      
+      // Try to detect CPU from user agent
+      const ua = navigator.userAgent;
+      if (ua.includes('Intel')) {
+        const match = ua.match(/Intel\(R\)\s+Core\(TM\)\s+([^\s]+)/);
+        if (match) cpuInfo = 'Intel Core ' + match[1];
+      } else if (ua.includes('AMD')) {
+        cpuInfo = 'AMD Processor';
       }
+      
+      // Estimate threads (typically 2x cores for modern CPUs)
+      if (cores !== 'Unknown') {
+        cpuThreads = cores * 2 + ' Threads';
+      }
+      
+      // ========== RAM DETECTION ==========
+      let ramTotal = 'Unknown';
+      let ramAvailable = 'Unknown';
+      
+      // Method 1: Use deviceMemory API
+      if (navigator.deviceMemory) {
+        ramTotal = navigator.deviceMemory + ' GB';
+      }
+      
+      // Method 2: Use performance.memory (Chrome/Edge only)
+      if (performance.memory) {
+        const totalHeap = (performance.memory.totalJSHeapSize / (1024 * 1024 * 1024)).toFixed(1);
+        const usedHeap = (performance.memory.usedJSHeapSize / (1024 * 1024 * 1024)).toFixed(2);
+        const jsLimitHeap = (performance.memory.jsHeapSizeLimit / (1024 * 1024 * 1024)).toFixed(1);
+        
+        if (ramTotal === 'Unknown') {
+          ramTotal = jsLimitHeap + ' GB (JS Heap Limit)';
+        }
+        ramAvailable = usedHeap + ' GB (In Use)';
+      }
+      
+      // ========== GPU DETECTION ==========
+      let gpuInfo = 'Unknown';
+      let gpuMemory = 'Unknown';
+      
+      try {
+        const canvas = document.createElement('canvas');
+        const webgl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        const webgl2 = canvas.getContext('webgl2');
+        
+        if (webgl2) {
+          const debugInfo = webgl2.getExtension('WEBGL_debug_renderer_info');
+          if (debugInfo) {
+            gpuInfo = webgl2.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+            const vendor = webgl2.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+          }
+        } else if (webgl) {
+          const debugInfo = webgl.getExtension('WEBGL_debug_renderer_info');
+          if (debugInfo) {
+            gpuInfo = webgl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          }
+        }
+        
+        // Try to get GPU memory from WebGL extensions
+        if (webgl) {
+          const ext = webgl.getExtension('EXT_disjoint_timer_query_webgl2');
+          if (!ext) {
+            const ext2 = webgl.getExtension('EXT_disjoint_timer_query');
+          }
+        }
+      } catch (e) {
+        console.log('WebGL detection limited');
+      }
+      
+      // ========== SCREEN DETECTION ==========
+      const screenWidth = window.screen.width;
+      const screenHeight = window.screen.height;
+      const screenDPI = window.devicePixelRatio * 96;
+      
+      // Calculate diagonal in inches
+      const screenDiagInches = (Math.sqrt(screenWidth * screenWidth + screenHeight * screenHeight) / screenDPI).toFixed(1);
+      
+      // Detect common screen sizes
+      let screenSize = screenDiagInches + '"';
+      const totalPixels = screenWidth * screenHeight;
+      
+      if (screenWidth === 1920 && screenHeight === 1080) screenSize = '24" FHD';
+      else if (screenWidth === 2560 && screenHeight === 1440) screenSize = '27" 2K';
+      else if (screenWidth === 3840 && screenHeight === 2160) screenSize = '27-32" 4K';
+      else if (screenWidth === 1366 && screenHeight === 768) screenSize = '15-17" HD';
+      else if (screenWidth === 1280 && screenHeight === 720) screenSize = 'HD Ready';
+      
+      const screenRes = screenWidth + ' x ' + screenHeight;
+      const screenColorDepth = window.screen.colorDepth + '-bit';
+      const screenRefresh = screen.refreshRate ? screen.refreshRate + ' Hz' : 'Unknown';
+      
+      // ========== STORAGE DETECTION ==========
+      if (navigator.storage && navigator.storage.estimate) {
+        navigator.storage.estimate().then(estimate => {
+          const total = (estimate.quota / (1024 * 1024 * 1024)).toFixed(2);
+          const used = (estimate.usage / (1024 * 1024 * 1024)).toFixed(2);
+          const available = (total - used).toFixed(2);
+          document.getElementById('storageCapacity').textContent = total + ' GB';
+          document.getElementById('availableStorage').textContent = available + ' GB';
+          document.getElementById('storageUsed').textContent = used + ' GB (' + ((used/total)*100).toFixed(1) + '%)';
+        }).catch(e => {
+          document.getElementById('storageCapacity').textContent = 'Storage API not available';
+          document.getElementById('availableStorage').textContent = 'Check System Settings';
+          document.getElementById('storageUsed').textContent = 'Check System Settings';
+        });
+      }
+      
+      // ========== NETWORK DETECTION ==========
+      let network = 'Unknown';
+      if (navigator.connection) {
+        network = navigator.connection.effectiveType.toUpperCase();
+        if (navigator.connection.saveData) {
+          network += ' (Data Saver ON)';
+        }
+      }
+      
+      // ========== UPTIME DETECTION ==========
+      const uptime = Math.floor(performance.now() / 1000);
+      const days = Math.floor(uptime / 86400);
+      const hours = Math.floor((uptime % 86400) / 3600);
+      const minutes = Math.floor((uptime % 3600) / 60);
+      
+      // Last boot time
+      const bootTime = new Date(Date.now() - uptime * 1000);
+      
+      // ========== UPDATE DOM ==========
+      // CPU
+      document.getElementById('cpuCores').textContent = cores + ' Cores' + (cpuInfo !== 'Unknown' ? ' (' + cpuInfo + ')' : '');
+      if (cpuThreads !== 'Unknown') {
+        document.getElementById('cpuThreads').textContent = cpuThreads;
+      }
+      
+      // RAM
+      document.getElementById('ramMemory').textContent = ramTotal;
+      document.getElementById('availableRam').textContent = ramAvailable !== 'Unknown' ? ramAvailable : 'Browser limitation';
+      
+      // GPU
+      document.getElementById('gpuInfo').textContent = gpuInfo;
+      if (gpuMemory !== 'Unknown') {
+        document.getElementById('gpuMemory').textContent = gpuMemory;
+      }
+      
+      // Screen
+      document.getElementById('screenDiagonal').textContent = screenSize;
+      document.getElementById('screenResolution').textContent = screenRes;
+      document.getElementById('screenColorDepth').textContent = screenColorDepth;
+      document.getElementById('screenRefreshRate').textContent = screenRefresh;
+      
+      // Architecture
+      const arch = (navigator.maxTouchPoints > 0 ? 'Touch-enabled' : 'Desktop') + ' - ' + (navigator.platform || 'Unknown');
+      document.getElementById('systemArch').textContent = arch;
+      
+      // Network
+      document.getElementById('networkInterface').textContent = network;
+      document.getElementById('ipAddressField').textContent = 'Check Network Settings';
+      
+      // Uptime
+      document.getElementById('systemUptime').textContent = days + ' days, ' + hours + ' hours, ' + minutes + ' minutes';
+      document.getElementById('lastBootTime').textContent = bootTime.toLocaleString();
     }
-
-    // Read the selected font from localStorage on page load
-    document.addEventListener('DOMContentLoaded', function () {
-      const storedFont = localStorage.getItem('selectedFont');
-      if (storedFont) {
-        document.body.style.fontFamily = storedFont;
-        // Set the selected font in the dropdown (optional)
-        const fontSelect = document.getElementById('fontSelect');
-        fontSelect.value = storedFont;
-      }
-    });
+    
+    // Call on page load
+    window.addEventListener('DOMContentLoaded', getSystemInfo);
   </script>
-</body>
-</html>
-<!--Font script ended-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Device</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .animated-container {
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fade-in 1s ease forwards, slide-up 1s ease forwards;
-    }
-    .separator {
-      margin-bottom: 20px;
-    }
-    .icon-img {
-      width: 603px;
-      height: 94px;
-      max-width: 100%;
-      display: block;
-      margin: 0 auto;
-      opacity: 0;
-      transform: scale(0.5);
-      animation: fade-in 1s ease forwards, scale-up 1s ease forwards;
-    }
-    .link-button {
-      font-size: x-large;
-      text-decoration: none;
-      color: #fff;
-      background-color: #007bff;
-      padding: 10px 20px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-      display: inline-block;
-      margin: 10px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fade-in 1s ease forwards, slide-up 1s ease forwards, delay-fade 1s 0.5s forwards;
-    }
-    .link-button:hover {
-      background-color: #0056b3;
-    }
-    @keyframes fade-in {
-      to {
-        opacity: 1;
-      }
-    }
-    @keyframes slide-up {
-      to {
-        transform: translateY(0);
-      }
-    }
-    @keyframes scale-up {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    @keyframes delay-fade {
-      to {
-        opacity: 1;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="animated-container">
-    <div class="separator">
-      <a href="#" style="margin-left: 1em; margin-right: 1em;">
-        <img alt="" data-original-height="137" data-original-width="720" class="icon-img" src="ICONS/about device.png" />
-      </a>
+  <div class="container">
+
+    <div class="hero">
+      <div class="logo">BJH</div>
+      <div class="hero-text">
+        <h1>BJH OS</h1>
+        <p>Modern, fast, customizable, and browser-based desktop operating system</p>
+      </div>
     </div>
-  
-    <div class="separator">
-      <span style="font-size: x-large;">
-        <a class="link-button" href="device status.html">
-          <b>Status</b><b></b>
-        </a>
-      </span>
+
+    <div class="card">
+      <div class="row">
+        <div class="label">Device name</div>
+        <div class="value">BJH OS Desktop</div>
+      </div>
+      <div class="row">
+        <div class="label">Model</div>
+        <div class="value">Desktop Edition</div>
+      </div>
+      <div class="row">
+        <div class="label">BJH OS version</div>
+        <div class="value">4.6</div>
+      </div>
+      <div class="row">
+        <div class="label">Build number</div>
+        <div class="value">BJH-OS-4.6-stable-2025-11-27</div>
+      </div>
+      <div class="row">
+        <div class="label">Security patch level</div>
+        <div class="value">2025-11-27</div>
+      </div>
+      <div class="row">
+        <div class="label">Status</div>
+        <div class="value"><a href="device status.html" class="link">Official</a></div>
+      </div>
+      <div class="row">
+        <div class="label">Legal information</div>
+        <div class="value"><a href="legal info.html" class="link">View legal info</a></div>
+      </div>
+      <div class="row">
+        <div class="label">System updates</div>
+        <div class="value"><a href="software update.html" class="link">Check for updates</a></div>
+      </div>
     </div>
-    <div class="separator">
-      <span style="font-size: x-large;">
-        <b>
-          <a class="link-button" href="legal info.html">Legal Information</a>
-        </b>
-      </span>
+
+    <div class="card">
+      <div class="row" style="padding: 16px 0; border-bottom: 2px solid var(--accent);">
+        <div style="font-size: 16px; font-weight: 700; color: var(--accent);">Hardware & System Information</div>
+      </div>
+      <div class="row">
+        <div class="label">CPU Cores</div>
+        <div class="value" id="cpuCores"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">CPU Threads</div>
+        <div class="value" id="cpuThreads"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">RAM Memory</div>
+        <div class="value" id="ramMemory"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Available RAM</div>
+        <div class="value" id="availableRam"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Storage Capacity</div>
+        <div class="value" id="storageCapacity"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Available Storage</div>
+        <div class="value" id="availableStorage"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Storage Used</div>
+        <div class="value" id="storageUsed"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Graphics Card (GPU)</div>
+        <div class="value" id="gpuInfo"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Display Size</div>
+        <div class="value" id="screenDiagonal"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Display Resolution</div>
+        <div class="value" id="screenResolution"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Refresh Rate</div>
+        <div class="value" id="screenRefreshRate"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Color Depth</div>
+        <div class="value" id="screenColorDepth"><span class="loading">Detecting...</span></div>
+      </div>
     </div>
-    <div class="separator">
-      <span style="font-size: x-large;">
-        <b>BJH OS Version: 4.4</b>
-      </span>
+
+    <div class="card">
+      <div class="row" style="padding: 16px 0; border-bottom: 2px solid var(--accent);">
+        <div style="font-size: 16px; font-weight: 700; color: var(--accent);">Additional Device Information</div>
+      </div>
+      <div class="row">
+        <div class="label">System Architecture</div>
+        <div class="value" id="systemArch"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Boot Method</div>
+        <div class="value">UEFI</div>
+      </div>
+      <div class="row">
+        <div class="label">Device Type</div>
+        <div class="value">Desktop Computer</div>
+      </div>
+      <div class="row">
+        <div class="label">Network Interface</div>
+        <div class="value" id="networkInterface"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">IP Address</div>
+        <div class="value" id="ipAddressField"><span class="loading">Detecting...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Uptime</div>
+        <div class="value" id="systemUptime"><span class="loading">Calculating...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Last Boot Time</div>
+        <div class="value" id="lastBootTime"><span class="loading">Calculating...</span></div>
+      </div>
+      <div class="row">
+        <div class="label">System Temperature</div>
+        <div class="value">Check BIOS</div>
+      </div>
+      <div class="row">
+        <div class="label">Power Mode</div>
+        <div class="value">High Performance</div>
+      </div>
     </div>
+
+    <div class="features">
+      <h2>Key Features in BJH OS 4.6</h2>
+      <ul>
+  <li><b>Draggable App Windows:</b> Apps now open inside floating, draggable iframe windows with a titlebar and close button.</li>
+  <li><b>Maximize / Restore:</b> Windows can be maximized or restored (double‑click titlebar works too).</li>
+  <li><b>In‑window Launching:</b> Start menu and toolbar apps open inside windows instead of new tabs.</li>
+  <li><b>window.open Intercept:</b> Same‑origin <code>window.open()</code> calls open in a window automatically.</li>
+  <li><b>Programmatic API:</b> Use <code>window.openAppInWindow(url, title)</code> from scripts to open windows.</li>
+  <li><b>UX Improvements:</b> Smoother window chrome, shadowing and drag behavior.</li>
+</ul>
+
+<h3>New Features & Updates</h3>
+<ul>
+  <li><b>BJH OS AI Added</b></li>
+  <li><b>Flash Browser Added</b></li>
+  <li><b>BJH OS Tool For 64 Bit Fix</b></li>
+  <li><b>BJH OS Antivirus:</b> All Virus Definitions updated</li>
+  <li><b>About Page:</b> Rebuilt with best UI and new features</li>
+  <li><b>Settings Page:</b> Rebuilt with new and improved UI</li>
+</ul>
+    </div>
+
+    <div class="actions">
+      <a href="settings.html" class="btn">System Settings</a>
+      <a href="device status.html" class="btn">Status</a>
+      <a href="legal info.html" class="btn">Legal Info</a>
+    </div>
+
+    <div class="legal">© 2025 BJH OS — Developed by Muhammad Haris</div>
+
   </div>
-
-  <script>
-    // Optional: If you want to redirect after animation finishes
-    const animatedContainer = document.querySelector('.animated-container');
-    animatedContainer.addEventListener('animationend', () => {
-      // Replace 'your-destination-page.html' with the actual URL of the page you want to redirect to.
-      // Uncomment the line below to enable the redirect.
-      // window.location.href = 'your-destination-page.html';
-    });
-  </script>
 </body>
 </html>

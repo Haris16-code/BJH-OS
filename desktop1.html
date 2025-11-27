@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const currentVersion = "4.4"; // Current version of BJH OS
+        const currentVersion = "4.6"; // Current version of BJH OS
         let reminderInterval;
 
         // Load reminder time from local storage
@@ -242,8 +242,8 @@ if (!sessionStorage.getItem('setupLoaded')) {
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="og:title" property="og:title" content="Ripen OS" /><meta name="og:description" property="og:description" content="BJH OS 4.4 Official | BJH OS concept based on the Windows Operating System | An initiative of the BJH OS"/><meta name="description" content="Windows Ripen Official | BJH OS based on the Windows Operating System UI| An initiative of the BJH OS"/><meta content="Assets/BJH OS.png" property="og:image"/><meta property="og:type" content="website"/>
-    <title>BJH OS 4.4</title>
+    <meta name="og:title" property="og:title" content="Ripen OS" /><meta name="og:description" property="og:description" content="BJH OS 4.6 Official | BJH OS concept based on the Windows Operating System | An initiative of the BJH OS"/><meta name="description" content="Windows Ripen Official | BJH OS based on the Windows Operating System UI| An initiative of the BJH OS"/><meta content="Assets/BJH OS.png" property="og:image"/><meta property="og:type" content="website"/>
+    <title>BJH OS 4.6</title>
     <link rel="shortcut icon" href="Assets/windows11-logo.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="Assets/windows11-logo.png" />
     <link rel="manifest" href="manifest.json">
@@ -297,13 +297,25 @@ if (!sessionStorage.getItem('setupLoaded')) {
                     
                     <script>
     function openFileManager() {
-        window.open('Root Directory/OS Files/file manager.html', '_blank');
+                            if (window.openAppInWindow) {
+                                window.openAppInWindow('Root Directory/OS Files/file manager.html', 'File Manager');
+                            } else {
+                                window.open('Root Directory/OS Files/file manager.html', '_blank');
+                            }
     }
     function openBrowser() {
-        window.open('Root Directory/OS Files/browser.html', '_blank');
+                            if (window.openAppInWindow) {
+                                window.openAppInWindow('Root Directory/OS Files/flash_browser.html', 'Browser');
+                            } else {
+                                window.open('Root Directory/OS Files/flash_browser.html', '_blank');
+                            }
     }
     function openPaint() {
-        window.open('Root Directory/OS Files/Other Files/Paint/paint.html', '_blank');
+                            if (window.openAppInWindow) {
+                                window.openAppInWindow('Root Directory/OS Files/Other Files/Paint/paint.html', 'Paint');
+                            } else {
+                                window.open('Root Directory/OS Files/Other Files/Paint/paint.html', '_blank');
+                            }
     }
 </script>
 
@@ -400,12 +412,13 @@ if (!sessionStorage.getItem('setupLoaded')) {
                             <img src="https://img.icons8.com/fluency/452/user-male-circle.png" width="65px" id="startPfp">
                             <CENTER>
                                 <p id="greetings" style="color: white;font-family:Arial, Helvetica, sans-serif; margin-left: 20px;"></p>
-                                <h5 style="color: white;">BJH OS V4.4 | Official Stable Release</h5>
+                                <h5 style="color: white;">BJH OS V4.6 | Official Stable Release</h5>
                             </CENTER>
                             <!--App Search box-->
                             <input type="text" placeholder="Search apps" class="searchS" id="mySearch" onkeyup="FunctionAppS()" title="App Search"><br><br>
+<!--
                             <img src="Assets/AppsIco.png" width="17px" style="margin-left: -160px; margin-top: -22.5px;-webkit-transform: translate(0px, -33.5px); transform: translate(0px, -33.5px);">
-
+-->
                             <!--Apps-->
                             <div class="darkthemeComp" id="themeSA" 
                             style="height: 372px; overflow-y: hidden; margin-top: -20px;padding-top: 5px;">
@@ -417,12 +430,21 @@ if (!sessionStorage.getItem('setupLoaded')) {
 					<!--B-->
                                     <ul id="myMenu" style="margin-left: -15px;">
                                         <li ><button class="startAppsbuttonH"><b>B</b></button></li>
-
-				<li > <a href="Root Directory/OS Files/browser.html" target="_blank" target="_blank">  <button class="startAppsbutton">
-                                                <img src="Root Directory/OS Files/ICONS/browser icon.png" alt="">
-                                                Browser</button></a></li>
+<li > <a href="Root Directory/OS Files/bjh-os-antivirus.html" target="_blank" target="_blank">  <button class="startAppsbutton">
+                                                <img src="Root Directory/OS Files/ICONS/bjh-os-antivirus.png" alt="">
+                                                BJH OS Antivirus</button></a></li>
+                                                <div style="margin-left: 15px;">
+				<li > <a href="Root Directory/OS Files/BJHOS_AI.html" target="_blank" target="_blank">  <button class="startAppsbutton">
+                                                <img src="Root Directory/OS Files/ICONS/BJHOS_AI_Icon.png" alt="">
+                                                BJH OS AI</button></a></li>
                                        <div style="margin-left: 15px;">
-                                            
+				<li > <a href="https://bjh-os-latest-news.blogspot.com" target="_blank" target="_blank">  <button class="startAppsbutton">
+                                                <img src="Root Directory/OS Files/ICONS/latest news icon.png" alt="">
+                                                BJH OS Latest News And Updates</button></a></li>
+                                       <div style="margin-left: 15px;">
+                                         <li > <a href="Root Directory/OS Files/flash_browser.html" target="_blank" target="_blank">  <button class="startAppsbutton">
+                                                <img src="Root Directory/OS Files/ICONS/browser icon.png" alt="">
+                                                Flash Browser</button></a></li>   
 
   
                     
@@ -1260,32 +1282,28 @@ if (!sessionStorage.getItem('setupLoaded')) {
                         <div id="welcome-cont">
 
                             <h2 style="margin-top: -20px;">🚀 What's New In This Update? 🎉</h2>
-                            <p>
-                            
-                           
-        <p><b>🔥 1. Seamless App Installation!</b><br>
-        The "Directory Not Found" error in BJH OS Tool 32-Bit is fixed! Now, you can install apps effortlessly.</p>
-        
-        <p><b>🛠 2. Enhanced Help for BJH OS Tool 32-Bit!</b><br>
-        A new Help Option (5) is added, guiding you to use BJH OS Tool 32-Bit with ease.</p>
-        
-        <p><b>📦 3. Optimized & Lighter OS!</b><br>
-        BJH OS is now 23MB smaller! Unused folders and temporary files have been removed for better performance.</p>
-        
-        <p><b>🌐 4. Introducing BJH OS Live App!</b><br>
-        This app connects directly to the BJH OS Server, allowing users to test the latest apps without downloading them. Perfect for beta testing!</p>
-        
-        <p><b>🖥 5. Taskbar Apps Are Now Fully Functional!</b><br>
-        The taskbar icons for File Manager, Browser, and Paint now open the real apps with a single click.</p>
-          <p><b>🐛 6. Bugs Fixes</p>
-        <p>🚀 Stay tuned! For more updates 🔥</p>
-                            </p>
+                            <ul style="margin-top:15px; line-height:1.8; list-style-type: disc; padding-left:20px;">
+    <h2>Window Management</h2>
+<ul>
+  <li><b>Draggable App Windows:</b> Apps now open inside floating, draggable iframe windows with a titlebar and close button.</li>
+  <li><b>Maximize / Restore:</b> Windows can be maximized or restored (double‑click titlebar works too).</li>
+  <li><b>In‑window Launching:</b> Start menu and toolbar apps open inside windows instead of new tabs.</li>
+  <li><b>window.open Intercept:</b> Same‑origin <code>window.open()</code> calls open in a window automatically.</li>
+  <li><b>Programmatic API:</b> Use <code>window.openAppInWindow(url, title)</code> from scripts to open windows.</li>
+  <li><b>UX Improvements:</b> Smoother window chrome, shadowing and drag behavior.</li>
+</ul>
 
-                            <h4>⚖️ License</h4>
-                            <p>MIT License License as Copyright (c) 2022-23 RipenOS</p>
-
+<h2>New Features & Updates</h2>
+<ul>
+  <li><b>BJH OS AI Added</b></li>
+  <li><b>Flash Browser Added</b></li>
+  <li><b>BJH OS Tool For 64 Bit Fix</b></li>
+  <li><b>BJH OS Antivirus:</b> All Virus Definitions updated</li>
+  <li><b>About Page:</b> Rebuilt with best UI and new features</li>
+  <li><b>Settings Page:</b> Rebuilt with new and improved UI</li>
+</ul>
                             <h4>📱 Current Version</h4>
-                            <p>version 4.4</p>
+                            <p>Version 4.6</p>
                            
                             <h4>©️ Credits</h4>
                             <p>This Operating System Is Created By Muhammad Haris.</p>
@@ -1339,7 +1357,7 @@ if (!sessionStorage.getItem('setupLoaded')) {
 </a>
                             <p >Dynamic Live App</p>
                         </CENTER>
-                    </div>
+                       </div>                     
             </div>
 
             <!--Desktop Widget-->
@@ -1380,7 +1398,156 @@ if (!sessionStorage.getItem('setupLoaded')) {
     </div>
     
     <!--Apps under testing-->
-        
+
+    <!-- App windows container + styles + behavior: opens relative links in draggable iframe windows -->
+    <style>
+    .app-windows-container{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;}
+    .app-window{position:absolute;width:900px;height:600px;background:#fff;border:1px solid rgba(0,0,0,0.15);box-shadow:0 8px 24px rgba(0,0,0,0.35);border-radius:6px;overflow:hidden;pointer-events:auto;}
+    .app-window .win-header{height:36px;background:linear-gradient(180deg,#2f2f2f,#232323);color:#fff;display:flex;align-items:center;padding:0 8px;cursor:move;font-family:Arial,Helvetica,sans-serif;font-size:13px}
+    .app-window .win-title{flex:1;padding-left:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .app-window .win-controls{display:flex;gap:6px}
+    .app-window .win-controls button{background:transparent;border:0;color:#fff;width:28px;height:28px;border-radius:4px;cursor:pointer}
+    .app-window .win-controls button:hover{background:rgba(255,255,255,0.06)}
+    .app-window iframe{width:100%;height:calc(100% - 36px);border:0;display:block}
+    .app-window.maximized{left:0 !important;top:0 !important;width:100% !important;height:100% !important;border-radius:0 !important}
+    .app-window.maximized iframe{height:calc(100% - 36px)}
+    /* helper to disable selection while dragging */
+    .disable-select{user-select:none;-webkit-user-select:none;-ms-user-select:none}
+    </style>
+
+    <div id="app-windows-container" class="app-windows-container" aria-hidden="false"></div>
+
+	<!-- App window script: create draggable windows and intercept internal link clicks -->
+    <script>
+    (function(){
+        let zIndexCounter = 10000;
+
+        function createAppWindow(url, title){
+            const container = document.getElementById('app-windows-container');
+            const win = document.createElement('div');
+            win.className = 'app-window';
+            win.style.left = (50 + Math.random()*200) + 'px';
+            win.style.top = (50 + Math.random()*120) + 'px';
+            win.style.zIndex = ++zIndexCounter;
+
+            const header = document.createElement('div'); header.className = 'win-header';
+            const t = document.createElement('div'); t.className = 'win-title'; t.textContent = title || url;
+            const controls = document.createElement('div'); controls.className = 'win-controls';
+            const maxBtn = document.createElement('button'); maxBtn.innerHTML = '▢'; maxBtn.title = 'Maximize';
+            const closeBtn = document.createElement('button'); closeBtn.innerHTML = '✕'; closeBtn.title = 'Close';
+            controls.appendChild(maxBtn);
+            controls.appendChild(closeBtn);
+            header.appendChild(t); header.appendChild(controls);
+
+            const iframe = document.createElement('iframe');
+            // resolve relative paths against current location
+            try{ iframe.src = new URL(url, location.href).href; } catch(e){ iframe.src = url; }
+            iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-forms allow-modals allow-popups');
+
+            win.appendChild(header); win.appendChild(iframe);
+            container.appendChild(win);
+
+            // bring to front on mousedown
+            win.addEventListener('mousedown', ()=>{ win.style.zIndex = ++zIndexCounter; });
+
+            // close
+            closeBtn.addEventListener('click', ()=>{ try{ container.removeChild(win); }catch(e){} });
+
+            // maximize / restore
+            function toggleMaximize(){
+                const isMax = win.classList.toggle('maximized');
+                if(isMax){
+                    // store previous geometry
+                    const rect = win.getBoundingClientRect();
+                    win.dataset.prevLeft = win.style.left || rect.left + 'px';
+                    win.dataset.prevTop = win.style.top || rect.top + 'px';
+                    win.dataset.prevWidth = win.style.width || rect.width + 'px';
+                    win.dataset.prevHeight = win.style.height || rect.height + 'px';
+                    // apply maximized inline styles to ensure fill
+                    win.style.left = '0px';
+                    win.style.top = '0px';
+                    win.style.width = '100%';
+                    win.style.height = '100%';
+                    maxBtn.innerHTML = '🗗';
+                } else {
+                    // restore
+                    win.style.left = win.dataset.prevLeft || '';
+                    win.style.top = win.dataset.prevTop || '';
+                    win.style.width = win.dataset.prevWidth || '';
+                    win.style.height = win.dataset.prevHeight || '';
+                    maxBtn.innerHTML = '▢';
+                }
+            }
+            maxBtn.addEventListener('click', toggleMaximize);
+            // double-click header to toggle maximize
+            header.addEventListener('dblclick', function(e){ toggleMaximize(); });
+
+            // dragging
+            let isDragging = false, startX=0, startY=0, origX=0, origY=0;
+            header.addEventListener('mousedown', (ev)=>{
+                // don't drag when maximized
+                if(win.classList.contains('maximized')) return;
+                isDragging = true;
+                startX = ev.clientX; startY = ev.clientY;
+                const rect = win.getBoundingClientRect(); origX = rect.left; origY = rect.top;
+                win.style.zIndex = ++zIndexCounter;
+                document.body.classList.add('disable-select');
+                ev.preventDefault();
+            });
+            function onMove(ev){ if(!isDragging) return; const dx = ev.clientX - startX; const dy = ev.clientY - startY; win.style.left = (origX + dx) + 'px'; win.style.top = (origY + dy) + 'px'; }
+            function onUp(){ if(isDragging){ isDragging = false; document.body.classList.remove('disable-select'); } }
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+
+            return win;
+        }
+
+        // Intercept clicks on <a> and open same-origin links in the app window
+        document.addEventListener('click', function(e){
+            const a = e.target.closest('a');
+            if(!a) return;
+            const href = a.getAttribute('href');
+            if(!href) return;
+
+            // ignore anchors that are just hashes, mailto, tel, javascript
+            const low = href.trim().toLowerCase();
+            if(low.startsWith('#') || low.startsWith('mailto:') || low.startsWith('tel:') || low.startsWith('javascript:')) return;
+
+            // resolve URL; if external origin, allow default behavior
+            let targetUrl;
+            try{ targetUrl = new URL(href, location.href); } catch(e){ return; }
+            if(targetUrl.origin !== location.origin) return; // external - leave alone
+
+            // If anchor explicitly requests native handling, allow default
+            if(a.hasAttribute('data-native')) return;
+
+            // Otherwise open in iframe window
+            e.preventDefault();
+            const title = (a.textContent || a.getAttribute('title') || '').trim() || targetUrl.pathname.split('/').pop() || href;
+            createAppWindow(targetUrl.href, title);
+        }, true);
+
+        // expose function to open programmatically
+        window.openAppInWindow = function(url, title){ return createAppWindow(url, title); };
+
+        // Override window.open for same-origin URLs so existing code calling window.open(...) opens in-window
+        try{
+            const _origOpen = window.open.bind(window);
+            window.open = function(url, target, features){
+                try{
+                    const u = new URL(url, location.href);
+                    if(u.origin === location.origin){
+                        createAppWindow(u.href, (u.pathname.split('/').pop() || u.href));
+                        return null;
+                    }
+                }catch(e){}
+                return _origOpen(url, target, features);
+            };
+        }catch(e){}
+
+    })();
+    </script>
+
 	<!-- Linking the external JavaScript -->
     <script src="Scripts/sketch.js"></script>
     <script src="index.js"></script>

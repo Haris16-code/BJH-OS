@@ -1,0 +1,2865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Flash Browser</title>
+  <script src="https://js.puter.com/v2/"></script>
+  <style>
+    /* General Body and Layout */
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      background-color: #f0f2f5;
+      color: #333;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* Prevent double scrollbars on body */
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Header */
+    header {
+      background-color: #0078d4;
+      color: white;
+      padding: 8px 12px; /* Slightly reduced padding for mobile */
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      transition: background-color 0.3s;
+      position: relative;
+      flex-shrink: 0; /* Prevent header from shrinking */
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.2rem; /* Adjusted for space */
+      font-weight: 600;
+      flex-grow: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    header .header-buttons { /* Container for buttons */
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    #historyBtn, #bookmarksBtn, #newTabBtn, #openSettingsBtn, #moreOptionsBtn {
+      background-color: #005a9e;
+      color: white;
+      border: none;
+      padding: 7px 10px; /* Adjusted padding */
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem; /* Adjusted font size */
+      font-weight: 500;
+      transition: background-color 0.2s ease;
+      margin-left: 8px; /* Adjusted margin */
+      line-height: 1.2; /* Better text centering */
+    }
+    #historyBtn { margin-left: 0; }
+    #moreOptionsBtn { font-size: 1.1rem; padding: 7px 8px; }
+
+
+    #historyBtn:hover, #bookmarksBtn:hover, #newTabBtn:hover, #openSettingsBtn:hover, #moreOptionsBtn:hover {
+      background-color: #004578;
+    }
+
+    /* More Options Menu */
+    #moreOptionsMenu {
+        display: none;
+        position: absolute;
+        top: 45px; /* Adjust based on header height */
+        right: 10px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1050;
+        min-width: 200px; /* Adjusted for more items */
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+    #moreOptionsMenu .menu-section button,
+    #moreOptionsMenu .menu-section .menu-separator {
+        display: block;
+        width: 100%;
+        padding: 8px 12px;
+        text-align: left;
+        background: none;
+        border: none;
+        color: #333;
+        cursor: pointer;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+    }
+     #moreOptionsMenu .menu-section button:hover {
+        background-color: #f0f2f5;
+    }
+    .menu-separator {
+        height: 1px;
+        background-color: #eee;
+        margin: 5px 0;
+        padding: 0 !important; /* Override button padding */
+        cursor: default !important;
+    }
+    .menu-separator:hover {
+      background-color: #eee !important; /* Keep separator color on hover */
+    }
+
+
+    /* Generic Modal Styles */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); display: none;
+      justify-content: center; align-items: center; z-index: 1000;
+      transition: opacity 0.2s ease-out; opacity: 0;
+    }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-content {
+      background-color: #fff; padding: 0;
+      border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      display: flex; flex-direction: column;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s ease-out;
+      width: 90%; max-height: 85vh; /* Adjusted max-height */
+      transform: scale(0.95);
+    }
+    .modal-overlay.active .modal-content {
+        transform: scale(1);
+    }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #eee; padding: 12px 20px; /* Adjusted padding */
+      flex-shrink: 0; transition: border-color 0.3s;
+    }
+    .modal-header h2 { margin: 0; font-size: 1.3rem; color: #333; transition: color 0.3s; } /* Adjusted font size */
+    .modal-close-btn {
+      background: none; border: none; font-size: 1.6rem; cursor: pointer; /* Adjusted font size */
+      color: #888; transition: color 0.3s; padding: 0 5px;
+    }
+    .modal-close-btn:hover { color: #333; }
+    .modal-body {
+        padding: 15px 20px; /* Adjusted padding */
+        flex-grow: 1; overflow-y: auto;
+    }
+    .modal-footer {
+        display: flex; justify-content: flex-end; align-items: center; 
+        padding: 12px 20px; border-top: 1px solid #eee;
+        background-color: #f9f9f9; border-radius: 0 0 8px 8px;
+        flex-shrink: 0;
+    }
+    .modal-footer button {
+        background-color: #d9534f; color: white; border: none;
+        padding: 7px 12px; border-radius: 4px; cursor: pointer; /* Adjusted padding */
+        font-size: 0.85rem; transition: background-color 0.2s ease; /* Adjusted font size */
+    }
+    .modal-footer button:not(:last-child) {
+        margin-right: 8px;
+    }
+    .modal-footer button:hover { background-color: #c9302c; }
+    .modal-footer button.primary-action { /* For OK buttons */
+        background-color: #0078d4;
+    }
+    .modal-footer button.primary-action:hover {
+        background-color: #005a9e;
+    }
+
+
+    /* Settings Modal Specifics */
+    #settingsModal .modal-content { max-width: 380px; } 
+    #settingsModal .modal-body { padding-top: 15px; }
+    #settingsModal .setting-item { margin-bottom: 15px; }
+    #settingsModal .setting-item label { display: block; margin-bottom: 6px; font-weight: 500; color: #555; font-size: 0.9rem; transition: color 0.3s; }
+    #settingsModal .setting-item select {
+      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;
+      font-size: 0.9rem; box-sizing: border-box;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+    #settingsModal .setting-item .small-settings-btn {
+        padding: 4px 8px; font-size: 0.8em; margin-left: 8px;
+        background-color: #e1e4e8; color: #24292e;
+        border: 1px solid #d1d5da; border-radius: 3px;
+        cursor: pointer; transition: background-color 0.2s;
+    }
+    #settingsModal .setting-item .small-settings-btn:hover { background-color: #d1d5da; }
+    #currentHomepageDisplay {
+        flex-grow: 1; font-size: 0.85em; color: #555;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        margin-right: 8px; padding: 4px 0; display: inline-block;
+        max-width: 180px; vertical-align: middle;
+    }
+    
+    /* Homepage Modal */
+    #homepageModal .modal-content { max-width: 420px; }
+    #homepageModal #homepageUrlInput {
+      width: 100%; padding: 8px; box-sizing: border-box; margin-bottom: 10px;
+      border: 1px solid #ccc; border-radius: 4px; font-size: 0.9rem;
+    }
+
+    /* Bookmarks Modal Specifics */
+    #bookmarksModal .modal-content { max-width: 500px; }
+    #bookmarksList { list-style: none; padding: 0; margin: 0; }
+    #bookmarksList li {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 8px 0px; border-bottom: 1px solid #eee; cursor: pointer; transition: background-color 0.2s;
+    }
+    #bookmarksList li:last-child { border-bottom: none; }
+    #bookmarksList li:hover { background-color: #f0f2f5; margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+    #bookmarksList .bookmark-title-url-container { display: flex; flex-direction: column; overflow: hidden; flex-grow: 1; margin-right: 8px; }
+    #bookmarksList .bookmark-title { font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #bookmarksList .bookmark-url { font-size: 0.7rem; color: #777; display: block; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #bookmarksList .bookmark-delete-btn { background: transparent; border: none; color: #cc0000; font-size: 1rem; cursor: pointer; padding: 2px 5px; line-height: 1; flex-shrink: 0; }
+    #bookmarksList .bookmark-delete-btn:hover { color: #ff0000; font-weight: bold; }
+    #bookmarksList .no-bookmarks { padding: 15px 0; text-align: center; color: #777; font-style: italic; cursor: default; font-size: 0.9rem; }
+    #bookmarksList .no-bookmarks:hover { background-color: transparent; margin: 0; padding: 15px 0; }
+
+    /* History Modal Specifics */
+    #historyModal .modal-content { max-width: 650px; }
+    .history-group h3 {
+        font-size: 0.95rem; color: #0078d4; margin-top: 15px; margin-bottom: 6px;
+        padding-bottom: 4px; border-bottom: 1px solid #e0e0e0;
+    }
+    .history-group:first-child h3 { margin-top: 0; }
+    #historyListContainer ul { list-style: none; padding: 0; margin: 0; }
+    #historyListContainer li {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 7px 0px; border-bottom: 1px solid #f0f0f0; cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    #historyListContainer li:last-child { border-bottom: none; }
+    #historyListContainer li:hover { background-color: #f0f2f5; margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+    #historyListContainer .history-item-details { display: flex; flex-direction: column; overflow: hidden; flex-grow: 1; margin-right: 8px; }
+    #historyListContainer .history-item-title { font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #historyListContainer .history-item-url { font-size: 0.7rem; color: #777; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+    #historyListContainer .history-item-time { font-size: 0.65rem; color: #999; flex-shrink: 0; margin-right: 8px; }
+    #historyListContainer .history-item-delete-btn { background: transparent; border: none; color: #cc0000; font-size: 0.9rem; cursor: pointer; padding: 2px 5px; line-height: 1; flex-shrink: 0; }
+    #historyListContainer .history-item-delete-btn:hover { color: #ff0000; font-weight: bold; }
+    #historyListContainer .no-history { padding: 15px 0; text-align: center; color: #777; font-style: italic; cursor: default; font-size: 0.9rem; }
+    #historyListContainer .no-history:hover { background-color: transparent; margin: 0; padding: 15px 0; }
+
+    /* View Source Modal Specifics */
+    #viewSourceModal .modal-content { max-width: 80vw; }
+    #sourceCodeContainer {
+        white-space: pre-wrap; word-wrap: break-word; 
+        overflow-y: auto; max-height: 70vh;      
+        background-color: #f8f9fa; padding: 10px;
+        border: 1px solid #ddd; border-radius: 4px;
+        font-family: Consolas, "Courier New", monospace; 
+        font-size: 0.8em; color: #333;
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    /* Extension Manager Modal */
+    #extensionManagerModal .modal-content { max-width: 600px; }
+    #extensionJsonInput {
+        width: 100%; min-height: 120px; padding: 8px; box-sizing: border-box;
+        border: 1px solid #ccc; border-radius: 4px;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.85em; margin-bottom: 10px;
+    }
+    .extension-input-actions { display: flex; margin-bottom: 15px; gap: 10px;} /* Added gap */
+    .extension-input-actions button { flex-grow: 1; padding: 8px; }
+
+
+    #installedExtensionsList { list-style: none; padding: 0; margin-top: 15px; }
+    #installedExtensionsList li {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 8px 0; border-bottom: 1px solid #eee;
+    }
+    #installedExtensionsList li:last-child { border-bottom: none; }
+    #installedExtensionsList .extension-info { flex-grow: 1; display: flex; align-items: center; }
+    #installedExtensionsList .extension-name { font-weight: 500; margin-right: 10px; }
+    #installedExtensionsList .extension-controls button,
+    #installedExtensionsList .extension-controls input[type="checkbox"] {
+        margin-left: 8px; padding: 4px 8px; font-size: 0.75em;
+        border-radius: 3px; cursor: pointer;
+    }
+    #installedExtensionsList .extension-controls input[type="checkbox"] { transform: scale(0.9); }
+    #installedExtensionsList .delete-extension-btn {
+        background-color: #f44336; color: white; border: none;
+    }
+    #installedExtensionsList .delete-extension-btn:hover { background-color: #d32f2f; }
+    #installedExtensionsList .pin-extension-btn { background-color: #e0e0e0; color: #333; border: 1px solid #ccc;}
+    #installedExtensionsList .pin-extension-btn.pinned { background-color: #ffc107; color: #333; border: 1px solid #ffa000;}
+
+    .no-extensions { text-align: center; color: #777; font-style: italic; padding: 10px 0;}
+
+    /* About Modal Specifics */
+    #aboutModal .modal-content { max-width: 450px; }
+    #aboutModal .modal-body { font-size: 0.9rem; line-height: 1.6; }
+    #aboutModal .modal-body h3 { margin-top: 0; color: #0078d4;}
+    #aboutModal .modal-body p { margin-bottom: 10px; }
+    #aboutModal .modal-body a { color: #005a9e; text-decoration: none; }
+    #aboutModal .modal-body a:hover { text-decoration: underline; }
+
+
+    /* Tabs Bar */
+    #tabs {
+      display: flex; background-color: #e1e4e8; padding: 5px 5px 0 5px;
+      overflow-x: auto; flex-shrink: 0; box-shadow: inset 0 -1px 0 #ccc;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .tab-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 8px; border: 1px solid #ccc; border-bottom: none;
+      background-color: #f6f8fa; cursor: pointer; margin-right: 3px;
+      border-radius: 4px 4px 0 0; font-size: 0.8rem; min-width: 80px; max-width: 150px;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s;
+      position: relative; color: #333;
+    }
+    .tab-btn:hover { background-color: #e9ecef; }
+    .tab-btn.active {
+      background-color: #ffffff; color: #005a9e; font-weight: 600; border-color: #ccc;
+      border-bottom: 1px solid #ffffff; z-index: 2; margin-bottom: -1px;
+    }
+    .tab-title {
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-right: 6px; flex-grow: 1;
+    }
+    .tab-close-button {
+      background: transparent; border: none; color: #586069; font-size: 1rem;
+      font-weight: bold; padding: 0 3px; line-height: 1; border-radius: 3px;
+      cursor: pointer; transition: color 0.2s, background-color 0.2s;
+    }
+    .tab-close-button:hover { color: #333; background-color: #e1e4e8; }
+
+    /* Tab Content Area */
+    #tabContainer {
+      flex-grow: 1; position: relative; background-color: #ffffff;
+      transition: background-color 0.3s;
+    }
+    .tab-content {
+      display: none; flex-direction: column; height: 100%; background-color: #ffffff;
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      transition: background-color 0.3s;
+    }
+    .tab-content.active { display: flex; z-index: 1; }
+
+    /* Toolbar within each Tab */
+    .tab-toolbar {
+      display: flex; align-items: center; padding: 5px 6px;
+      background-color: #f6f8fa; border-bottom: 1px solid #e1e4e8;
+      flex-shrink: 0; transition: background-color 0.3s, border-color 0.3s;
+    }
+    .tab-toolbar .nav-button, .tab-toolbar .go-button, .tab-toolbar .bookmark-button {
+      background-color: #eff3f6; border: 1px solid #d1d5da; color: #24292e;
+      padding: 4px 7px; margin-right: 3px; border-radius: 3px; cursor: pointer;
+      font-size: 0.85rem;
+      transition: background-color 0.2s ease, border-color 0.2s, color 0.2s;
+    }
+    .tab-toolbar .bookmark-button { font-size: 1rem; padding: 3px 6px; }
+    .tab-toolbar .nav-button:hover, .tab-toolbar .go-button:hover, .tab-toolbar .bookmark-button:hover {
+      background-color: #e1e4e8;
+    }
+    .tab-toolbar .nav-button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .tab-toolbar input[type="text"] {
+      flex-grow: 1; padding: 6px 8px; margin-right: 4px; border-radius: 3px;
+      border: 1px solid #d1d5da; font-size: 0.85rem;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+    .tab-toolbar input[type="text"]:focus {
+      border-color: #0078d4; box-shadow: 0 0 0 1.5px rgba(0, 120, 212, 0.2); outline: none;
+    }
+
+    /* Iframe */
+    .tab-iframe { flex-grow: 1; border: none; }
+
+    /* Find in Page Bar */
+    .find-bar {
+        display: none; 
+        position: absolute; top: 0; left: 0; right: 0;
+        background-color: #f0f2f5; padding: 5px 8px;
+        border-bottom: 1px solid #e1e4e8;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        z-index: 50; 
+        display: flex; align-items: center; gap: 5px;
+    }
+    .find-bar input.find-input {
+        flex-grow: 1; padding: 4px 6px; font-size: 0.8rem;
+        border: 1px solid #ccc; border-radius: 3px;
+    }
+    .find-bar .find-match-count {
+        font-size: 0.75rem; color: #555;
+        min-width: 50px; text-align: center;
+    }
+    .find-bar button {
+        background-color: #e1e4e8; border: 1px solid #ccc; color: #333;
+        padding: 3px 7px; font-size: 0.8rem; border-radius: 3px;
+        cursor: pointer; line-height: 1.2;
+    }
+    .find-bar button:hover { background-color: #d1d5da; }
+    .find-bar button.find-close-btn { font-weight: bold; padding: 3px 6px; }
+
+    /* Custom Context Menu */
+    #customContextMenu {
+        display: none; position: fixed;
+        background-color: white; border: 1px solid #ccc;
+        border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 2000; padding: 5px 0; min-width: 180px;
+    }
+    #customContextMenu button {
+        display: block; width: 100%; padding: 8px 15px;
+        text-align: left; background: none; border: none;
+        color: #333; cursor: pointer; font-size: 0.9rem;
+    }
+    #customContextMenu button:hover { background-color: #f0f2f5; }
+    #customContextMenu hr {
+        border: none; border-top: 1px solid #eee; margin: 5px 0;
+    }
+
+    /* Media Grabber Icon */
+    #mediaGrabberIcon {
+        display: none; 
+        position: fixed; bottom: 15px; right: 15px;
+        background-color: rgba(0, 120, 212, 0.8); color: white;
+        padding: 8px 10px; border-radius: 20px; 
+        font-size: 0.9rem; cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        z-index: 900; 
+        transition: background-color 0.2s, opacity 0.2s;
+        opacity: 0.9; white-space: nowrap;
+    }
+    #mediaGrabberIcon:hover { background-color: #005a9e; opacity: 1; }
+    /* Media Grabber Modal */
+    #mediaGrabberModal .modal-content { max-width: 600px; }
+    #mediaGrabberList { list-style: none; padding: 0; margin: 0; }
+    .media-grabber-item {
+        display: flex; align-items: center;
+        padding: 8px 0; border-bottom: 1px solid #eee;
+    }
+    .media-grabber-item:last-child { border-bottom: none; }
+    .media-grabber-item img.thumbnail, .media-grabber-item span.thumbnail {
+        width: 50px; height: 50px; object-fit: cover;
+        margin-right: 10px; border-radius: 3px;
+        background-color: #f0f0f0; flex-shrink: 0;
+        cursor: pointer; /* Make thumbnail clickable for opening in new host tab */
+    }
+    .media-grabber-item .media-info {
+        flex-grow: 1; font-size: 0.85rem;
+        word-break: break-all; min-width: 0; 
+        cursor: pointer; /* Make info area also clickable */
+    }
+    .media-grabber-item .media-filename { display: block; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+    .media-grabber-item .media-type { font-size: 0.75rem; color: #777; }
+    .media-grabber-item .download-media-btn {
+        padding: 5px 10px; font-size: 0.8rem;
+        margin-left: 10px; flex-shrink: 0;
+    }
+    .no-media-found {
+         padding: 20px; text-align: center; color: #777; font-style: italic;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #0078d4; color: white; padding: 6px 12px; text-align: center;
+      font-size: 0.75rem; flex-shrink: 0; transition: background-color 0.3s;
+    }
+
+    /* Scrollbar styling */
+    #tabs::-webkit-scrollbar, .modal-body::-webkit-scrollbar, #sourceCodeContainer::-webkit-scrollbar, #moreOptionsMenu::-webkit-scrollbar { height: 5px; width: 5px; }
+    #tabs::-webkit-scrollbar-track, .modal-body::-webkit-scrollbar-track, #sourceCodeContainer::-webkit-scrollbar-track, #moreOptionsMenu::-webkit-scrollbar-track { background: #e1e4e8; }
+    #tabs::-webkit-scrollbar-thumb, .modal-body::-webkit-scrollbar-thumb, #sourceCodeContainer::-webkit-scrollbar-thumb, #moreOptionsMenu::-webkit-scrollbar-thumb { background: #bdc1c6; border-radius: 3px; }
+    #tabs::-webkit-scrollbar-thumb:hover, .modal-body::-webkit-scrollbar-thumb:hover, #sourceCodeContainer::-webkit-scrollbar-thumb:hover, #moreOptionsMenu::-webkit-scrollbar-thumb:hover { background: #9ea3a8; }
+
+    /* --- Dark Theme Styles --- */
+    body.dark-theme { background-color: #1e1e1e; color: #f1f1f1; }
+    body.dark-theme header { background-color: #252526; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    body.dark-theme #historyBtn, body.dark-theme #bookmarksBtn, body.dark-theme #newTabBtn, body.dark-theme #openSettingsBtn, body.dark-theme #moreOptionsBtn {
+      background-color: #333333; color: #f1f1f1;
+    }
+    body.dark-theme #historyBtn:hover, body.dark-theme #bookmarksBtn:hover, body.dark-theme #newTabBtn:hover, body.dark-theme #openSettingsBtn:hover, body.dark-theme #moreOptionsBtn:hover {
+      background-color: #444444;
+    }
+    body.dark-theme #moreOptionsMenu { background-color: #2d2d2d; border-color: #444; box-shadow: 0 2px 10px rgba(0,0,0,0.3);}
+    body.dark-theme #moreOptionsMenu .menu-section button { color: #f1f1f1; }
+    body.dark-theme #moreOptionsMenu .menu-section button:hover { background-color: #3a3a3a; }
+    body.dark-theme .menu-separator { background-color: #444; }
+    body.dark-theme .menu-separator:hover { background-color: #444 !important; }
+
+
+    body.dark-theme .modal-content { background-color: #2d2d2d; color: #f1f1f1; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+    body.dark-theme .modal-header { border-bottom-color: #444; }
+    body.dark-theme .modal-header h2 { color: #f1f1f1; }
+    body.dark-theme .modal-close-btn { color: #aaa; }
+    body.dark-theme .modal-close-btn:hover { color: #fff; }
+    body.dark-theme .modal-footer { background-color: #252526; border-top-color: #444; }
+    body.dark-theme .modal-footer button { background-color: #a94442; } 
+    body.dark-theme .modal-footer button:hover { background-color: #8c3330; }
+    body.dark-theme .modal-footer button.primary-action { background-color: #007acc; } 
+    body.dark-theme .modal-footer button.primary-action:hover { background-color: #005a9e;}
+    
+    body.dark-theme #extensionJsonInput { background-color: #3c3c3c; color: #f1f1f1; border-color: #555;}
+    body.dark-theme #installedExtensionsList li { border-bottom-color: #444; }
+    body.dark-theme #installedExtensionsList .delete-extension-btn { background-color: #c62828; }
+    body.dark-theme #installedExtensionsList .delete-extension-btn:hover { background-color: #b71c1c; }
+    body.dark-theme #installedExtensionsList .pin-extension-btn { background-color: #3e3e42; color: #ccc; border-color: #555;}
+    body.dark-theme #installedExtensionsList .pin-extension-btn.pinned { background-color: #fdd835; color: #212121; border-color: #fbc02d;}
+    body.dark-theme .no-extensions { color: #888;}
+    body.dark-theme #aboutModal .modal-body h3 { color: #3b9cff;}
+    body.dark-theme #aboutModal .modal-body a { color: #64b5f6; }
+
+
+    body.dark-theme #settingsModal .setting-item label { color: #ccc; }
+    body.dark-theme #settingsModal .setting-item select { background-color: #3c3c3c; border-color: #555; color: #f1f1f1; }
+    body.dark-theme #settingsModal .setting-item select option { background-color: #3c3c3c; color: #f1f1f1; }
+    body.dark-theme #settingsModal .setting-item select:focus { border-color: #007acc; box-shadow: 0 0 0 1px #007acc; }
+    body.dark-theme #settingsModal .setting-item .small-settings-btn { background-color: #3e3e42; color: #ccc; border-color: #555; }
+    body.dark-theme #settingsModal .setting-item .small-settings-btn:hover { background-color: #4f4f53; }
+    body.dark-theme #currentHomepageDisplay { color: #bbb; }
+    
+    body.dark-theme #homepageModal .modal-body p { color: #ccc; }
+    body.dark-theme #homepageModal #homepageUrlInput { background-color: #3c3c3c; border-color: #555; color: #f1f1f1; }
+    body.dark-theme #homepageModal #homepageUrlInput:focus { border-color: #007acc; box-shadow: 0 0 0 1px #007acc; }
+
+
+    body.dark-theme #bookmarksList li { border-bottom-color: #444; }
+    body.dark-theme #bookmarksList li:hover { background-color: #3a3a3a; }
+    body.dark-theme #bookmarksList .bookmark-url { color: #888; }
+    body.dark-theme #bookmarksList .no-bookmarks { color: #888; }
+    body.dark-theme #bookmarksList .no-bookmarks:hover { background-color: transparent; }
+    
+    body.dark-theme .history-group h3 { color: #3b9cff; border-bottom-color: #4a4a4a; } 
+    body.dark-theme #historyListContainer li { border-bottom-color: #3a3a3a; }
+    body.dark-theme #historyListContainer li:hover { background-color: #3a3a3a; }
+    body.dark-theme #historyListContainer .history-item-url { color: #888; }
+    body.dark-theme #historyListContainer .history-item-time { color: #777; }
+    body.dark-theme #historyListContainer .no-history { color: #888; }
+    body.dark-theme #historyListContainer .no-history:hover { background-color: transparent; }
+
+    body.dark-theme #sourceCodeContainer {
+        background-color: #222; border-color: #444; color: #e0e0e0; 
+    }
+    body.dark-theme #tabs::-webkit-scrollbar-track, 
+    body.dark-theme .modal-body::-webkit-scrollbar-track, 
+    body.dark-theme #sourceCodeContainer::-webkit-scrollbar-track,
+    body.dark-theme #moreOptionsMenu::-webkit-scrollbar-track { background: #2d2d2d; }
+    body.dark-theme #tabs::-webkit-scrollbar-thumb, 
+    body.dark-theme .modal-body::-webkit-scrollbar-thumb,
+    body.dark-theme #sourceCodeContainer::-webkit-scrollbar-thumb,
+    body.dark-theme #moreOptionsMenu::-webkit-scrollbar-thumb { background: #555; }
+    body.dark-theme #tabs::-webkit-scrollbar-thumb:hover, 
+    body.dark-theme .modal-body::-webkit-scrollbar-thumb:hover,
+    body.dark-theme #sourceCodeContainer::-webkit-scrollbar-thumb:hover,
+    body.dark-theme #moreOptionsMenu::-webkit-scrollbar-thumb:hover { background: #666; }
+
+    body.dark-theme #customContextMenu { background-color: #2d2d2d; border-color: #444; }
+    body.dark-theme #customContextMenu button { color: #f1f1f1; }
+    body.dark-theme #customContextMenu button:hover { background-color: #3a3a3a; }
+    body.dark-theme #customContextMenu hr { border-top-color: #444; }
+
+    body.dark-theme #mediaGrabberIcon { background-color: rgba(37, 37, 38, 0.8); }
+    body.dark-theme #mediaGrabberIcon:hover { background-color: #333; }
+    body.dark-theme .media-grabber-item { border-bottom-color: #444; }
+    body.dark-theme .media-grabber-item img.thumbnail, 
+    body.dark-theme .media-grabber-item span.thumbnail { background-color: #3c3c3c; }
+    body.dark-theme .media-grabber-item .media-type { color: #888; }
+    body.dark-theme .no-media-found { color: #888; }
+
+
+    body.dark-theme #tabs { background-color: #2d2d2d; box-shadow: inset 0 -1px 0 #444; }
+    body.dark-theme .tab-btn { background-color: #252526; border-color: #444; color: #ccc; }
+    body.dark-theme .tab-btn:hover { background-color: #333333; }
+    body.dark-theme .tab-btn.active { background-color: #1e1e1e; color: #fff; border-color: #444; border-bottom: 1px solid #1e1e1e; }
+    body.dark-theme .tab-close-button { color: #aaa; }
+    body.dark-theme .tab-close-button:hover { color: #fff; background-color: #444; }
+    body.dark-theme #tabContainer, body.dark-theme .tab-content { background-color: #1e1e1e; }
+    body.dark-theme .tab-toolbar { background-color: #252526; border-bottom: 1px solid #444; }
+    body.dark-theme .tab-toolbar .nav-button, body.dark-theme .tab-toolbar .go-button, body.dark-theme .tab-toolbar .bookmark-button { background-color: #3e3e42; border: 1px solid #555; color: #ccc; }
+    body.dark-theme .tab-toolbar .nav-button:hover, body.dark-theme .tab-toolbar .go-button:hover, body.dark-theme .tab-toolbar .bookmark-button:hover { background-color: #4f4f53; }
+    body.dark-theme .tab-toolbar input[type="text"] { background-color: #3c3c3c; border: 1px solid #555; color: #f1f1f1; }
+    body.dark-theme .tab-toolbar input[type="text"]:focus { border-color: #007acc; box-shadow: 0 0 0 1px #007acc; }
+    
+    body.dark-theme .find-bar { background-color: #252526; border-bottom-color: #444; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+    body.dark-theme .find-bar input.find-input { background-color: #3c3c3c; border-color: #555; color: #f1f1f1; }
+    body.dark-theme .find-bar .find-match-count { color: #bbb; }
+    body.dark-theme .find-bar button { background-color: #3e3e42; border-color: #555; color: #ccc; }
+    body.dark-theme .find-bar button:hover { background-color: #4f4f53; }
+
+    body.dark-theme footer { background-color: #252526; }
+
+    /* Media Query for Smaller Screens (Mobile Friendliness) */
+    @media (max-width: 600px) {
+        header h1 { font-size: 1rem; margin-right: 5px; }
+        #historyBtn, #bookmarksBtn, #newTabBtn, #openSettingsBtn, #moreOptionsBtn { padding: 6px 8px; font-size: 0.8rem; margin-left: 5px; }
+        .tab-btn { min-width: 70px; max-width: 120px; font-size: 0.75rem; padding: 6px 7px; }
+        .tab-close-button { font-size: 0.9rem; }
+        .tab-toolbar { padding: 4px 5px; }
+        .tab-toolbar .nav-button, .tab-toolbar .go-button, .tab-toolbar .bookmark-button { padding: 3px 6px; font-size: 0.8rem; margin-right: 2px; }
+        .tab-toolbar .bookmark-button { font-size: 0.9rem; padding: 2px 5px; }
+        .tab-toolbar input[type="text"] { padding: 5px 7px; font-size: 0.8rem; }
+        .modal-content { width: 95%; max-height: 90vh; }
+        .modal-header { padding: 10px 15px; }
+        .modal-header h2 { font-size: 1.1rem; }
+        .modal-close-btn { font-size: 1.4rem; }
+        .modal-body { padding: 10px 15px; }
+        .modal-footer { padding: 10px 15px; }
+        .modal-footer button { font-size: 0.8rem; padding: 6px 10px; }
+        
+        #bookmarksList .bookmark-title { font-size: 0.85rem; }
+        #bookmarksList .bookmark-url { font-size: 0.65rem; }
+        #bookmarksList .no-bookmarks { font-size: 0.85rem; }
+        .history-group h3 { font-size: 0.9rem; }
+        #historyListContainer .history-item-title { font-size: 0.8rem; }
+        #historyListContainer .history-item-url { font-size: 0.65rem; }
+        #historyListContainer .history-item-time { font-size: 0.6rem; }
+        #historyListContainer .no-history { font-size: 0.85rem; }
+        #currentHomepageDisplay { max-width: 100px; } 
+        .find-bar { padding: 3px 5px; }
+        .find-bar input.find-input { font-size: 0.75rem; }
+        .find-bar .find-match-count { font-size: 0.7rem; min-width: 40px; }
+        .find-bar button { font-size: 0.75rem; padding: 2px 5px; }
+        #viewSourceModal .modal-content { max-width: 90vw; }
+        #sourceCodeContainer { font-size: 0.75em; max-height: 75vh; }
+        
+        #customContextMenu { min-width: 150px; }
+        #customContextMenu button { font-size: 0.85rem; padding: 7px 12px; }
+        #mediaGrabberIcon { font-size: 0.8rem; padding: 6px 8px; bottom: 10px; right: 10px;}
+        #mediaGrabberModal .modal-content { max-width: 95vw;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Flash Browser</h1>
+    <div class="header-buttons">
+        <button id="historyBtn" title="History">📜</button>
+        <button id="bookmarksBtn" title="Bookmarks">🔖</button>
+        <button id="newTabBtn" title="New Tab">+</button>
+        <button id="openSettingsBtn" title="Settings">⚙️</button>
+        <button id="moreOptionsBtn" title="More options">⋮</button>
+    </div>
+  </header>
+
+  <div id="moreOptionsMenu">
+    <!-- Items will be populated by JavaScript by renderMoreOptionsMenu() -->
+  </div>
+
+  <div id="tabs"></div>
+  <div id="tabContainer"></div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button id="closeSettingsModalBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-item">
+          <label for="themeSelector">Theme:</label>
+          <select id="themeSelector">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <label for="searchEngineSelector">Default Search Engine:</label>
+          <select id="searchEngineSelector">
+            <option value="https://www.google.com/search?q=">Google</option>
+            <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+            <option value="https://www.bing.com/search?q=">Bing</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <label>Default Homepage:</label>
+          <div style="display: flex; align-items: center;">
+            <span id="currentHomepageDisplay" title="Current default homepage"></span>
+            <button id="openHomepageModalBtn" class="small-settings-btn">Set Homepage</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Homepage Modal -->
+  <div id="homepageModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Set Default Homepage</h2>
+        <button id="closeHomepageModalBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9em; margin-bottom: 10px;">Enter the URL for your default homepage (e.g., https://www.bing.com). Leave blank for the standard New Tab page.</p>
+        <input type="text" id="homepageUrlInput" placeholder="https://example.com or leave blank">
+      </div>
+      <div class="modal-footer">
+        <button id="saveHomepageBtn" class="primary-action">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bookmarks Modal -->
+  <div id="bookmarksModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Bookmarks</h2>
+            <button id="closeBookmarksModalBtn" class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <ul id="bookmarksList"></ul>
+        </div>
+    </div>
+  </div>
+
+  <!-- History Modal -->
+  <div id="historyModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Browsing History</h2>
+            <button id="closeHistoryModalBtn" class="modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body" id="historyListContainer"></div>
+        <div class="modal-footer">
+            <button id="clearAllHistoryBtn">Clear All Browsing History</button>
+        </div>
+    </div>
+  </div>
+
+  <!-- View Source Modal -->
+  <div id="viewSourceModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Page Source</h2>
+        <button id="closeViewSourceModalBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <pre id="sourceCodeContainer"></pre>
+      </div>
+      <div class="modal-footer">
+        <button id="downloadSourceBtn" class="primary-action">Download Source</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Extension Manager Modal -->
+  <div id="extensionManagerModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Extension Manager</h2>
+        <button id="closeExtensionManagerModalBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <p style="font-size:0.8em; margin-bottom:10px; color: #555;">Paste extension JSON below. Extensions inject HTML, CSS, and JS into new tabs.</p>
+        <p style="font-size:0.8em; margin-bottom:10px; color: #ff0303;">How to launch extension? See here → First, open the Flash Store using the button below. Choose an extension and click Apply. Copy the JSON code, paste it in the box below, and press Load Extension from JSON. After loading, go back to the Flash Browser main screen, tap ⋮, and launch your extension from the bottom.</p>
+        <textarea id="extensionJsonInput" placeholder='Example: { "name": "My Extension", "html": "<div>Hello</div>" }'></textarea>
+        <div class="extension-input-actions">
+            <button id="pasteExtensionJsonBtn" style="background-color: #6c757d; color:white;">Paste from Clipboard</button>
+            <button id="loadExtensionBtn" class="primary-action">Load Extension from JSON</button>
+        </div>
+        <h3>Installed Extensions:</h3>
+        <ul id="installedExtensionsList">
+          <!-- Loaded extensions will be listed here -->
+        </ul>
+      </div>
+  
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    #openFlashStoreBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    #flashStoreContainer {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 90vw;
+      max-width: 1200px;
+      height: 650px;
+      transform: translate(-50%, -50%);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      z-index: 2000;
+    }
+
+    .flash-store-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      font-size: 20px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="openFlashStoreBtn">Open Flash Store</button>
+
+  <div id="flashStoreContainer">
+    <button class="close-btn" id="closeFlashStoreBtn">&times;</button>
+    <iframe 
+      src="https://flash-browser-web-store.combini.app/" 
+      class="flash-store-iframe"
+      title="Flash Store">
+    </iframe>
+  </div>
+
+  <script>
+  const openBtn = document.getElementById('openFlashStoreBtn');
+  const container = document.getElementById('flashStoreContainer');
+  const closeBtn = document.getElementById('closeFlashStoreBtn');
+  const iframe = container.querySelector('iframe');
+
+  openBtn.addEventListener('click', () => {
+    // Force reload without cache by appending a timestamp
+    const baseURL = "https://flash-browser-web-store.combini.app/";
+    iframe.src = baseURL + "?t=" + new Date().getTime();
+
+    openBtn.style.display = 'none';
+    container.style.display = 'block';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    container.style.display = 'none';
+    openBtn.style.display = 'inline-block';
+  });
+</script>
+
+</body>
+</html>
+
+      <div class="modal-footer">
+        <button id="clearAllExtensionsBtn">Clear All Extensions</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Modal -->
+  <div id="aboutModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>About Flash Browser</h2>
+        <button id="closeAboutModalBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h3>Flash Browser v1.1</h3>
+        <p>A lightweight, fast and secure browser experience.</p>
+        <p><strong>Developed by:</strong></p>
+        <ul>
+            <li>Haris (Project Creator And Developer)
+                <ul>
+                    <li>Discord: @gamingdevx</li>
+                    <li>GitHub: <a href="https://github.com/Haris16-code/Flash-Browser" target="_blank" rel="noopener noreferrer">Haris16-code</a></li>
+<li>Any Question? Join The Flash Browser On Discord Now: <a href="https://discord.com/channels/1071986474041495705/1379067426767110235" target="_blank" rel="noopener noreferrer">Join Us Now!</a></li>
+                </ul>
+            </li>
+            <br>
+            <li>Chetan (Contributes in Flash Browser On Github)
+                <ul>
+                    <li>GitHub: <a href="https://github.com/chetanpatel0" target="_blank" rel="noopener noreferrer">chetanpatel0</a></li>
+                </ul>
+            </li>
+        </ul>
+        <p style="margin-top:15px; font-size:0.8em; text-align:center;">Thank you for using Flash Browser!</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Custom Context Menu -->
+  <div id="customContextMenu">
+    <!-- Items will be populated by JavaScript -->
+  </div>
+
+  <!-- Media Grabber Icon -->
+  <div id="mediaGrabberIcon" title="Open Media Grabber">🖼️</div>
+
+  <!-- Media Grabber Modal -->
+  <div id="mediaGrabberModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Grabbed Media</h2>
+        <button id="closeMediaGrabberModalBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ul id="mediaGrabberList"></ul>
+      </div>
+      <div class="modal-footer">
+        <button id="refreshMediaGrabberBtn">Refresh Media</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Global Constants and Variables ---
+    const THEME_KEY = 'flashBrowserTheme';
+    const BOOKMARKS_KEY = 'flashBrowserBookmarks';
+    const HISTORY_KEY = 'flashBrowserGlobalHistory';
+    const SEARCH_ENGINE_KEY = 'flashBrowserSearchEngine';
+    const HOMEPAGE_KEY = 'flashBrowserHomepage';
+    const EXTENSIONS_KEY = 'flashBrowserUserExtensions';
+
+
+    const DEFAULT_NEW_TAB_URL = "about:blank"; 
+    const DEFAULT_SEARCH_ENGINE_URL = 'https://www.bing.com/search?q=';
+
+    let currentTheme = 'light';
+    let currentSearchEngineUrl = DEFAULT_SEARCH_ENGINE_URL;
+    let defaultHomepageUrl = DEFAULT_NEW_TAB_URL; 
+
+    let tabCount = 0;
+    let currentTabId = null;
+    const tabData = {}; // { tabId: { history: {urls: [], currentIndex: -1}, findState: {}, media: [], lastLoadedUrl: '', lastLoadedTitle: '' } }
+
+    let bookmarks = [];
+    let globalHistory = [];
+    let userExtensions = []; 
+    let currentContextMenuData = null; 
+
+
+    // --- DOM Elements (will be assigned in initializeApp) ---
+    let settingsModalEl, openSettingsBtnEl, closeSettingsModalBtnEl, themeSelectorEl, searchEngineSelectorEl;
+    let homepageModalEl, openHomepageModalBtnEl, closeHomepageModalBtnEl, homepageUrlInputEl, saveHomepageBtnEl, currentHomepageDisplayEl;
+    let bookmarksBtnEl, bookmarksModalEl, closeBookmarksModalBtnEl, bookmarksListEl;
+    let historyBtnEl, historyModalEl, closeHistoryModalBtnEl, historyListContainerEl, clearAllHistoryBtnEl;
+    let moreOptionsBtnEl, moreOptionsMenuEl; 
+    let viewSourceModalEl, closeViewSourceModalBtnEl, sourceCodeContainerEl, downloadSourceBtnEl;
+    let extensionManagerModalEl, closeExtensionManagerModalBtnEl, extensionJsonInputEl, loadExtensionBtnEl, installedExtensionsListEl, clearAllExtensionsBtnEl, pasteExtensionJsonBtnEl;
+    let aboutModalEl, closeAboutModalBtnEl; 
+    let customContextMenuEl;
+    let mediaGrabberIconEl, mediaGrabberModalEl, closeMediaGrabberModalBtnEl, mediaGrabberListEl, refreshMediaGrabberBtnEl;
+
+    // --- SDK Readiness ---
+    let puterReadyCheckInterval;
+    const MAX_PUTER_READY_CHECKS = 100; 
+    let puterReadyChecks = 0;
+
+    function isPuterNetReady() { 
+        return typeof puter !== 'undefined' &&
+               puter.net &&
+               typeof puter.net.fetch === 'function';
+    }
+
+    // --- Theme Management ---
+    function applyTheme(theme) {
+      document.body.classList.remove('light-theme', 'dark-theme');
+      document.body.classList.add(theme + '-theme');
+      if (themeSelectorEl) themeSelectorEl.value = theme;
+      currentTheme = theme;
+    }
+    function saveTheme(theme) {
+      try { localStorage.setItem(THEME_KEY, theme); }
+      catch (e) { console.error("Could not save theme to localStorage:", e); }
+    }
+    function loadTheme() {
+      let savedTheme = 'light';
+      try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; }
+      catch (e) { console.error("Could not load theme from localStorage:", e); }
+      applyTheme(savedTheme);
+    }
+
+    // --- Search Engine Setting ---
+    function loadSearchEngineSetting() {
+        try {
+            currentSearchEngineUrl = localStorage.getItem(SEARCH_ENGINE_KEY) || DEFAULT_SEARCH_ENGINE_URL;
+        } catch (e) {
+            console.error("Could not load search engine setting from localStorage:", e);
+            currentSearchEngineUrl = DEFAULT_SEARCH_ENGINE_URL;
+        }
+        if (searchEngineSelectorEl) {
+            searchEngineSelectorEl.value = currentSearchEngineUrl;
+        }
+    }
+    function saveSearchEngineSetting(url) {
+        try {
+            localStorage.setItem(SEARCH_ENGINE_KEY, url);
+            currentSearchEngineUrl = url;
+        } catch (e) {
+            console.error("Could not save search engine setting to localStorage:", e);
+        }
+    }
+
+    // --- Homepage Setting ---
+    function updateCurrentHomepageDisplay() {
+        if (currentHomepageDisplayEl) {
+            let displayVal = defaultHomepageUrl;
+            if (!defaultHomepageUrl || defaultHomepageUrl === "about:blank") { 
+                displayVal = "New Tab Page (Default)";
+            }
+            currentHomepageDisplayEl.textContent = displayVal.length > 30 ? displayVal.substring(0, 27) + "..." : displayVal;
+            currentHomepageDisplayEl.title = defaultHomepageUrl || "New Tab Page (Default)";
+        }
+    }
+    function loadHomepageSetting() {
+        try {
+            const savedHomepage = localStorage.getItem(HOMEPAGE_KEY);
+            if (savedHomepage === null || savedHomepage === "") { 
+                defaultHomepageUrl = DEFAULT_NEW_TAB_URL;
+            } else { 
+                defaultHomepageUrl = savedHomepage;
+            }
+        } catch (e) {
+            console.error("Could not load homepage setting from localStorage:", e);
+            defaultHomepageUrl = DEFAULT_NEW_TAB_URL; 
+        }
+        updateCurrentHomepageDisplay();
+    }
+    function saveHomepageSetting() {
+        let newUrl = homepageUrlInputEl.value.trim();
+        let finalUrlToSave;
+
+        if (newUrl === '') {
+            finalUrlToSave = "about:blank"; 
+        } else if (/^(https?:\/\/)/i.test(newUrl)) {
+            finalUrlToSave = newUrl; 
+        } else if (newUrl.startsWith('about:') || newUrl.startsWith('data:') || newUrl.startsWith('blob:') || newUrl.startsWith('file:')) {
+            finalUrlToSave = newUrl; 
+        } else if (newUrl.includes('.') && !newUrl.includes(' ') && !newUrl.startsWith('/')) { 
+            finalUrlToSave = 'https://' + newUrl;
+        } else {
+            alert("Invalid Homepage URL. Please enter a full URL (e.g., https://example.com), a special page (e.g. about:blank), or leave blank for the default new tab page.");
+            homepageUrlInputEl.focus();
+            return; 
+        }
+
+        try {
+            localStorage.setItem(HOMEPAGE_KEY, finalUrlToSave);
+            defaultHomepageUrl = finalUrlToSave;
+        } catch (e) {
+            console.error("Could not save homepage setting to localStorage:", e);
+            alert("Error saving homepage setting.");
+        }
+        
+        updateCurrentHomepageDisplay();
+        closeHomepageModal();
+    }
+    function showHomepageModal() {
+        if(homepageModalEl) {
+            homepageUrlInputEl.value = (defaultHomepageUrl === "about:blank" || !defaultHomepageUrl) ? "" : defaultHomepageUrl; 
+            homepageModalEl.classList.add('active');
+            homepageUrlInputEl.focus();
+            homepageUrlInputEl.select();
+        }
+    }
+    function closeHomepageModal() {
+        if(homepageModalEl) homepageModalEl.classList.remove('active');
+    }
+
+
+    // --- Bookmark Management ---
+    function loadBookmarks() {
+        try {
+            const storedBookmarks = localStorage.getItem(BOOKMARKS_KEY);
+            bookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+        } catch (e) { console.error("Error loading bookmarks:", e); bookmarks = []; }
+    }
+    function saveBookmarks() {
+        try { localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks)); }
+        catch (e) { console.error("Error saving bookmarks:", e); }
+    }
+    function isBookmarked(url) {
+        if (!url) return false;
+        const normalized = normalizeUrlForBookmarkCheck(url); 
+        return bookmarks.some(bm => bm.url === normalized);
+    }
+    function renderBookmarksList() {
+        if (!bookmarksListEl) return;
+        bookmarksListEl.innerHTML = '';
+        if (bookmarks.length === 0) {
+            bookmarksListEl.innerHTML = '<li class="no-bookmarks">No bookmarks yet. Click the ☆ star in a tab to add one.</li>';
+            return;
+        }
+        bookmarks.forEach(bookmark => {
+            const listItem = document.createElement('li');
+            const textContainer = document.createElement('div');
+            textContainer.className = 'bookmark-title-url-container';
+            textContainer.onclick = () => {
+                if (currentTabId) loadInTab(currentTabId, bookmark.url);
+                else createTab(bookmark.url);
+                closeBookmarksModal();
+            };
+            const titleSpan = document.createElement('span');
+            titleSpan.className = 'bookmark-title';
+            titleSpan.textContent = bookmark.title;
+            const urlSpan = document.createElement('span');
+            urlSpan.className = 'bookmark-url';
+            urlSpan.textContent = bookmark.url;
+            textContainer.appendChild(titleSpan);
+            textContainer.appendChild(urlSpan);
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'bookmark-delete-btn';
+            deleteBtn.innerHTML = '&times;';
+            deleteBtn.title = 'Delete bookmark';
+            deleteBtn.onclick = (e) => { e.stopPropagation(); removeBookmarkByURL(bookmark.url); };
+            listItem.appendChild(textContainer);
+            listItem.appendChild(deleteBtn);
+            bookmarksListEl.appendChild(listItem);
+        });
+    }
+    function updateBookmarkButtonState(tabId, url) {
+        const tabContent = document.getElementById(tabId);
+        if (!tabContent || !tabData[tabId]) return; 
+        const bookmarkBtn = tabContent.querySelector('.bookmark-button');
+        if (bookmarkBtn) {
+            const currentTabData = tabData[tabId];
+            const urlToCheck = currentTabData.lastLoadedUrl && currentTabData.lastLoadedUrl !== 'about:blank' 
+                                ? currentTabData.lastLoadedUrl 
+                                : (url !== 'about:blank' ? url : null); 
+            
+            const normalizedUrlForCheck = urlToCheck ? normalizeUrlForBookmarkCheck(urlToCheck) : null;
+
+            if (normalizedUrlForCheck && isBookmarked(normalizedUrlForCheck)) {
+                bookmarkBtn.textContent = '★'; bookmarkBtn.title = 'Remove bookmark';
+            } else {
+                bookmarkBtn.textContent = '☆'; bookmarkBtn.title = 'Bookmark this page';
+            }
+        }
+    }
+    function toggleBookmark(tabId) {
+        if (!tabId || !tabData[tabId]) {
+             alert("Cannot bookmark: Tab data not found.");
+             return;
+        }
+        const currentTabData = tabData[tabId];
+        let pageUrl = currentTabData.lastLoadedUrl; 
+        let pageTitle = currentTabData.lastLoadedTitle;
+
+        if (!pageUrl || pageUrl === "about:blank" || pageUrl.startsWith("data:")) {
+            alert("Cannot bookmark this page type (e.g., about:blank, data URI).");
+            return;
+        }
+        if (!pageTitle || pageTitle === "Loading..." || pageTitle === "Error" || pageTitle === "New Tab" || pageTitle.trim() === "") {
+            let fallbackTitle = "Untitled Page";
+            try { fallbackTitle = new URL(pageUrl).hostname.replace(/^www\./, ''); if(!fallbackTitle) fallbackTitle = "Untitled Page"; } catch(e){}
+            
+            if(confirm(`Page title is not fully available. Bookmark with title "${fallbackTitle}"?`)){
+                 pageTitle = fallbackTitle; 
+                 currentTabData.lastLoadedTitle = pageTitle; 
+            } else {
+                alert("Bookmark canceled. Please wait for the page to fully load its title, or try again.");
+                return;
+            }
+        }
+        
+        const normalizedPageUrl = normalizeUrlForBookmarkCheck(pageUrl);
+        if (!normalizedPageUrl) { 
+            alert("Cannot bookmark: The URL is not valid for bookmarking (e.g. a search query or malformed).");
+            return;
+        }
+
+        if (isBookmarked(normalizedPageUrl)) {
+            bookmarks = bookmarks.filter(bm => bm.url !== normalizedPageUrl);
+        } else {
+            bookmarks.push({ title: pageTitle, url: normalizedPageUrl });
+        }
+        saveBookmarks();
+        renderBookmarksList(); 
+        updateBookmarkButtonState(tabId, normalizedPageUrl); 
+    }
+    function removeBookmarkByURL(urlToRemove) {
+        if(!urlToRemove) return;
+        const normalizedUrlToRemove = normalizeUrlForBookmarkCheck(urlToRemove);
+        bookmarks = bookmarks.filter(bm => bm.url !== normalizedUrlToRemove);
+        saveBookmarks();
+        renderBookmarksList();
+        
+        Object.keys(tabData).forEach(openTabId => {
+            if (tabData[openTabId] && normalizeUrlForBookmarkCheck(tabData[openTabId].lastLoadedUrl) === normalizedUrlToRemove) {
+                updateBookmarkButtonState(openTabId, tabData[openTabId].lastLoadedUrl);
+            }
+        });
+    }
+    function showBookmarksModal() {
+        if (bookmarksModalEl) {
+            renderBookmarksList();
+            bookmarksModalEl.classList.add('active');
+        }
+    }
+    function closeBookmarksModal() {
+        if (bookmarksModalEl) bookmarksModalEl.classList.remove('active');
+    }
+
+    // --- Global History Management ---
+    function loadGlobalHistory() {
+        try {
+            const storedHistory = localStorage.getItem(HISTORY_KEY);
+            globalHistory = storedHistory ? JSON.parse(storedHistory) : [];
+            globalHistory.sort((a, b) => b.timestamp - a.timestamp);
+        } catch (e) { console.error("Error loading global history:", e); globalHistory = []; }
+    }
+    function saveGlobalHistory() {
+        try { localStorage.setItem(HISTORY_KEY, JSON.stringify(globalHistory)); }
+        catch (e) { console.error("Error saving global history:", e); }
+    }
+    function logToGlobalHistory(url, title, timestamp) {
+        if (!url || url === "about:blank" || url.startsWith("data:") || url.includes("New Tab</h1>") || !title || title === "Loading..." || title === "Error" || title === "New Tab" || title.trim() === "") {
+            return;
+        }
+        if (globalHistory.length > 0 && globalHistory[0].url === url && globalHistory[0].title === title && (timestamp - globalHistory[0].timestamp < 5000) ) {
+            globalHistory[0].timestamp = timestamp; 
+        } else {
+            globalHistory.unshift({ url, title, timestamp });
+        }
+        saveGlobalHistory();
+    }
+    function renderGlobalHistory() {
+        if (!historyListContainerEl) return;
+        historyListContainerEl.innerHTML = '';
+        if (globalHistory.length === 0) {
+            historyListContainerEl.innerHTML = '<div class="no-history">Your browsing history is empty.</div>';
+            return;
+        }
+        const now = new Date();
+        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const yesterdayStart = todayStart - (24 * 60 * 60 * 1000);
+        const sevenDaysAgoStart = todayStart - (7 * 24 * 60 * 60 * 1000);
+        const thirtyDaysAgoStart = todayStart - (30 * 24 * 60 * 60 * 1000);
+
+        const groups = {
+            today: { title: "Today", items: [] }, yesterday: { title: "Yesterday", items: [] },
+            previous7Days: { title: "Previous 7 Days", items: [] }, previous30Days: { title: "Previous 30 Days", items: [] },
+            older: { title: "Older", items: [] }
+        };
+        globalHistory.forEach(item => {
+            if (item.timestamp >= todayStart) groups.today.items.push(item);
+            else if (item.timestamp >= yesterdayStart) groups.yesterday.items.push(item);
+            else if (item.timestamp >= sevenDaysAgoStart) groups.previous7Days.items.push(item);
+            else if (item.timestamp >= thirtyDaysAgoStart) groups.previous30Days.items.push(item);
+            else groups.older.items.push(item);
+        });
+        for (const groupKey in groups) {
+            const group = groups[groupKey];
+            if (group.items.length > 0) {
+                const groupDiv = document.createElement('div'); groupDiv.className = 'history-group';
+                const groupTitle = document.createElement('h3'); groupTitle.textContent = group.title;
+                groupDiv.appendChild(groupTitle); const itemList = document.createElement('ul');
+                group.items.forEach(item => {
+                    const listItem = document.createElement('li');
+                    const detailsDiv = document.createElement('div'); detailsDiv.className = 'history-item-details';
+                    detailsDiv.onclick = () => {
+                        if (currentTabId) loadInTab(currentTabId, item.url);
+                        else createTab(item.url);
+                        closeHistoryModal();
+                    };
+                    const titleSpan = document.createElement('span'); titleSpan.className = 'history-item-title'; titleSpan.textContent = item.title;
+                    const urlSpan = document.createElement('span'); urlSpan.className = 'history-item-url'; urlSpan.textContent = item.url;
+                    detailsDiv.appendChild(titleSpan); detailsDiv.appendChild(urlSpan);
+                    const timeSpan = document.createElement('span'); timeSpan.className = 'history-item-time';
+                    const itemDate = new Date(item.timestamp);
+                    timeSpan.textContent = itemDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    const deleteBtn = document.createElement('button'); deleteBtn.className = 'history-item-delete-btn';
+                    deleteBtn.innerHTML = '&times;'; deleteBtn.title = 'Remove from history';
+                    deleteBtn.onclick = (e) => { e.stopPropagation(); deleteHistoryItem(item.timestamp); };
+                    listItem.appendChild(timeSpan); listItem.appendChild(detailsDiv); listItem.appendChild(deleteBtn);
+                    itemList.appendChild(listItem);
+                });
+                groupDiv.appendChild(itemList); historyListContainerEl.appendChild(groupDiv);
+            }
+        }
+    }
+    function deleteHistoryItem(timestamp) {
+        globalHistory = globalHistory.filter(item => item.timestamp !== timestamp);
+        saveGlobalHistory(); renderGlobalHistory();
+    }
+    function clearAllGlobalHistory() {
+        if (confirm("Are you sure you want to clear all browsing history? This cannot be undone.")) {
+            globalHistory = []; saveGlobalHistory(); renderGlobalHistory();
+        }
+    }
+    function showHistoryModal() {
+        if (historyModalEl) { renderGlobalHistory(); historyModalEl.classList.add('active'); }
+    }
+    function closeHistoryModal() {
+        if (historyModalEl) historyModalEl.classList.remove('active');
+    }
+
+    // --- URL Normalization & Filename Extraction ---
+    function normalizeUrl(inputUrl) {
+      inputUrl = String(inputUrl || '').trim();
+      if (!inputUrl) return null;
+      if (inputUrl === "about:blank") return inputUrl; 
+      if (/^(data:|blob:|file:)/i.test(inputUrl)) return inputUrl; 
+      if (/^(https?:\/\/)/i.test(inputUrl)) return inputUrl;
+      if (/^www\./i.test(inputUrl) || (inputUrl.includes('.') && !inputUrl.includes(' '))) { 
+        const domainPattern = /^(([^:/?#]+):)?(\/\/([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/;
+        const match = inputUrl.match(domainPattern);
+        if (match && match[4] && match[4].includes('.')) { 
+            return 'https://' + inputUrl;
+        }
+      }
+      return currentSearchEngineUrl + encodeURIComponent(inputUrl);
+    }
+
+    function normalizeUrlForBookmarkCheck(inputUrl) { 
+        inputUrl = String(inputUrl || '').trim();
+        if (!inputUrl || inputUrl === "about:blank" || inputUrl.startsWith("data:")) return null; 
+        if (/^(https?:\/\/|file:)/i.test(inputUrl)) return inputUrl; 
+        if (inputUrl.includes('.') && !inputUrl.includes(' ') && !/^[a-zA-Z]+:/i.test(inputUrl)) {
+            return 'https://' + inputUrl;
+        }
+        return null; 
+    }
+    
+    function extractFilename(url, contentDisposition) {
+        if (contentDisposition) {
+            const filenameStarMatch = contentDisposition.match(/filename\*=(?:UTF-8|ISO-8859-1)''([^;'"\s]+)/i);
+            if (filenameStarMatch && filenameStarMatch[1]) {
+                try { return decodeURIComponent(filenameStarMatch[1]); } catch (e) { /* ignore */ }
+            }
+            const filenameMatch = contentDisposition.match(/filename=(?:"([^"]+)"|([^;]+))/i);
+            if (filenameMatch) {
+                const fn = filenameMatch[1] || filenameMatch[2]; 
+                if (fn) try { return decodeURIComponent(fn); } catch (e) { return fn; }
+            }
+        }
+        try {
+            const parsedUrl = new URL(url);
+            const pathSegments = parsedUrl.pathname.split('/');
+            const lastSegment = pathSegments.pop() || pathSegments.pop(); 
+            if (lastSegment) return decodeURIComponent(lastSegment);
+        } catch (e) { /* Invalid URL */ }
+        
+        let simpleName = url.substring(url.lastIndexOf('/') + 1);
+        if (simpleName.includes('?')) simpleName = simpleName.substring(0, simpleName.indexOf('?'));
+        if (simpleName.includes('#')) simpleName = simpleName.substring(0, simpleName.indexOf('#'));
+        return simpleName || 'downloaded_file';
+    }
+
+    // --- Download Handling (Host Browser) ---
+    function triggerHostBrowserDownload(url, filenameSuggestion = null) {
+        console.log("Attempting to trigger host browser download for:", url);
+        const link = document.createElement('a');
+        link.href = url;
+        if (filenameSuggestion) {
+            link.download = filenameSuggestion;
+        } else {
+            try {
+                const path = new URL(url).pathname;
+                const name = path.substring(path.lastIndexOf('/') + 1);
+                if (name) link.download = name;
+            } catch (e) { /* ignore if URL is not parsable for filename */ }
+        }
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        const activeTabContent = currentTabId ? document.getElementById(currentTabId) : null;
+        if (activeTabContent) {
+            console.log(`Download for ${link.download || url} should have started in your main browser.`);
+        }
+    }
+
+
+    // --- Tab Management ---
+    function createTab(initialUrlOverride = '') {
+      tabCount++;
+      const tabId = `tab${tabCount}`;
+      tabData[tabId] = {
+          history: { urls: [], currentIndex: -1 },
+          findState: { term: '', total: 0, current: 0, lastSearchSuccess: false },
+          media: [],
+          lastLoadedUrl: 'about:blank', 
+          lastLoadedTitle: 'New Tab'
+      };
+
+
+      const tabButton = document.createElement('button');
+      tabButton.className = 'tab-btn';
+      tabButton.id = `${tabId}-btn`;
+      tabButton.onclick = (event) => {
+        if (event.target.closest('.tab-close-button') === null) activateTab(tabId);
+      };
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'tab-title';
+      titleSpan.textContent = `New Tab`; 
+      tabButton.appendChild(titleSpan);
+      const closeButton = document.createElement('button');
+      closeButton.className = 'tab-close-button';
+      closeButton.innerHTML = '&times;';
+      closeButton.title = 'Close Tab';
+      closeButton.onclick = (e) => { e.stopPropagation(); closeTab(tabId); };
+      tabButton.appendChild(closeButton);
+      document.getElementById('tabs').appendChild(tabButton);
+
+      const tabContent = document.createElement('div');
+      tabContent.className = 'tab-content';
+      tabContent.id = tabId;
+      
+      const findBar = document.createElement('div');
+      findBar.className = 'find-bar';
+      findBar.style.display = 'none'; 
+      findBar.innerHTML = `
+        <input type="text" class="find-input" placeholder="Find in page">
+        <span class="find-match-count"></span>
+        <button class="find-prev-btn" title="Previous match">↑</button>
+        <button class="find-next-btn" title="Next match">↓</button>
+        <button class="find-close-btn" title="Close find bar">&times;</button>
+      `;
+      tabContent.appendChild(findBar);
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'tab-toolbar';
+      const backBtn = document.createElement('button');
+      backBtn.className = 'nav-button'; backBtn.innerHTML = '←'; backBtn.title = 'Back'; backBtn.disabled = true;
+      backBtn.onclick = () => navigateHistory(tabId, 'back');
+      const forwardBtn = document.createElement('button');
+      forwardBtn.className = 'nav-button'; forwardBtn.innerHTML = '→'; forwardBtn.title = 'Forward'; forwardBtn.disabled = true;
+      forwardBtn.onclick = () => navigateHistory(tabId, 'forward');
+      const refreshBtn = document.createElement('button');
+      refreshBtn.className = 'nav-button'; refreshBtn.innerHTML = '↻'; refreshBtn.title = 'Refresh';
+      refreshBtn.onclick = () => {
+        const currentTabData = tabData[tabId];
+        const urlToRefresh = currentTabData.lastLoadedUrl || (currentTabData.history.urls.length > 0 ? currentTabData.history.urls[currentTabData.history.currentIndex] : null);
+        if (urlToRefresh && urlToRefresh !== "about:blank") {
+             loadInTab(tabId, urlToRefresh, false); 
+        } else {
+             setNewTabPlaceholderContent(tabId); 
+        }
+      };
+      const bookmarkBtn = document.createElement('button');
+      bookmarkBtn.className = 'bookmark-button';
+      bookmarkBtn.innerHTML = '☆';
+      bookmarkBtn.title = 'Bookmark this page';
+      bookmarkBtn.onclick = () => toggleBookmark(tabId);
+      const urlInput = document.createElement('input');
+      urlInput.type = 'text';
+      urlInput.placeholder = 'Enter URL or search';
+      urlInput.onkeydown = e => { if (e.key === 'Enter') loadInTab(tabId, urlInput.value); };
+      const goBtn = document.createElement('button');
+      goBtn.className = 'go-button'; goBtn.textContent = 'Go';
+      goBtn.onclick = () => loadInTab(tabId, urlInput.value);
+      toolbar.append(backBtn, forwardBtn, refreshBtn, bookmarkBtn, urlInput, goBtn);
+      tabContent.appendChild(toolbar);
+
+
+      const iframe = document.createElement('iframe');
+      iframe.className = 'tab-iframe';
+      iframe.sandbox = "allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation allow-top-navigation-by-user-activation allow-downloads";
+      tabContent.appendChild(iframe); 
+
+      document.getElementById('tabContainer').appendChild(tabContent);
+
+      const findInputElement = findBar.querySelector('.find-input');
+      const findPrevBtn = findBar.querySelector('.find-prev-btn');
+      const findNextBtn = findBar.querySelector('.find-next-btn');
+      const findCloseBtn = findBar.querySelector('.find-close-btn');
+
+      findInputElement.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+            performSearch(tabId, e.target.value, true, !e.shiftKey); 
+        } else if (e.key === 'Escape') {
+            closeFindBar(tabId);
+        } else {
+            performSearch(tabId, e.target.value, true, true); 
+        }
+      });
+      findPrevBtn.addEventListener('click', () => performSearch(tabId, findInputElement.value, false, false));
+      findNextBtn.addEventListener('click', () => performSearch(tabId, findInputElement.value, false, true));
+      findCloseBtn.addEventListener('click', () => closeFindBar(tabId));
+
+      activateTab(tabId);
+
+      const urlForNewTab = (initialUrlOverride && initialUrlOverride.trim() !== '' && initialUrlOverride !== "about:blank") 
+                         ? initialUrlOverride 
+                         : (defaultHomepageUrl && defaultHomepageUrl !== "about:blank" ? defaultHomepageUrl : "about:blank");
+
+      let initialSrcdocContent = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${getEnabledInjectedExtensionCSS()}</style></head><body>${getEnabledInjectedExtensionHTML()}`;
+
+      if (urlForNewTab && urlForNewTab !== "about:blank") {
+        const normalizedUrlToLoad = normalizeUrl(urlForNewTab);
+        urlInput.value = normalizedUrlToLoad; 
+        iframe.srcdoc = initialSrcdocContent + `<script>${getEnabledInjectedExtensionJS()}<\/script></body></html>`; 
+        loadInTab(tabId, normalizedUrlToLoad);
+      } else { 
+        const newTabPlaceholder = `<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:80%; font-family: Arial, sans-serif; color: ${currentTheme === 'dark' ? '#ccc' : '#555'};"><h1 style="font-weight:lighter;font-size:2em;">New Tab</h1></div>`;
+        iframe.srcdoc = initialSrcdocContent + newTabPlaceholder + `<script>${getEnabledInjectedExtensionJS()}<\/script></body></html>`;
+        urlInput.value = ''; 
+        updateBookmarkButtonState(tabId, "about:blank"); 
+        tabData[tabId].lastLoadedUrl = 'about:blank';
+        tabData[tabId].lastLoadedTitle = 'New Tab';
+        setTimeout(() => { 
+            if (iframe.contentWindow && typeof iframe.contentWindow.scanForMediaInIframe === 'function') {
+                iframe.contentWindow.scanForMediaInIframe();
+            } else if (iframe.contentWindow) { 
+                iframe.contentWindow.postMessage({ type: 'rescanMediaRequest', tabId: tabId }, '*');
+            }
+        }, 1000);
+      }
+      updateNavButtons(tabId);
+    }
+
+    function setNewTabPlaceholderContent(tabIdToUpdate) { 
+        if (!tabData[tabIdToUpdate]) return;
+
+        const tabContent = document.getElementById(tabIdToUpdate);
+        if (!tabContent) return;
+        const iframeElement = tabContent.querySelector('iframe.tab-iframe');
+        const titleSpanElement = document.querySelector(`#${tabIdToUpdate}-btn .tab-title`);
+        const urlInput = tabContent.querySelector('.tab-toolbar input[type="text"]');
+
+        let baseHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${getEnabledInjectedExtensionCSS()}</style></head><body>${getEnabledInjectedExtensionHTML()}`;
+        const placeholderContent = `<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:80%; font-family: Arial, sans-serif; color: ${currentTheme === 'dark' ? '#ccc' : '#555'};"><h1 style="font-weight:lighter;font-size:2em;">New Tab</h1></div>`;
+        baseHtml += placeholderContent;
+        baseHtml += `<script>${getEnabledInjectedExtensionJS()}<\/script></body></html>`;
+
+        if (iframeElement) {
+            iframeElement.srcdoc = baseHtml;
+        }
+        if (titleSpanElement) {
+            titleSpanElement.textContent = 'New Tab';
+            titleSpanElement.title = 'New Tab';
+        }
+        if (urlInput) urlInput.value = ''; 
+        
+        tabData[tabIdToUpdate].media = []; 
+        tabData[tabIdToUpdate].lastLoadedUrl = 'about:blank';
+        tabData[tabIdToUpdate].lastLoadedTitle = 'New Tab';
+        
+        updateMediaGrabberIconVisibility(); 
+        updateBookmarkButtonState(tabIdToUpdate, 'about:blank');
+        setTimeout(() => {
+            if (iframeElement && iframeElement.contentWindow && typeof iframeElement.contentWindow.scanForMediaInIframe === 'function') {
+                iframeElement.contentWindow.scanForMediaInIframe();
+            } else if (iframeElement && iframeElement.contentWindow) { 
+                iframeElement.contentWindow.postMessage({ type: 'rescanMediaRequest', tabId: tabIdToUpdate }, '*');
+            }
+        }, 1000);
+    }
+    function updateNavButtons(tabId) {
+        if (!tabData[tabId]) return;
+        const tabHistory = tabData[tabId].history;
+        const tabContentElement = document.getElementById(tabId);
+        if (!tabContentElement) return;
+        const toolbar = tabContentElement.querySelector('.tab-toolbar');
+        if(!toolbar) return;
+        const backBtn = toolbar.querySelector('.nav-button[title="Back"]');
+        const forwardBtn = toolbar.querySelector('.nav-button[title="Forward"]');
+
+        if (tabHistory && backBtn && forwardBtn) {
+            backBtn.disabled = tabHistory.currentIndex <= 0;
+            forwardBtn.disabled = tabHistory.currentIndex >= tabHistory.urls.length - 1;
+        } else if (backBtn && forwardBtn) {
+            backBtn.disabled = true; forwardBtn.disabled = true;
+        }
+    }
+    function navigateHistory(tabId, direction) {
+        if (!tabData[tabId]) return;
+        const tabHistory = tabData[tabId].history;
+        if (!tabHistory) return;
+        let newIndex = tabHistory.currentIndex;
+        if (direction === 'back' && tabHistory.currentIndex > 0) newIndex--;
+        else if (direction === 'forward' && tabHistory.currentIndex < tabHistory.urls.length - 1) newIndex++;
+        
+        if (newIndex !== tabHistory.currentIndex && tabHistory.urls[newIndex] !== undefined) { 
+            tabHistory.currentIndex = newIndex;
+            const urlToLoad = tabHistory.urls[newIndex];
+            
+            const tabContentElement = document.getElementById(tabId);
+            if(tabContentElement) {
+                const urlInput = tabContentElement.querySelector('.tab-toolbar input[type="text"]');
+                if(urlInput) urlInput.value = urlToLoad; 
+            }
+            loadInTab(tabId, urlToLoad, false); 
+        }
+        updateNavButtons(tabId);
+    }
+    function activateTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      const button = document.getElementById(`${tabId}-btn`);
+      const content = document.getElementById(tabId);
+      if (button && content) {
+        button.classList.add('active'); content.classList.add('active'); currentTabId = tabId;
+        button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        const urlInput = content.querySelector('.tab-toolbar input[type="text"]'); 
+        if (urlInput && tabData[tabId]) {
+            const currentTabData = tabData[tabId];
+            urlInput.value = currentTabData.lastLoadedUrl === 'about:blank' ? '' : currentTabData.lastLoadedUrl;
+
+            const iframe = content.querySelector('iframe.tab-iframe');
+            const isNewTabPlaceholder = iframe && iframe.srcdoc && iframe.srcdoc.includes("<h1 style=\"font-weight:lighter;font-size:2em;\">New Tab</h1>");
+            if (isNewTabPlaceholder || !urlInput.value.trim()) { 
+                 setTimeout(() => urlInput.focus(), 50);
+            }
+            updateBookmarkButtonState(tabId, currentTabData.lastLoadedUrl); 
+        }
+        updateMediaGrabberIconVisibility(); 
+      }
+    }
+    function closeTab(tabId) {
+        const tabButtonToClose = document.getElementById(`${tabId}-btn`);
+        const tabContentToClose = document.getElementById(tabId);
+        if (!tabButtonToClose || !tabContentToClose) return;
+        
+        if (tabData[tabId]) closeFindBar(tabId, false); 
+        delete tabData[tabId];
+
+        const parentTabs = document.getElementById('tabs');
+        const allTabButtons = Array.from(parentTabs.children);
+        const closedTabIndex = allTabButtons.indexOf(tabButtonToClose);
+        tabButtonToClose.remove(); tabContentToClose.remove(); 
+        
+        const wasActive = currentTabId === tabId;
+        if (wasActive) currentTabId = null;
+        
+        const remainingButtons = Array.from(parentTabs.children);
+        if (wasActive && remainingButtons.length > 0) {
+            let newIndexToActivate = closedTabIndex;
+            if (newIndexToActivate >= remainingButtons.length) newIndexToActivate = remainingButtons.length - 1;
+            if (newIndexToActivate < 0) newIndexToActivate = 0; 
+            if (remainingButtons[newIndexToActivate]) {
+                 activateTab(remainingButtons[newIndexToActivate].id.replace('-btn', ''));
+            } else if (remainingButtons.length > 0) { 
+                 activateTab(remainingButtons[0].id.replace('-btn', ''));
+            }
+        } else if (remainingButtons.length === 0) {
+            currentTabId = null; createTab(); 
+        } else if (!currentTabId && remainingButtons.length > 0){ 
+            const activeBtn = document.querySelector('.tab-btn.active');
+            if(!activeBtn) activateTab(remainingButtons[0].id.replace('-btn', ''));
+        }
+        updateMediaGrabberIconVisibility(); 
+    }
+    
+    async function loadInTab(tabId, urlInputFromUser, addToHistoryByTab = true) {
+        const normalizedUrlToLoad = normalizeUrl(urlInputFromUser); 
+        if (!normalizedUrlToLoad) {
+            console.warn("Normalization resulted in null URL for input:", urlInputFromUser);
+            return;
+        }
+
+        const currentTabData = tabData[tabId];
+        if (!currentTabData) { console.error("Tab data not found for ID:", tabId); return; }
+
+        const tabContentElement = document.getElementById(tabId);
+        if (!tabContentElement) return;
+
+        const iframe = tabContentElement.querySelector('iframe.tab-iframe');
+        const addressBarInput = tabContentElement.querySelector('.tab-toolbar input[type="text"]');
+        const titleSpanOnTabButton = document.querySelector(`#${tabId}-btn .tab-title`);
+        if (!iframe || !addressBarInput || !titleSpanOnTabButton) return;
+
+        closeFindBar(tabId, true);
+        currentTabData.media = []; 
+        updateMediaGrabberIconVisibility(); 
+
+        const tabHistory = currentTabData.history;
+        const previousUrlInBarIfReverting = currentTabData.lastLoadedUrl; 
+        const previousTitleOnTabIfReverting = currentTabData.lastLoadedTitle;
+        const previousHistoryIndex = tabHistory.currentIndex;
+
+
+        addressBarInput.disabled = true;
+        addressBarInput.value = normalizedUrlToLoad; 
+        titleSpanOnTabButton.textContent = 'Loading...';
+        titleSpanOnTabButton.title = 'Loading...';
+        currentTabData.lastLoadedTitle = 'Loading...'; 
+        
+        let loadingPlaceholderHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>`;
+        loadingPlaceholderHTML += `<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:80%; padding:20px; font-family: Arial, sans-serif; text-align: center; color: ${currentTheme === 'dark' ? '#ccc' : '#333'};">Loading <span style="font-size:1.5em;">⏳</span><br><small style="word-break:break-all;">${normalizedUrlToLoad}</small></div>`;
+        loadingPlaceholderHTML += `</body></html>`;
+        iframe.srcdoc = loadingPlaceholderHTML; 
+        
+        let historyWasUpdatedForThisLoad = false;
+        if (addToHistoryByTab) {
+            if (tabHistory.currentIndex < tabHistory.urls.length - 1) { 
+                tabHistory.urls = tabHistory.urls.slice(0, tabHistory.currentIndex + 1);
+            }
+            if (tabHistory.urls.length === 0 || tabHistory.urls[tabHistory.urls.length -1] !== normalizedUrlToLoad) {
+                tabHistory.urls.push(normalizedUrlToLoad);
+                historyWasUpdatedForThisLoad = true;
+            }
+            tabHistory.currentIndex = tabHistory.urls.length - 1;
+        }
+        updateNavButtons(tabId); 
+
+        try {
+            if (!isPuterNetReady()) { 
+                throw new Error("Puter SDK (puter.net.fetch) not available for network operations.");
+            }
+            const response = await puter.net.fetch(normalizedUrlToLoad);
+            
+            const finalUrl = response.url || normalizedUrlToLoad; 
+            currentTabData.lastLoadedUrl = finalUrl; 
+            addressBarInput.value = finalUrl; 
+
+            if (historyWasUpdatedForThisLoad && tabHistory.urls[tabHistory.currentIndex] === normalizedUrlToLoad && normalizedUrlToLoad !== finalUrl) {
+                tabHistory.urls[tabHistory.currentIndex] = finalUrl;
+            } else if (addToHistoryByTab && !historyWasUpdatedForThisLoad && (tabHistory.urls.length === 0 || tabHistory.urls[tabHistory.currentIndex] !== finalUrl)) {
+                 if (tabHistory.currentIndex < tabHistory.urls.length - 1) {
+                    tabHistory.urls = tabHistory.urls.slice(0, tabHistory.currentIndex + 1);
+                }
+                tabHistory.urls.push(finalUrl);
+                tabHistory.currentIndex = tabHistory.urls.length - 1;
+            }
+            updateNavButtons(tabId);
+
+
+            const contentDisposition = response.headers.get('Content-Disposition');
+            const isDownload = contentDisposition && contentDisposition.toLowerCase().includes('attachment');
+
+            if (isDownload) {
+                const filename = extractFilename(finalUrl, contentDisposition);
+                triggerHostBrowserDownload(finalUrl, filename); 
+
+                currentTabData.lastLoadedUrl = previousUrlInBarIfReverting; 
+                currentTabData.lastLoadedTitle = previousTitleOnTabIfReverting;
+                addressBarInput.value = previousUrlInBarIfReverting === 'about:blank' ? '' : previousUrlInBarIfReverting; 
+                titleSpanOnTabButton.textContent = previousTitleOnTabIfReverting.length > 20 ? previousTitleOnTabIfReverting.substring(0, 18) + '...' : previousTitleOnTabIfReverting;
+                titleSpanOnTabButton.title = previousTitleOnTabIfReverting;
+                
+                if (historyWasUpdatedForThisLoad || (tabHistory.urls[tabHistory.currentIndex] === finalUrl && finalUrl !== previousUrlInBarIfReverting) ) { 
+                    if(tabHistory.urls[tabHistory.currentIndex] === finalUrl) tabHistory.urls.pop(); 
+                    tabHistory.currentIndex = previousHistoryIndex; 
+                }
+                updateNavButtons(tabId); 
+                addressBarInput.disabled = false;
+                updateBookmarkButtonState(tabId, currentTabData.lastLoadedUrl); 
+                
+                setNewTabPlaceholderContent(tabId); 
+                return; 
+            }
+
+            const bodyText = await response.text();
+            
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(bodyText, 'text/html');
+
+            const head = doc.head || doc.createElement('head');
+            if(!doc.head) doc.documentElement.prepend(head);
+
+            const styleTag = doc.createElement('style');
+            styleTag.textContent = getEnabledInjectedExtensionCSS();
+            head.appendChild(styleTag);
+
+            const body = doc.body || doc.createElement('body');
+            if(!doc.body) doc.documentElement.appendChild(body);
+
+            const htmlWrapper = doc.createElement('div'); // Temporary wrapper
+            htmlWrapper.innerHTML = getEnabledInjectedExtensionHTML(); 
+            // Prepend extension HTML children to actual body
+            Array.from(htmlWrapper.childNodes).reverse().forEach(node => body.prepend(node));
+            
+            const scriptTag = doc.createElement('script');
+            scriptTag.textContent = getEnabledInjectedExtensionJS();
+            body.appendChild(scriptTag);
+
+            const processedHtml = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+            const finalHTMLForIframe = injectLinkHandler(processedHtml, finalUrl, tabId); 
+            iframe.srcdoc = finalHTMLForIframe;
+            
+            setTimeout(() => { 
+                let pageTitle = "Page";
+                try {
+                    if(iframe.contentDocument && iframe.contentDocument.title) {
+                        pageTitle = iframe.contentDocument.title.trim();
+                    }
+                    if (!pageTitle || pageTitle === "Page" || pageTitle === "Untitled Page") { 
+                        const urlObj = new URL(finalUrl); 
+                        pageTitle = urlObj.hostname.replace(/^www\./, '');
+                        if (!pageTitle || pageTitle.toLowerCase() === "search" || pageTitle.length === 0) {
+                             if (finalUrl.includes('google.com/search') || finalUrl.includes('bing.com/search') || finalUrl.includes('duckduckgo.com/')) {
+                                const queryParams = urlObj.searchParams; const q = queryParams.get('q');
+                                if (q) pageTitle = `Search: ${q.substring(0,15)}${q.length > 15 ? '...' : ''}`;
+                                else pageTitle = urlObj.hostname.replace(/^www\./, '') || "Untitled Page";
+                            } else pageTitle = urlObj.hostname.replace(/^www\./, '') || "Untitled Page";
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Error generating page title with iframe.contentDocument, falling back:", e);
+                    try { pageTitle = new URL(finalUrl).hostname.replace(/^www\./, '') || "Page"; }
+                    catch { pageTitle = "Page"; }
+                }
+                titleSpanOnTabButton.textContent = pageTitle.length > 20 ? pageTitle.substring(0, 18) + '...' : pageTitle;
+                titleSpanOnTabButton.title = pageTitle; 
+                currentTabData.lastLoadedTitle = pageTitle; 
+
+                if(!isDownload) { 
+                    logToGlobalHistory(finalUrl, pageTitle, Date.now()); 
+                }
+                updateBookmarkButtonState(tabId, finalUrl); 
+                if (iframe.contentWindow && typeof iframe.contentWindow.scanForMediaInIframe === 'function') {
+                    iframe.contentWindow.scanForMediaInIframe();
+                } else if (iframe.contentWindow) {
+                     iframe.contentWindow.postMessage({ type: 'rescanMediaRequest', tabId: tabId }, '*');
+                }
+
+            }, 350); 
+        } catch (err) {
+            iframe.srcdoc = `<div style="padding:20px;color:red; font-family: Arial, sans-serif; text-align: center;">Error loading page: ${err.message}<br><small style="word-break:break-all;">${normalizedUrlToLoad}</small></div>`;
+            titleSpanOnTabButton.textContent = 'Error'; titleSpanOnTabButton.title = 'Error';
+            currentTabData.lastLoadedTitle = 'Error';
+            currentTabData.lastLoadedUrl = normalizedUrlToLoad; 
+            addressBarInput.value = normalizedUrlToLoad; 
+            console.error(`Puter.net.fetch error for "${normalizedUrlToLoad}":`, err);
+        } finally {
+            addressBarInput.disabled = false;
+        }
+    }
+
+    function injectLinkHandler(html, baseUrl, tabIdForInjection) {
+      const parser = new DOMParser(); const doc = parser.parseFromString(html, 'text/html');
+      let base = doc.querySelector('base');
+      if (!base) {
+        base = doc.createElement('base');
+        if (doc.head) doc.head.prepend(base);
+        else { const headEl = doc.createElement('head'); doc.documentElement.prepend(headEl); headEl.prepend(base); }
+      }
+      base.href = baseUrl; 
+      const script = doc.createElement('script');
+      script.textContent = `
+        function resolveUrl(url) { try { return new URL(url, document.baseURI).href; } catch(e){ return url;} }
+
+        document.addEventListener('click', function(event) {
+          const link = event.target.closest('a');
+          if (link && link.href && link.href.trim() !== '' && !link.href.toLowerCase().startsWith('javascript:')) {
+            const absoluteUrl = resolveUrl(link.getAttribute('href'));
+            if (link.hasAttribute('download')) {
+                parent.postMessage({ type: 'hostDownloadRequest', url: absoluteUrl, filename: link.download || null }, '*');
+                event.preventDefault(); 
+                return; 
+            }
+            
+            event.preventDefault(); 
+
+            if (link.target === '_blank' || event.metaKey || event.ctrlKey) {
+              parent.postMessage({ type: 'newTabNavigate', url: absoluteUrl, tabId: '${tabIdForInjection}' }, '*');
+            } else {
+              parent.postMessage({ type: 'navigate', url: absoluteUrl, tabId: '${tabIdForInjection}' }, '*');
+            }
+          }
+        }, true); 
+
+        document.addEventListener('submit', function(event) {
+          const form = event.target.closest('form');
+          if (form) {
+            event.preventDefault(); const formData = new FormData(form); const params = new URLSearchParams(formData);
+            let targetUrl;
+            try {
+                const formAction = form.getAttribute('action') || ''; 
+                targetUrl = new URL(formAction, document.baseURI); 
+            }
+            catch (e) { console.warn('Invalid form action:', form.getAttribute('action'), e); return; }
+            
+            console.warn("Form submission method (e.g., POST) is converted to GET for this browser prototype.");
+            targetUrl.search = params.toString(); 
+
+            parent.postMessage({ type: 'navigate', url: targetUrl.href, tabId: '${tabIdForInjection}' }, '*');
+          }
+        }, true); 
+
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault(); 
+            event.stopPropagation(); 
+
+            const targetElement = event.target;
+            const contextData = {
+                type: 'showContextMenu',
+                x: event.clientX, 
+                y: event.clientY,
+                targetType: 'page', 
+                href: null,
+                src: null,
+                pageUrl: document.location.href === 'about:srcdoc' ? document.baseURI : document.location.href, 
+                baseURI: document.baseURI, 
+                tabId: '${tabIdForInjection}'
+            };
+            const link = targetElement.closest('a');
+            if (link && link.hasAttribute('href')) { 
+                contextData.targetType = 'link';
+                contextData.href = resolveUrl(link.getAttribute('href'));
+            } else if (targetElement.tagName === 'IMG' && targetElement.hasAttribute('src')) { 
+                contextData.targetType = 'image';
+                contextData.src = resolveUrl(targetElement.getAttribute('src'));
+            }
+            parent.postMessage(contextData, '*');
+        }, true); 
+
+        window.scanForMediaInIframe = function() {
+            const mediaItems = [];
+            const seenSources = new Set(); 
+
+            document.querySelectorAll('img').forEach(img => {
+                if(!img.src) return; 
+                const imgSrc = resolveUrl(img.src);
+                if (imgSrc && !imgSrc.startsWith('data:') && img.naturalWidth > 30 && img.naturalHeight > 30 && !seenSources.has(imgSrc)) { 
+                     mediaItems.push({ type: 'image', src: imgSrc, alt: img.alt });
+                     seenSources.add(imgSrc);
+                }
+            });
+            document.querySelectorAll('video').forEach(video => {
+                 let videoSrc = video.currentSrc || video.src; 
+                 if (videoSrc) videoSrc = resolveUrl(videoSrc);
+
+                 if (!videoSrc) { 
+                     const sourceEl = video.querySelector('source[src]');
+                     if (sourceEl && sourceEl.src) videoSrc = resolveUrl(sourceEl.src);
+                 }
+
+                 if (videoSrc && !videoSrc.startsWith('data:') && !seenSources.has(videoSrc)) {
+                    mediaItems.push({ type: 'video', src: videoSrc, poster: video.poster ? resolveUrl(video.poster) : null });
+                    seenSources.add(videoSrc);
+                 }
+            });
+            parent.postMessage({ type: 'mediaFound', mediaList: mediaItems, tabId: '${tabIdForInjection}' }, '*');
+        }
+        
+        function handleParentMessage(event) {
+            if (event.data && event.data.type === 'rescanMediaRequest' && event.data.tabId === '${tabIdForInjection}') {
+                if(typeof window.scanForMediaInIframe === 'function') window.scanForMediaInIframe();
+            }
+        }
+        window.addEventListener('message', handleParentMessage);
+        
+        if (document.readyState === 'complete') {
+            setTimeout(window.scanForMediaInIframe, 1200);
+        } else {
+            window.addEventListener('load', () => setTimeout(window.scanForMediaInIframe, 1200));
+        }
+      `;
+      const targetNode = doc.body || doc.head || doc.documentElement;
+      if (targetNode) {
+        targetNode.appendChild(script);
+      }
+      
+      return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+    }
+
+    // --- More Options Menu Logic ---
+    function renderMoreOptionsMenu() {
+        if (!moreOptionsMenuEl) return;
+        moreOptionsMenuEl.innerHTML = ''; // Clear existing
+
+        const standardSection = document.createElement('div');
+        standardSection.className = 'menu-section';
+
+        const findBtn = document.createElement('button');
+        findBtn.textContent = 'Find in Page...';
+        findBtn.onclick = toggleFindBarForActiveTab;
+        standardSection.appendChild(findBtn);
+
+        const sourceBtn = document.createElement('button');
+        sourceBtn.textContent = 'View Page Source';
+        sourceBtn.onclick = showViewSourceModal;
+        standardSection.appendChild(sourceBtn);
+        
+        const printBtn = document.createElement('button');
+        printBtn.textContent = 'Print Page';
+        printBtn.onclick = printCurrentTabPage;
+        standardSection.appendChild(printBtn);
+
+        const extManagerBtn = document.createElement('button');
+        extManagerBtn.textContent = 'Extension Manager';
+        extManagerBtn.onclick = showExtensionManagerModal;
+        standardSection.appendChild(extManagerBtn);
+        
+        const aboutBtn = document.createElement('button');
+        aboutBtn.textContent = 'About Flash Browser';
+        aboutBtn.onclick = showAboutModal;
+        standardSection.appendChild(aboutBtn);
+        
+        moreOptionsMenuEl.appendChild(standardSection);
+
+        const pinnedExtensions = userExtensions.filter(ext => ext.enabled && ext.pinned);
+        if (pinnedExtensions.length > 0) {
+            const separator = document.createElement('div');
+            separator.className = 'menu-separator';
+            moreOptionsMenuEl.appendChild(separator);
+
+            const pinnedSection = document.createElement('div');
+            pinnedSection.className = 'menu-section';
+            pinnedExtensions.forEach(ext => {
+                const extBtn = document.createElement('button');
+                extBtn.textContent = ext.name;
+                extBtn.title = `Launch "${ext.name}" in new tab`;
+                extBtn.onclick = () => {
+                    const newTabId = createTab(); 
+                    const tabContent = document.getElementById(newTabId);
+                    const iframe = tabContent.querySelector('iframe.tab-iframe');
+                    if (iframe) {
+                        let extContent = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${ext.name}</title>`;
+                        if (ext.css) extContent += `<style>${ext.css}</style>`;
+                        extContent += `</head><body>`;
+                        if (ext.html) extContent += ext.html;
+                        if (ext.js) extContent += `<script>${ext.js}<\/script>`;
+                        extContent += `</body></html>`;
+                        iframe.srcdoc = extContent;
+
+                        const titleSpan = document.querySelector(`#${newTabId}-btn .tab-title`);
+                        if(titleSpan) {
+                            titleSpan.textContent = ext.name.length > 20 ? ext.name.substring(0,18) + '...' : ext.name;
+                            titleSpan.title = ext.name;
+                        }
+                        const urlInput = tabContent.querySelector('.tab-toolbar input[type="text"]');
+                        if(urlInput) urlInput.value = `flash-extension://${ext.name.toLowerCase().replace(/\s+/g, '-')}`;
+                        
+                        if(tabData[newTabId]) {
+                            tabData[newTabId].lastLoadedUrl = `flash-extension://${ext.name.toLowerCase().replace(/\s+/g, '-')}`;
+                            tabData[newTabId].lastLoadedTitle = ext.name;
+                        }
+                    }
+                    toggleMoreOptionsMenu(); 
+                };
+                pinnedSection.appendChild(extBtn);
+            });
+            moreOptionsMenuEl.appendChild(pinnedSection);
+        }
+    }
+    function toggleMoreOptionsMenu() {
+        if (moreOptionsMenuEl) {
+            if (moreOptionsMenuEl.style.display === 'block') {
+                moreOptionsMenuEl.style.display = 'none';
+            } else {
+                renderMoreOptionsMenu(); 
+                moreOptionsMenuEl.style.display = 'block';
+            }
+        }
+    }
+
+    // --- Find in Page Logic ---
+    function toggleFindBarForActiveTab() {
+    if (!currentTabId || !tabData[currentTabId]) return;
+    const tabContent = document.getElementById(currentTabId);
+    if (!tabContent) return;
+    const findBar = tabContent.querySelector('.find-bar');
+    const findInput = findBar.querySelector('.find-input');
+
+    if (findBar.style.display === 'none' || findBar.style.display === '') {
+        findBar.style.display = 'flex';
+        findInput.value = tabData[currentTabId].findState.term || '';
+        findInput.focus();
+        findInput.select();
+        if (findInput.value) {
+            performSearch(currentTabId, findInput.value, true, true);
+        }
+    } else {
+        closeFindBar(currentTabId, true);
+    }
+
+    if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+    hideCustomContextMenu();
+}
+
+function closeFindBar(tabId, clearHighlights = true) {
+    if (!tabId || !tabData[tabId]) return;
+    const currentFindState = tabData[tabId].findState;
+    const tabContent = document.getElementById(tabId);
+    if (!tabContent) return;
+    const findBar = tabContent.querySelector('.find-bar');
+    const matchCountEl = findBar.querySelector('.find-match-count');
+
+    findBar.style.display = 'none';
+    currentFindState.current = 0;
+    currentFindState.total = 0;
+    if (matchCountEl) matchCountEl.textContent = '';
+
+    if (clearHighlights) {
+        const iframe = tabContent.querySelector('iframe.tab-iframe');
+        if (iframe && iframe.contentWindow) {
+            clearSearchHighlights(iframe.contentWindow);
+        }
+    }
+}
+
+function clearSearchHighlights(contentWindow) {
+    if (contentWindow && contentWindow.getSelection) {
+        contentWindow.getSelection().removeAllRanges();
+        try {
+            contentWindow.find('aStringThatAlmostCertainlyWontExistOnThePageXYZ123', false, false, false);
+        } catch (e) { /* Ignore errors */ }
+    }
+}
+
+function performSearch(tabId, term, isNewSearch, findForward) {
+    if (!tabId || !tabData[tabId]) return;
+    const currentFindState = tabData[tabId].findState;
+
+    if (!term || term.trim() === '') {
+        const tabContent = document.getElementById(tabId);
+        if (tabContent) {
+            const matchCountEl = tabContent.querySelector('.find-bar .find-match-count');
+            if (matchCountEl) matchCountEl.textContent = '0/0';
+            clearSearchHighlights(tabContent.querySelector('iframe.tab-iframe')?.contentWindow);
+        }
+        currentFindState.term = '';
+        currentFindState.total = 0;
+        currentFindState.current = 0;
+        return;
+    }
+
+    // Prevent extremely long search terms from freezing browser
+    if (term.length > 1000) {
+        console.warn("Search term too long. Aborting search.");
+        return;
+    }
+
+    const tabContent = document.getElementById(tabId);
+    const iframe = tabContent.querySelector('iframe.tab-iframe');
+    const matchCountEl = tabContent.querySelector('.find-bar .find-match-count');
+    if (!iframe || !iframe.contentWindow || !iframe.contentWindow.find) {
+        if (matchCountEl) matchCountEl.textContent = 'Error';
+        return;
+    }
+
+    const contentWin = iframe.contentWindow;
+    currentFindState.term = term;
+    let found;
+
+    if (isNewSearch) {
+        currentFindState.total = 0;
+        currentFindState.current = 0;
+
+        try {
+            contentWin.getSelection().removeAllRanges();
+            if (contentWin.document.body) contentWin.getSelection().collapse(contentWin.document.body, 0);
+        } catch (e) { console.warn("Error resetting selection for count:", e); }
+
+        let tempCount = 0;
+        const maxFinds = 1000;
+
+        try {
+            while (contentWin.find(term, false, false, false, false, false, false)) {
+                tempCount++;
+                if (tempCount >= maxFinds) {
+                    console.warn("Exceeded max find attempts. Breaking loop.");
+                    break;
+                }
+            }
+        } catch (e) {
+            console.warn("Error during find count loop:", e);
+        }
+
+        currentFindState.total = tempCount;
+
+        try {
+            contentWin.getSelection().removeAllRanges();
+            if (contentWin.document.body) contentWin.getSelection().collapse(contentWin.document.body, 0);
+        } catch (e) { console.warn("Error resetting selection for first find:", e); }
+
+        found = contentWin.find(term, false, false, true, false, false, false);
+        if (found) currentFindState.current = 1;
+    } else {
+        found = contentWin.find(term, false, !findForward, true, false, false, false);
+        if (found) {
+            if (findForward) {
+                currentFindState.current++;
+                if (currentFindState.current > currentFindState.total && currentFindState.total > 0)
+                    currentFindState.current = 1;
+                else if (currentFindState.total === 0) {
+                    currentFindState.total = 1;
+                    currentFindState.current = 1;
+                }
+            } else {
+                currentFindState.current--;
+                if (currentFindState.current < 1 && currentFindState.total > 0)
+                    currentFindState.current = currentFindState.total;
+                else if (currentFindState.total === 0) {
+                    currentFindState.total = 1;
+                    currentFindState.current = 1;
+                }
+            }
+        } else if (currentFindState.total > 0) {
+            try {
+                contentWin.getSelection().removeAllRanges();
+                if (contentWin.document.body) contentWin.getSelection().collapse(contentWin.document.body, findForward ? 0 : 1);
+            } catch (e) { console.warn("Error resetting selection for wrap find:", e); }
+
+            found = contentWin.find(term, false, !findForward, true, false, false, false);
+            if (found) currentFindState.current = findForward ? 1 : currentFindState.total;
+        }
+    }
+
+    if (matchCountEl) {
+        if (currentFindState.total === 0) {
+            matchCountEl.textContent = '0/0';
+        } else if (!found && currentFindState.total > 0) {
+            matchCountEl.textContent = (findForward ? currentFindState.total : 1) + '/' + currentFindState.total;
+        } else {
+            matchCountEl.textContent = currentFindState.current + '/' + currentFindState.total;
+        }
+
+        if (!found && term.trim() !== "" && currentFindState.total === 0)
+            matchCountEl.textContent = 'Not found';
+    }
+
+    currentFindState.lastSearchSuccess = found;
+}
+
+
+
+    // --- View Page Source Logic ---
+    function showViewSourceModal() {
+        if (!currentTabId || !viewSourceModalEl || !sourceCodeContainerEl) return;
+        const activeTabContent = document.getElementById(currentTabId);
+        if (!activeTabContent) return;
+        const iframe = activeTabContent.querySelector('iframe.tab-iframe');
+        if (!iframe) return;
+        let sourceContent = iframe.srcdoc;
+        if (!sourceContent || sourceContent.trim() === "") {
+            if (iframe.src && iframe.src !== 'about:blank' && iframe.src !== 'about:srcdoc') sourceContent = `<!-- Source for remote URL (${iframe.src}) might not be fully available. -->`;
+            else if (iframe.srcdoc && iframe.srcdoc.includes("<h1 style=\"font-weight:lighter;font-size:2em;\">New Tab</h1>")) sourceContent = "<!-- This is a placeholder New Tab page. -->";
+            else sourceContent = "<!-- No source code available. -->";
+        }
+        sourceCodeContainerEl.textContent = sourceContent; 
+        viewSourceModalEl.classList.add('active');
+        if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+        hideCustomContextMenu();
+    }
+    function closeViewSourceModal() { if (viewSourceModalEl) viewSourceModalEl.classList.remove('active'); }
+    function downloadSourceCode() {
+        if (!sourceCodeContainerEl) return;
+        const sourceText = sourceCodeContainerEl.textContent;
+        const blob = new Blob([sourceText], { type: 'text/html;charset=utf-8' });
+        let filename = 'page-source.html';
+        if (currentTabId && tabData[currentTabId]) {
+            const pageUrl = tabData[currentTabId].lastLoadedUrl;
+            if (pageUrl && pageUrl !== "about:blank") {
+                try {
+                    const currentUrl = new URL(pageUrl); let path = currentUrl.pathname;
+                    if (path === '/' || path === '') path = '_index'; else path = path.replace(/\//g, '_');
+                    filename = currentUrl.hostname.replace(/\./g, '_') + path + '.html';
+                    filename = filename.replace(/__+/g, '_').replace(/^_|_$/g, ''); 
+                    if (!filename.endsWith('.html')) filename += '.html';
+                } catch (e) { 
+                    let tempName = pageUrl.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50);
+                    filename = (tempName || 'source') + '.html';
+                }
+            }
+        }
+        const link = document.createElement('a'); link.href = URL.createObjectURL(blob);
+        link.download = filename; document.body.appendChild(link); link.click();
+        document.body.removeChild(link); URL.revokeObjectURL(link.href);
+    }
+
+    // --- Print Page Logic ---
+    function printCurrentTabPage() {
+        if (!currentTabId) return;
+        const activeTabContent = document.getElementById(currentTabId);
+        if (!activeTabContent) return;
+        const iframe = activeTabContent.querySelector('iframe.tab-iframe');
+        if (iframe && iframe.contentWindow && iframe.srcdoc && !iframe.srcdoc.includes("<h1 style=\"font-weight:lighter;font-size:2em;\">New Tab</h1>")) {
+            try { iframe.contentWindow.focus(); iframe.contentWindow.print(); } 
+            catch (e) { console.error("Error initiating print:", e); alert("Could not initiate print."); }
+        } else { alert("No active page content to print, or it's a New Tab page."); }
+        if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+        hideCustomContextMenu();
+    }
+
+    // --- Custom Context Menu Logic ---
+    function showCustomContextMenu(data) {
+        if (!customContextMenuEl || !data || !data.tabId || !tabData[data.tabId]) return;
+        const activeTabContent = document.getElementById(data.tabId);
+        if (!activeTabContent) return;
+        const iframe = activeTabContent.querySelector('iframe.tab-iframe');
+        if (!iframe) return;
+
+        currentContextMenuData = data; 
+        customContextMenuEl.innerHTML = ''; 
+
+        const iframeRect = iframe.getBoundingClientRect();
+        const menuX = data.x + iframeRect.left;
+        const menuY = data.y + iframeRect.top;
+
+        const menuWidth = 180; 
+        const menuHeight = 250; 
+        const finalX = (menuX + menuWidth > window.innerWidth) ? window.innerWidth - menuWidth - 5 : menuX;
+        const finalY = (menuY + menuHeight > window.innerHeight) ? window.innerHeight - menuHeight - 5 : menuY;
+
+
+        customContextMenuEl.appendChild(createContextMenuItem('Reload Tab', () => {
+            if (tabData[data.tabId]) {
+                 const urlToReload = tabData[data.tabId].lastLoadedUrl || tabData[data.tabId].history.urls[tabData[data.tabId].history.currentIndex];
+                 if (urlToReload) loadInTab(data.tabId, urlToReload, false);
+            }
+        }));
+        customContextMenuEl.appendChild(createContextMenuItem('Share Page URL...', async () => {
+            const pageUrlToShare = data.baseURI || (tabData[data.tabId] ? tabData[data.tabId].lastLoadedUrl : null);
+            if (!pageUrlToShare || pageUrlToShare === 'about:blank') { alert("No valid page URL to share."); return; }
+            try {
+                if (navigator.share) {
+                    await navigator.share({ title: tabData[data.tabId]?.lastLoadedTitle || document.title, text: `Check out this page: ${pageUrlToShare}`, url: pageUrlToShare });
+                } else if (navigator.clipboard) {
+                    await navigator.clipboard.writeText(pageUrlToShare);
+                    alert('Page URL copied to clipboard!');
+                } else {
+                    alert('Sharing/Copying not supported.');
+                }
+            } catch (err) { console.error('Share/Copy error:', err); alert('Could not share or copy URL.'); }
+        }));
+        customContextMenuEl.appendChild(document.createElement('hr'));
+
+        if (data.targetType === 'link' && data.href) {
+            customContextMenuEl.appendChild(createContextMenuItem('Open Link in New Tab', () => createTab(data.href)));
+            customContextMenuEl.appendChild(createContextMenuItem('Copy Link Address', async () => {
+                try { await navigator.clipboard.writeText(data.href); alert('Link address copied!'); }
+                catch(e) { alert('Failed to copy link address.'); }
+            }));
+            customContextMenuEl.appendChild(document.createElement('hr'));
+        }
+
+        if (data.targetType === 'image' && data.src) {
+            customContextMenuEl.appendChild(createContextMenuItem('Save Image As...', () => triggerHostBrowserDownload(data.src, extractFilename(data.src, null))));
+            customContextMenuEl.appendChild(createContextMenuItem('Copy Image URL', async () => {
+                 try { await navigator.clipboard.writeText(data.src); alert('Image URL copied!'); }
+                 catch(e) { alert('Failed to copy image URL.'); }
+            }));
+             customContextMenuEl.appendChild(document.createElement('hr'));
+        }
+        
+        customContextMenuEl.appendChild(createContextMenuItem('View Page Source', () => showViewSourceModal()));
+        customContextMenuEl.appendChild(createContextMenuItem('Print Page...', () => printCurrentTabPage()));
+
+
+        customContextMenuEl.style.top = `${finalY}px`;
+        customContextMenuEl.style.left = `${finalX}px`;
+        customContextMenuEl.style.display = 'block';
+    }
+    function createContextMenuItem(text, action) {
+        const button = document.createElement('button');
+        button.textContent = text;
+        button.onclick = (e) => {
+            e.stopPropagation(); 
+            action();
+            hideCustomContextMenu();
+        };
+        return button;
+    }
+    function hideCustomContextMenu() {
+        if (customContextMenuEl) customContextMenuEl.style.display = 'none';
+        currentContextMenuData = null;
+    }
+
+    // --- Media Grabber Logic ---
+    function updateMediaGrabberIconVisibility() {
+        if (!mediaGrabberIconEl || !currentTabId || !tabData[currentTabId]) {
+             if(mediaGrabberIconEl) mediaGrabberIconEl.style.display = 'none';
+             return;
+        }
+        const mediaForTab = tabData[currentTabId].media || [];
+        if (mediaForTab.length > 0) {
+            mediaGrabberIconEl.style.display = 'block';
+            mediaGrabberIconEl.textContent = `🖼️ ${mediaForTab.length}`;
+        } else {
+            mediaGrabberIconEl.style.display = 'none';
+        }
+    }
+    function showMediaGrabberModal() {
+        if (!mediaGrabberModalEl || !mediaGrabberListEl || !currentTabId || !tabData[currentTabId]) return;
+        hideCustomContextMenu();
+        
+        mediaGrabberListEl.innerHTML = '';
+        const mediaItems = tabData[currentTabId].media || [];
+
+        if (mediaItems.length === 0) {
+            mediaGrabberListEl.innerHTML = '<li class="no-media-found">No media found on this page. Try refreshing media.</li>';
+        } else {
+            mediaItems.forEach(media => {
+                const li = document.createElement('li');
+                li.className = 'media-grabber-item';
+                
+                let thumbnailHtml = '';
+                const itemClickAction = () => { 
+                    window.open(media.src, '_blank'); 
+                    closeMediaGrabberModal(); 
+                };
+
+                if (media.type === 'image') {
+                    thumbnailHtml = `<img src="${media.src}" alt="${media.alt || 'Image'}" class="thumbnail" onerror="this.style.display='none'; this.nextElementSibling.querySelector('.media-type').textContent += ' (Thumb failed)'">`; 
+                } else if (media.type === 'video') {
+                    thumbnailHtml = media.poster ? `<img src="${media.poster}" alt="Video Poster" class="thumbnail" onerror="this.style.display='none'; this.nextElementSibling.querySelector('.media-type').textContent += ' (Thumb failed)'">` : `<span class="thumbnail" style="display:inline-flex; align-items:center; justify-content:center;font-size:1.5em;">🎬</span>`;
+                }
+
+                const filename = extractFilename(media.src, null);
+                
+                const clickableArea = document.createElement('div');
+                clickableArea.style.display = 'flex';
+                clickableArea.style.alignItems = 'center';
+                clickableArea.style.flexGrow = '1';
+                clickableArea.style.cursor = 'pointer';
+                clickableArea.onclick = itemClickAction; 
+
+                clickableArea.innerHTML = `
+                    ${thumbnailHtml}
+                    <div class="media-info">
+                        <span class="media-filename" title="${media.src}">${filename}</span>
+                        <span class="media-type">${media.type.toUpperCase()}</span>
+                    </div>
+                `;
+                
+                li.appendChild(clickableArea);
+
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'download-media-btn primary-action';
+                downloadBtn.textContent = 'Download';
+                downloadBtn.onclick = (e) => {
+                    e.stopPropagation(); 
+                    triggerHostBrowserDownload(media.src, filename);
+                };
+                li.appendChild(downloadBtn);
+                mediaGrabberListEl.appendChild(li);
+            });
+        }
+        mediaGrabberModalEl.classList.add('active');
+    }
+    function closeMediaGrabberModal() {
+        if (mediaGrabberModalEl) mediaGrabberModalEl.classList.remove('active');
+    }
+    function refreshMediaForCurrentTab() {
+        if (!currentTabId) return;
+        const activeTabContent = document.getElementById(currentTabId);
+        if (!activeTabContent) return;
+        const iframe = activeTabContent.querySelector('iframe.tab-iframe');
+        if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.postMessage({ type: 'rescanMediaRequest', tabId: currentTabId }, '*');
+        }
+        if (mediaGrabberListEl) mediaGrabberListEl.innerHTML = '<li class="no-media-found">Rescanning media...</li>';
+    }
+
+    // --- Extension Manager Logic ---
+    // const EXTENSIONS_STORAGE_KEY = 'flashBrowserUserExtensions'; // Already defined above
+    // let userExtensions = []; // Already defined above
+
+    function loadUserExtensionsFromStorage() {
+        try {
+            const storedExtensions = localStorage.getItem(EXTENSIONS_STORAGE_KEY);
+            userExtensions = storedExtensions ? JSON.parse(storedExtensions) : [];
+            userExtensions.forEach(ext => {
+                if (typeof ext.enabled === 'undefined') ext.enabled = true;
+                if (typeof ext.pinned === 'undefined') ext.pinned = false;
+            });
+        } catch (e) {
+            console.error("Error loading extensions from localStorage:", e);
+            userExtensions = [];
+        }
+    }
+    function saveUserExtensionsToStorage() {
+        try {
+            localStorage.setItem(EXTENSIONS_STORAGE_KEY, JSON.stringify(userExtensions));
+        } catch (e) {
+            console.error("Error saving extensions to localStorage:", e);
+        }
+        renderMoreOptionsMenu(); 
+    }
+    function renderInstalledExtensionsList() {
+        if (!installedExtensionsListEl) return;
+        installedExtensionsListEl.innerHTML = '';
+        if (userExtensions.length === 0) {
+            installedExtensionsListEl.innerHTML = '<li class="no-extensions">No extensions loaded.</li>';
+            return;
+        }
+        userExtensions.forEach(ext => {
+            const li = document.createElement('li');
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'extension-info';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'extension-name';
+            nameSpan.textContent = ext.name || 'Unnamed Extension';
+            infoDiv.appendChild(nameSpan);
+
+            const controlsDiv = document.createElement('div');
+            controlsDiv.className = 'extension-controls';
+
+            const enableLabel = document.createElement('label');
+            enableLabel.style.marginRight = '10px';
+            enableLabel.style.fontSize = '0.8em';
+            const enableCheckbox = document.createElement('input');
+            enableCheckbox.type = 'checkbox';
+            enableCheckbox.checked = ext.enabled;
+            enableCheckbox.title = ext.enabled ? 'Disable Extension' : 'Enable Extension';
+            enableCheckbox.onchange = () => toggleExtensionEnable(ext.id);
+            enableLabel.appendChild(enableCheckbox);
+            enableLabel.appendChild(document.createTextNode(ext.enabled ? ' Enabled' : ' Disabled'));
+            controlsDiv.appendChild(enableLabel);
+
+            const pinBtn = document.createElement('button');
+            pinBtn.className = `pin-extension-btn ${ext.pinned ? 'pinned' : ''}`;
+            pinBtn.textContent = ext.pinned ? 'Unpin' : 'Pin';
+            pinBtn.title = ext.pinned ? 'Unpin from More Menu' : 'Pin to More Menu';
+            pinBtn.onclick = () => toggleExtensionPin(ext.id);
+            controlsDiv.appendChild(pinBtn);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-extension-btn';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.onclick = () => deleteUserExtension(ext.id);
+            controlsDiv.appendChild(deleteBtn);
+            
+            li.appendChild(infoDiv);
+            li.appendChild(controlsDiv);
+            installedExtensionsListEl.appendChild(li);
+        });
+    }
+    function showExtensionManagerModal() {
+        if (extensionManagerModalEl) {
+            renderInstalledExtensionsList();
+            extensionJsonInputEl.value = ''; 
+            extensionManagerModalEl.classList.add('active');
+        }
+        if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+        hideCustomContextMenu();
+    }
+    function closeExtensionManagerModal() {
+        if (extensionManagerModalEl) extensionManagerModalEl.classList.remove('active');
+    }
+    function loadExtensionFromInput() {
+        if (!extensionJsonInputEl) return;
+        const jsonText = extensionJsonInputEl.value.trim();
+        if (!jsonText) {
+            alert("Please paste extension JSON in the text area.");
+            return;
+        }
+        try {
+            const extData = JSON.parse(jsonText);
+            if (!extData.name || (!extData.html && !extData.css && !extData.js)) {
+                alert("Invalid extension format. Must have a 'name' and at least one of 'html', 'css', or 'js'.");
+                return;
+            }
+            const existingExtIndex = userExtensions.findIndex(ext => ext.name === extData.name);
+            if (existingExtIndex !== -1) {
+                if (!confirm(`An extension named "${extData.name}" already exists. Overwrite it?`)) {
+                    return;
+                }
+                userExtensions.splice(existingExtIndex, 1); 
+            }
+
+            extData.id = `ext-${Date.now()}-${Math.random().toString(36).substring(2,9)}`;
+            extData.enabled = true; 
+            extData.pinned = false; 
+            userExtensions.push(extData);
+            saveUserExtensionsToStorage();
+            renderInstalledExtensionsList();
+            extensionJsonInputEl.value = ''; 
+            alert(`Extension "${extData.name}" loaded successfully! It will apply to new tabs when enabled.`);
+        } catch (e) {
+            console.error("Error parsing extension JSON:", e);
+            alert("Invalid JSON provided for the extension. Please check the format.");
+        }
+    }
+    async function pasteExtensionJsonFromClipboard() {
+        if (!extensionJsonInputEl) return;
+        if (navigator.clipboard && typeof navigator.clipboard.readText === 'function') {
+            try {
+                const text = await navigator.clipboard.readText();
+                extensionJsonInputEl.value = text;
+                // alert("Pasted from clipboard!"); // Optional: User feedback
+            } catch (err) {
+                console.error('Failed to read clipboard contents: ', err);
+                alert('Failed to paste from clipboard. You might need to grant permission or paste manually (Ctrl+V / Cmd+V).');
+            }
+        } else {
+            alert('Clipboard API not available. Please paste manually (Ctrl+V / Cmd+V).');
+        }
+    }
+
+    function deleteUserExtension(extensionId) {
+        userExtensions = userExtensions.filter(ext => ext.id !== extensionId);
+        saveUserExtensionsToStorage();
+        renderInstalledExtensionsList();
+    }
+    function clearAllUserExtensions() {
+        if (confirm("Are you sure you want to delete ALL installed extensions? This cannot be undone.")) {
+            userExtensions = [];
+            saveUserExtensionsToStorage();
+            renderInstalledExtensionsList();
+        }
+    }
+    function toggleExtensionEnable(extensionId) {
+        const ext = userExtensions.find(e => e.id === extensionId);
+        if (ext) {
+            ext.enabled = !ext.enabled;
+            saveUserExtensionsToStorage();
+            renderInstalledExtensionsList(); 
+        }
+    }
+    function toggleExtensionPin(extensionId) {
+        const ext = userExtensions.find(e => e.id === extensionId);
+        if (ext) {
+            ext.pinned = !ext.pinned;
+            saveUserExtensionsToStorage();
+            renderInstalledExtensionsList(); 
+            renderMoreOptionsMenu(); 
+        }
+    }
+
+    function getEnabledInjectedExtensionHTML() {
+        return userExtensions.filter(ext => ext.enabled).map(ext => ext.html || '').join('\n');
+    }
+    function getEnabledInjectedExtensionCSS() {
+        return userExtensions.filter(ext => ext.enabled).map(ext => ext.css || '').join('\n');
+    }
+    function getEnabledInjectedExtensionJS() {
+        return userExtensions.filter(ext => ext.enabled).map(ext => ext.js || '').join(';\n'); 
+    }
+
+    // --- About Modal Logic ---
+    function showAboutModal() {
+        if(aboutModalEl) aboutModalEl.classList.add('active');
+        if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+        hideCustomContextMenu();
+    }
+    function closeAboutModal() {
+        if(aboutModalEl) aboutModalEl.classList.remove('active');
+    }
+
+
+    // --- Main Application Initialization ---
+    function initializeApp() {
+        console.log("Flash Browser Initializing...");
+        settingsModalEl = document.getElementById('settingsModal');
+        openSettingsBtnEl = document.getElementById('openSettingsBtn');
+        closeSettingsModalBtnEl = document.getElementById('closeSettingsModalBtn');
+        themeSelectorEl = document.getElementById('themeSelector');
+        searchEngineSelectorEl = document.getElementById('searchEngineSelector'); 
+
+        homepageModalEl = document.getElementById('homepageModal');
+        openHomepageModalBtnEl = document.getElementById('openHomepageModalBtn');
+        closeHomepageModalBtnEl = document.getElementById('closeHomepageModalBtn');
+        homepageUrlInputEl = document.getElementById('homepageUrlInput');
+        saveHomepageBtnEl = document.getElementById('saveHomepageBtn');
+        currentHomepageDisplayEl = document.getElementById('currentHomepageDisplay');
+
+        bookmarksBtnEl = document.getElementById('bookmarksBtn');
+        bookmarksModalEl = document.getElementById('bookmarksModal');
+        closeBookmarksModalBtnEl = document.getElementById('closeBookmarksModalBtn');
+        bookmarksListEl = document.getElementById('bookmarksList');
+        historyBtnEl = document.getElementById('historyBtn');
+        historyModalEl = document.getElementById('historyModal');
+        closeHistoryModalBtnEl = document.getElementById('closeHistoryModalBtn');
+        historyListContainerEl = document.getElementById('historyListContainer');
+        clearAllHistoryBtnEl = document.getElementById('clearAllHistoryBtn');
+
+        moreOptionsBtnEl = document.getElementById('moreOptionsBtn');
+        moreOptionsMenuEl = document.getElementById('moreOptionsMenu');
+        
+        viewSourceModalEl = document.getElementById('viewSourceModal');
+        closeViewSourceModalBtnEl = document.getElementById('closeViewSourceModalBtn');
+        sourceCodeContainerEl = document.getElementById('sourceCodeContainer');
+        downloadSourceBtnEl = document.getElementById('downloadSourceBtn');
+        
+        extensionManagerModalEl = document.getElementById('extensionManagerModal');
+        closeExtensionManagerModalBtnEl = document.getElementById('closeExtensionManagerModalBtn');
+        extensionJsonInputEl = document.getElementById('extensionJsonInput');
+        loadExtensionBtnEl = document.getElementById('loadExtensionBtn');
+        pasteExtensionJsonBtnEl = document.getElementById('pasteExtensionJsonBtn');
+        installedExtensionsListEl = document.getElementById('installedExtensionsList');
+        clearAllExtensionsBtnEl = document.getElementById('clearAllExtensionsBtn');
+        
+        aboutModalEl = document.getElementById('aboutModal');
+        closeAboutModalBtnEl = document.getElementById('closeAboutModalBtn');
+
+        customContextMenuEl = document.getElementById('customContextMenu');
+        mediaGrabberIconEl = document.getElementById('mediaGrabberIcon');
+        mediaGrabberModalEl = document.getElementById('mediaGrabberModal');
+        closeMediaGrabberModalBtnEl = document.getElementById('closeMediaGrabberModalBtn');
+        mediaGrabberListEl = document.getElementById('mediaGrabberList');
+        refreshMediaGrabberBtnEl = document.getElementById('refreshMediaGrabberBtn');
+
+        loadTheme(); 
+        loadSearchEngineSetting(); 
+        loadHomepageSetting(); 
+        loadBookmarks(); 
+        loadGlobalHistory();
+        loadUserExtensionsFromStorage(); 
+        renderMoreOptionsMenu(); 
+
+        if (openSettingsBtnEl) openSettingsBtnEl.onclick = () => { 
+            if (themeSelectorEl) themeSelectorEl.value = currentTheme; 
+            if (searchEngineSelectorEl) searchEngineSelectorEl.value = currentSearchEngineUrl; 
+            updateCurrentHomepageDisplay(); 
+            settingsModalEl.classList.add('active'); 
+            if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+             hideCustomContextMenu();
+        };
+        if (closeSettingsModalBtnEl) closeSettingsModalBtnEl.onclick = () => settingsModalEl.classList.remove('active');
+        if (settingsModalEl) settingsModalEl.onclick = (e) => { if (e.target === settingsModalEl) settingsModalEl.classList.remove('active'); };
+        
+        if (openHomepageModalBtnEl) openHomepageModalBtnEl.onclick = showHomepageModal;
+        if (closeHomepageModalBtnEl) closeHomepageModalBtnEl.onclick = closeHomepageModal;
+        if (saveHomepageBtnEl) saveHomepageBtnEl.onclick = saveHomepageSetting;
+        if (homepageModalEl) homepageModalEl.onclick = (e) => { if (e.target === homepageModalEl) closeHomepageModal(); };
+        if (homepageUrlInputEl) homepageUrlInputEl.onkeydown = (e) => { if (e.key === 'Enter') saveHomepageSetting(); };
+
+
+        if (bookmarksBtnEl) {
+            bookmarksBtnEl.onclick = () => {
+                showBookmarksModal();
+                if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+                 hideCustomContextMenu();
+            };
+        }
+        if (closeBookmarksModalBtnEl) closeBookmarksModalBtnEl.onclick = closeBookmarksModal;
+        if (bookmarksModalEl) bookmarksModalEl.onclick = (e) => { if (e.target === bookmarksModalEl) closeBookmarksModal(); };
+
+        if (historyBtnEl) {
+            historyBtnEl.onclick = () => {
+                showHistoryModal();
+                if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+                 hideCustomContextMenu();
+            };
+        }
+        if (closeHistoryModalBtnEl) closeHistoryModalBtnEl.onclick = closeHistoryModal;
+        if (historyModalEl) historyModalEl.onclick = (e) => { if (e.target === historyModalEl) closeHistoryModal(); };
+        if (clearAllHistoryBtnEl) clearAllHistoryBtnEl.onclick = clearAllGlobalHistory;
+        
+        if (themeSelectorEl) {
+            themeSelectorEl.onchange = (event) => {
+                const newTheme = event.target.value; applyTheme(newTheme); saveTheme(newTheme);
+                if (currentTabId && tabData[currentTabId]) {
+                    if (tabData[currentTabId].lastLoadedUrl === 'about:blank') {
+                        setNewTabPlaceholderContent(currentTabId); 
+                    }
+                }
+            };
+        }
+        if (searchEngineSelectorEl) {
+            searchEngineSelectorEl.onchange = (event) => {
+                saveSearchEngineSetting(event.target.value);
+            };
+        }
+
+        if (moreOptionsBtnEl) moreOptionsBtnEl.onclick = (e) => {
+            e.stopPropagation(); 
+            toggleMoreOptionsMenu();
+             hideCustomContextMenu();
+        };
+        
+        if (closeViewSourceModalBtnEl) closeViewSourceModalBtnEl.onclick = closeViewSourceModal;
+        if (downloadSourceBtnEl) downloadSourceBtnEl.onclick = downloadSourceCode;
+        if (viewSourceModalEl) viewSourceModalEl.onclick = (e) => { if (e.target === viewSourceModalEl) closeViewSourceModal(); };
+        
+        if (closeExtensionManagerModalBtnEl) closeExtensionManagerModalBtnEl.onclick = closeExtensionManagerModal;
+        if (loadExtensionBtnEl) loadExtensionBtnEl.onclick = loadExtensionFromInput;
+        if (pasteExtensionJsonBtnEl) pasteExtensionJsonBtnEl.onclick = pasteExtensionJsonFromClipboard;
+        if (clearAllExtensionsBtnEl) clearAllExtensionsBtnEl.onclick = clearAllUserExtensions;
+        if (extensionManagerModalEl) extensionManagerModalEl.onclick = (e) => { if (e.target === extensionManagerModalEl) closeExtensionManagerModal(); };
+
+        if (closeAboutModalBtnEl) closeAboutModalBtnEl.onclick = closeAboutModal;
+        if (aboutModalEl) aboutModalEl.onclick = (e) => { if(e.target === aboutModalEl) closeAboutModal(); };
+
+
+        if (mediaGrabberIconEl) mediaGrabberIconEl.onclick = showMediaGrabberModal;
+        if (closeMediaGrabberModalBtnEl) closeMediaGrabberModalBtnEl.onclick = closeMediaGrabberModal;
+        if (mediaGrabberModalEl) mediaGrabberModalEl.onclick = (e) => { if(e.target === mediaGrabberModalEl) closeMediaGrabberModal(); };
+        if (refreshMediaGrabberBtnEl) refreshMediaGrabberBtnEl.onclick = refreshMediaForCurrentTab;
+
+
+        const newTabGlobalBtn = document.getElementById('newTabBtn');
+        if (newTabGlobalBtn) {
+            newTabGlobalBtn.onclick = () => {
+                createTab(); 
+                if (moreOptionsMenuEl) moreOptionsMenuEl.style.display = 'none';
+                 hideCustomContextMenu();
+            }
+        };
+        
+        createTab(); 
+        console.log("Flash Browser Initialized.");
+    }
+
+    // --- Event Listeners (Global, outside initializeApp) ---
+    window.addEventListener('message', e => {
+      if (e.data && e.data.type) { 
+        const { tabId, url, filename, mediaList, x, y, targetType, href, src, baseURI } = e.data;
+        switch(e.data.type) {
+            case 'navigate':
+                if (tabId && url && document.getElementById(tabId)) {
+                    if (currentTabId !== tabId) activateTab(tabId);
+                    loadInTab(tabId, url); 
+                }
+                break;
+            case 'newTabNavigate':
+                if (url) createTab(url); 
+                break;
+            case 'hostDownloadRequest': 
+                if (url) triggerHostBrowserDownload(url, filename);
+                break;
+            case 'showContextMenu':
+                if (tabId) showCustomContextMenu({ tabId, x, y, targetType, href, src, baseURI });
+                break;
+            case 'mediaFound':
+                if (tabId && mediaList && tabData[tabId]) {
+                    tabData[tabId].media = mediaList;
+                    if (tabId === currentTabId) { 
+                        updateMediaGrabberIconVisibility();
+                        if (mediaGrabberModalEl && mediaGrabberModalEl.classList.contains('active')) {
+                            showMediaGrabberModal(); 
+                        }
+                    }
+                }
+                break;
+        }
+      }
+    });
+
+    document.addEventListener('click', function(event) {
+        if (moreOptionsBtnEl && moreOptionsMenuEl && moreOptionsMenuEl.style.display === 'block') {
+            if (!moreOptionsBtnEl.contains(event.target) && !moreOptionsMenuEl.contains(event.target)) {
+                moreOptionsMenuEl.style.display = 'none';
+            }
+        }
+        if (customContextMenuEl && customContextMenuEl.style.display === 'block') {
+            if (!customContextMenuEl.contains(event.target)) {
+                hideCustomContextMenu();
+            }
+        }
+    });
+    document.addEventListener('contextmenu', function(event) {
+        const clickedOnIframe = event.target.closest('iframe.tab-iframe');
+        if (!clickedOnIframe) { 
+            event.preventDefault();
+        }
+    });
+
+    // --- Start SDK Ready Check and App Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log("DOM Loaded. Starting Puter SDK ready check...");
+        puterReadyCheckInterval = setInterval(() => {
+            puterReadyChecks++;
+            if (isPuterNetReady()) { 
+                clearInterval(puterReadyCheckInterval);
+                console.log("Puter SDK (puter.net.fetch) is ready. Initializing Flash Browser.");
+                initializeApp();
+            } else if (puterReadyChecks > MAX_PUTER_READY_CHECKS) {
+                clearInterval(puterReadyCheckInterval);
+                console.error("Puter SDK (puter.net.fetch) did not become ready after timeout. Flash Browser functionality may be limited.");
+                const bodyMessage = document.createElement('div');
+                bodyMessage.textContent = "Flash Browser could not connect to required services. Page loading and other features may not work. Please try refreshing the page or check your internet connection.";
+                bodyMessage.style.padding = "20px";
+                bodyMessage.style.backgroundColor = "lightcoral";
+                bodyMessage.style.textAlign = "center";
+                bodyMessage.style.fontWeight = "bold";
+                document.body.prepend(bodyMessage);
+            }
+        }, 100); 
+    });
+
+  </script>
+</body>
+</html>

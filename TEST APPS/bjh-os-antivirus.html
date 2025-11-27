@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BJH OS Antivirus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #101820;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #1b2a38;
+      padding: 30px 40px;
+      border-radius: 15px;
+      width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #f1c40f;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background: #34495e;
+      color: white;
+      cursor: pointer;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      font-weight: bold;
+      background: #f1c40f;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .progress {
+      margin-top: 15px;
+      height: 20px;
+      background: #2c3e50;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #f1c40f;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .spinner {
+      margin: 15px auto;
+      border: 4px solid #f1c40f;
+      border-top: 4px solid transparent;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 0.95em;
+      min-height: 1.2em;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #22303c;
+      font-weight: bold;
+    }
+
+    .safe { color: #2ecc71; }
+    .danger { color: #e74c3c; }
+  </style>
+
+  <!-- MD5 hashing library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+
+  <!-- Load virus hashes from separate file -->
+  <script src="hashed.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>BJH OS Antivirus</h1>
+  <input type="file" id="fileInput" />
+  <button id="scanBtn">Scan File</button>
+
+  <div class="spinner" id="spinner"></div>
+  <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="status" id="status"></div>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  const virusHashes = virusHashText
+    .split('\n')
+    .map(h => h.trim().toLowerCase())
+    .filter(h => h.length === 32);
+
+  const fileInput = document.getElementById('fileInput');
+  const scanBtn = document.getElementById('scanBtn');
+  const result = document.getElementById('result');
+  const spinner = document.getElementById('spinner');
+  const progress = document.getElementById('progress');
+  const progressBar = document.getElementById('progressBar');
+  const status = document.getElementById('status');
+
+  function calculateMD5(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const hash = md5(e.target.result);
+          resolve(hash);
+        } catch (err) {
+          reject(err);
+        }
+      };
+      reader.onerror = () => reject("File read error");
+      reader.readAsBinaryString(file);
+    });
+  }
+
+  scanBtn.addEventListener('click', async () => {
+    result.textContent = "";
+    result.className = "result";
+    progressBar.style.width = "0%";
+    progress.style.display = "block";
+    spinner.style.display = "block";
+    status.textContent = "";
+
+    if (!fileInput.files.length) {
+      alert("Please select a file to scan.");
+      progress.style.display = "none";
+      spinner.style.display = "none";
+      return;
+    }
+
+    try {
+      status.textContent = "Calculating hash...";
+      progressBar.style.width = "30%";
+      const file = fileInput.files[0];
+      const fileHash = await calculateMD5(file);
+
+      status.textContent = "Checking against virus database...";
+      progressBar.style.width = "60%";
+
+      setTimeout(() => {
+        if (virusHashes.includes(fileHash.toLowerCase())) {
+          result.textContent = `🚨 Virus Detected! Delete File Now. This can harm BJH OS! `;<!--MD5: ${fileHash}-->
+          result.classList.add("danger");
+        } else {
+          result.textContent = "✅ File is safe.";
+          result.classList.add("safe");
+        }
+        progressBar.style.width = "100%";
+        spinner.style.display = "none";
+        status.textContent = "Scan complete.";
+      }, 2000);
+    } catch (err) {
+      result.textContent = "❌ Error: " + err;
+      result.classList.add("danger");
+      spinner.style.display = "none";
+      progress.style.display = "none";
+      status.textContent = "Scan failed.";
+    }
+  });
+</script>
+
+</body>
+</html>

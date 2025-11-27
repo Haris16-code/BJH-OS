@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BJH OS AI</title>
+<style>
+/* Basic reset */
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: #0f111a; color: #fff; display: flex; justify-content:center; align-items:center; height:100vh; }
+.container { width: 90%; max-width: 700px; display: flex; flex-direction: column; background: #1c1f2b; border-radius: 15px; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.7);}
+.header { padding: 15px; font-size: 1.5em; font-weight: bold; background: #252944; text-align: center; }
+.chat-area { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #1c1f2b; }
+.message { padding: 12px 15px; border-radius: 15px; max-width: 80%; word-wrap: break-word; }
+.user { align-self: flex-end; background: #4a90e2; color:#fff; }
+.bot { align-self: flex-start; background: #2e3145; color:#fff; }
+.input-area { display: flex; padding: 15px; background: #252944; gap: 10px; }
+.input-area input { flex: 1; padding: 12px; border-radius: 20px; border: none; background: #1c1f2b; color: #fff; font-size: 1em; }
+.input-area button { padding: 12px 20px; border-radius: 20px; border: none; background: #4a90e2; color:#fff; cursor:pointer; font-weight:bold; }
+::-webkit-scrollbar { width:8px; }
+::-webkit-scrollbar-track { background:#1c1f2b; }
+::-webkit-scrollbar-thumb { background:#4a90e2; border-radius:4px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">BJH OS AI</div>
+  <div class="chat-area" id="chatArea">
+    <div class="bot message">Hello! I am BJH OS AI, your all-rounder assistant. Ask me anything!</div>
+  </div>
+  <form class="input-area" id="inputForm">
+    <input type="text" id="userInput" placeholder="Type a message..." autocomplete="off" required/>
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<script>
+const API_KEY = "AIzaSyBgoyk-fVWaWLmv8LAmKX8WtZI49ctplac"; // Replace with your Google API key
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+
+const chatArea = document.getElementById("chatArea");
+const userInput = document.getElementById("userInput");
+const inputForm = document.getElementById("inputForm");
+
+const chatHistory = [];
+
+function addMessage(content, sender) {
+  const div = document.createElement("div");
+  div.classList.add("message", sender);
+  div.innerText = content;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+async function getAIResponse(message) {
+  const lowerMsg = message.toLowerCase();
+
+  // Local responses first
+  if (lowerMsg.includes("your name") || lowerMsg.includes("who are you")) 
+    return "I am BJH OS AI — your all-rounder assistant!";
+
+  if (lowerMsg.includes("how are you")) 
+    return "I'm running perfectly, thank you for asking!";
+
+  if (
+    lowerMsg.includes("developer") || 
+    lowerMsg.includes("who made you") ||
+    lowerMsg.includes("develop") ||
+    lowerMsg.includes("created you")
+  ) 
+    return "My developer is Muhammad Haris.";
+
+  if (lowerMsg.includes("what can you do") || lowerMsg.includes("purpose")) 
+    return "I am BJH OS AI, your all-rounder assistant for chatting, helping, learning, and fun!";
+
+  if (lowerMsg.includes("bjh os")) 
+    return `BJH OS is an open-source operating system developed by Muhammad Haris. 
+It is designed to run in web browsers, offering apps, utilities, and a futuristic interface. 
+BJH OS AI is a part of BJH OS, created to assist users with all-round tasks and information within the OS.`;
+
+  // For anything else, use API
+  chatHistory.push({ role: "user", parts: [{ text: message }] });
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contents: chatHistory })
+    });
+    const data = await res.json();
+    let aiText = "Sorry, I couldn't understand.";
+    if (res.ok && data.candidates && data.candidates[0].content.parts[0].text) {
+      aiText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g,"$1").trim();
+    }
+    chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+    return aiText;
+  } catch (err) {
+    return "Error: " + err.message;
+  }
+}
+
+inputForm.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const message = userInput.value.trim();
+  if(!message) return;
+  addMessage(message, "user");
+  userInput.value = "";
+  addMessage("BJH OS AI is typing...", "bot");
+  const lastBot = chatArea.lastChild;
+  const aiResponse = await getAIResponse(message);
+  lastBot.innerText = aiResponse;
+});
+</script>
+
+</body>
+</html>
