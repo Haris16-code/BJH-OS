@@ -88,6 +88,25 @@ It lets you:
 ✅ Ensure the file or folder exists before proceeding.
 
 ---
+## 🧑‍💻 Developer Documentation
+
+BJH OS 4.6 developer docs provide everything you need to **build, extend, and create apps or games** for the web-based desktop experience.  
+
+**Highlights:**
+- **Step-by-Step App & Game Development For BJH OS:** Learn how to create apps and games for BJH OS from scratch, including folder structure, required files, optional assets, and best practices.  
+- **Project Structure:** Clear layout of core files and directories:
+- **Window & Taskbar Systems:** Full guidance on draggable, resizable windows, maximize/restore behavior, taskbar icons, and in-window app launching.  
+- **App Models:** Supports both built-in apps (pre-installed) and 3rd-party apps (installed via BJH OS TOOL).  
+- **App Folder Template & Installer Flow:** Proper folder setup with required files (`index.html`, `favicon.ico`) and optional files (`style.css`, `app.js`, `constants.js`, assets). Includes installer instructions for seamless integration into BJH OS.  
+- **Font Sync & Theming:** Apps automatically inherit the system font using `localStorage.selectedFont`. Supports custom themes and styling.  
+- **Examples Included:** Ready-to-use apps like **Calculator** and **Snake** demonstrate best practices for structure, styling, and functionality.  
+- **API & Programmatic Launching:** Use `window.openAppInWindow(url, title)` for in-window app launches and intercept same-origin `window.open()` calls.  
+- **Testing & Troubleshooting:** Checklist for responsiveness, offline support, console errors, and common fixes. Tips for performance optimization and user experience.  
+- **Developer Guidance & Best Practices:** Code style, accessibility, packaging/sharing apps, contributor workflow, and submitting apps to the BJH OS ecosystem.  
+
+> For full instructions, examples, and detailed guidance:  
+> 📄 **[DEV_DOCS.md — Full Developer Documentation](DEV_DOCS.md)**
+
 
 ## 💻 BJH OS Discord Community
 
