@@ -14,7 +14,7 @@
 4. [Installation & Setup](#installation--setup)
 5. [Architecture & Key Systems](#architecture--key-systems)
 6. [File Descriptions](#file-descriptions)
-7. [Development Guidelines](#development-guidelines)
+7. [Development Guidelines For Developing Apps And Games For BJH OS](#development-guidelines)
 8. [API Reference](#api-reference)
 9. [Troubleshooting](#troubleshooting)
 10. [Contributing](#contributing)
@@ -399,11 +399,10 @@ YOUR_APP_NAME/
 - User can't remove (unless code is changed)
 - Always appear in start menu
 
-**2. 3rd-Party Apps** (Installed via Installer)
+**2. 3rd-Party Apps** (Installed via BJH OS Tool)
 - Location: `Installed Apps/[APP_NAME]/`
-- Registered: Automatically via BJH OS Installer app
-- User can install/uninstall anytime
-- Appear in start menu after installation
+- Registered: Automatically via BJH OS Tool
+- Appear in Installed Apps after installation in BJH OS
 
 **Both use identical structure and code!** The only difference is registration method and location.
 
@@ -436,16 +435,16 @@ Add this to the start menu section:
 
 **Step 3: Add icon**
 
-Save 64x64 PNG to: `Root Directory/OS Files/ICONS/my-app.png`
+Save PNG to: `Root Directory/OS Files/ICONS/my-app.png`
 
-#### Developing 3rd-Party Apps
+#### Developing 3rd-Party Apps Installed Via BJH OS Tool
 
-**Location:** `Installed Apps/my-app/`
+**Create A New Folder:** `My App (The Name Of Folder Become The Name Of Your App.`
 
 **Step 1: Create folder with required files**
 ```
-Installed Apps/my-app/
-├── index.html       (REQUIRED)
+My App (You can develop anything using HTML CSS JS)
+├── index.html       (REQUIRED Main file)
 ├── favicon.ico      (REQUIRED - 64x64)
 ├── style.css        (optional)
 └── app.js          (optional)
@@ -453,15 +452,25 @@ Installed Apps/my-app/
 
 **Step 2: Add icon**
 
-Save 64x64 PNG to: `Installed Apps/my-app/favicon.ico` (or same folder)
+Save PNG to: `My App/favicon.ico` ( same folder)
+Another Info If favicon.ico is not in your app folder then default icon is automatically applied.
+### Step 3: Compress Your App/Project Folder
+Once you have completed your application or game, **compress the entire project folder into a ZIP file**. Make sure it includes all necessary files like `index.html` and `favicon.ico`.  
 
-**Step 3: User installation**
+### Step 4: User Installation
+1. The user extracts the ZIP file.  
+2. Open the **BJH OS Tool** app.  
+3. Click the **Install App** button.  
+4. Select the extracted folder.  
+5. BJH OS Tool will automatically:
+   - Read the `index.html` and `favicon.ico` files.  
+   - Detect the app/game name (based on the folder name).  
+   - Copy all files from the app folder into the **Installed Apps** folder in the BJH OS main directory.  
+   - Save app information in `installed_apps.html`, including app/game name, path to `index.html`, and path to `favicon.ico`.  
+6. After installation, **restart or run BJH OS**.  
+7. The newly installed app will appear automatically under **Installed Apps**.  
+   - Open the Start menu (BJH OS icon at the bottom-left) and type **Installed Apps**, or check **Pinned Apps** to access it quickly.
 
-User opens **BJH OS Installer** app:
-- Installer scans `Installed Apps/` folder
-- Reads `index.html` and `favicon.ico`
-- User selects app to install
-- App appears in start menu automatically
 
 **No code changes needed!** Installer handles registration automatically.
 
