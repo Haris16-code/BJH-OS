@@ -318,7 +318,7 @@ Apps are simple HTML files (loaded in iframe windows):
 
 ---
 
-## Development Guidelines
+## Development Guidelines For Developing Apps And Games For BJH OS
 
 ### Code Style & Best Practices
 
