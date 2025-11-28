@@ -103,7 +103,8 @@ We are building an active community around **BJH OS**, where you can:
 - Participate in events, contests, and discussions
 
 Whether you are a **developer, tester, or BJH OS fan**, there’s a place for you here!
----
 
-Made with love in Pakistan ❤️
-© 2025 BJH OS — by Muhammad Haris  
+---
+**Made with love in Pakistan ❤️**  
+---  
+**© 2025 BJH OS — by Muhammad Haris**
