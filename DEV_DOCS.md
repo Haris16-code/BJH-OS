@@ -941,4 +941,4 @@ This project is not affiliated with Microsoft or Windows. It is an Web Based Ope
 
 **End of Developer Documentation**
 
-For questions, issues, or contributions, please contact the project maintainer or open an issue on GitHub.
+For questions, issues, or contributions, please contact us on [Discord](https://discord.gg/SdDSUtCbX8)
