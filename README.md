@@ -33,16 +33,7 @@ Hi everyone! 👋 My name is **Muhammad Haris** and I made a **web-based operati
 
 - 🌐 **Flash Browser**  
   Lightweight, fast, and secure browser integrated into BJH OS.
-
-- 🛠️ **BJH Tool 64-bit Fix**  
-  Improved compatibility with 64-bit utilities and applications.
-
-- 🛡️ **Antivirus Update**  
-  BJH OS Antivirus is now integrated! Scan files offline using VirusShare MD5 signatures with an animated progress bar and detailed results. Virus definitions are updated to the latest version for enhanced security.
-
-- 📝 **About & Settings Rebuilt**  
-  Modern UI with detailed system hardware info, smoother interactions, and improved usability.
-
+  
 - 🌍 **Worldwide Rollout**  
   Updates are being released globally in stages to ensure stability, avoid server overload, and provide a smooth installation experience.
 ---
