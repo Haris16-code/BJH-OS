@@ -105,7 +105,7 @@ BJH OS 4.6 developer docs provide everything you need to **build, extend, and cr
 - **Developer Guidance & Best Practices:** Code style, accessibility, packaging/sharing apps, contributor workflow, and submitting apps to the BJH OS ecosystem.  
 
 > For full instructions, examples, and detailed guidance:  
-> 📄 **[DEV_DOCS.md — Full Developer Documentation](DEV_DOCS.md)**
+> 📄 **[Full Developer Documentation Here](DEV_DOCS.md)**
 
 
 ## 💻 BJH OS Discord Community
