@@ -14,7 +14,7 @@
 4. [Installation & Setup](#installation--setup)
 5. [Architecture & Key Systems](#architecture--key-systems)
 6. [File Descriptions](#file-descriptions)
-7. [Development Guidelines For Developing Apps And Games For BJH OS](#development-guidelines)
+7. [Development Guidelines For Developing Apps And Games For BJH OS Using BJH OS Studio](#development-guidelines)
 8. [API Reference](#api-reference)
 9. [Troubleshooting](#troubleshooting)
 10. [Contributing](#contributing)
@@ -318,7 +318,7 @@ Apps are simple HTML files (loaded in iframe windows):
 
 ---
 
-## Development Guidelines For Developing Apps And Games For BJH OS
+## Development Guidelines For Developing Apps And Games For BJH OS Using BJH OS Studio
 
 ### Code Style & Best Practices
 
@@ -357,9 +357,9 @@ Apps are simple HTML files (loaded in iframe windows):
    - Ensure keyboard navigation works
    - Test with screen readers
 
-### How to Develop Apps for BJH OS
+### How to Develop Apps for BJH OS Using BJH OS Studio
 
-BJH OS supports **HTML, CSS, and JavaScript** apps natively. This guide covers folder structure, font integration, step-by-step creation, best practices, and registration.
+BJH OS supports **HTML, CSS, and JavaScript** apps natively. This guide covers how to use BJH OS Studio, font integration, step-by-step creation, best practices, and registration.
 
 #### App Folder Structure
 
@@ -399,14 +399,14 @@ YOUR_APP_NAME/
 - User can't remove (unless code is changed)
 - Always appear in start menu
 
-**2. 3rd-Party Apps** (Installed via BJH OS Tool)
+**2. 3rd-Party Apps** (Installed via BJH OS Tool And Developed Via BJH OS Studio)
 - Location: `Installed Apps/[APP_NAME]/`
 - Registered: Automatically via BJH OS Tool
 - Appear in Installed Apps after installation in BJH OS
 
 **Both use identical structure and code!** The only difference is registration method and location.
 
-#### Developing Built-in Apps
+#### Developing Built-in Apps Manually
 
 **Location:** `Root Directory/OS Files/my-app/`
 
@@ -437,25 +437,167 @@ Add this to the start menu section:
 
 Save PNG to: `Root Directory/OS Files/ICONS/my-app.png`
 
-#### Developing 3rd-Party Apps Installed Via BJH OS Tool
+# Developing 3rd-Party Apps Installed Via BJH OS Studio
+## 📖 Table of Contents For BJH OS Studio
+1. [Introduction To BJH OS Studio](#1-introduction)
+2. [Installation & Requirements](#2-installation--requirements)
+3. [Interface Overview](#3-interface-overview)
+4. [Project Management](#4-project-management)
+5. [The Editor & Workflow](#5-the-editor--workflow)
+6. [Asset Management](#6-asset-management)
+7. [BJH OS Integration APIs](#7-bjh-os-integration-apis)
+8. [Compilation & Exporting](#8-compilation--exporting)
+9. [Troubleshooting](#9-troubleshooting)
 
-**Create A New Folder:** `My App (The Name Of Folder Become The Name Of Your App.`
+---
 
-**Step 1: Create folder with required files**
+## 1. Introduction To BJH OS Studio
+**BJH OS Studio** is the official Integrated Development Environment (IDE) built to empower developers to create robust HTML5-based Applications and Games for the **BJH OS** ecosystem. 
+
+It provides a syntax highlighting, and integrated asset management, stripping away the complexity of manual configuration.
+
+---
+
+## 2. Installation & Requirements
+
+### System Requirements
+* **OS:** Windows 10/11, Linux, or macOS
+* **Storage:** 500 MB free
+### [Download BJH OS Studio Latest Version](https://github.com/Haris16-code/BJH-OS-Studio/releases/tag/bjh-os-studio-first-official-release)
+---
+
+## 3. Interface Overview
+The Studio is designed with a modern, dark-themed (default) layout inspired by VS Code.
+
+### Top Toolbar
+* **New Project:** Start a fresh App or Game.
+* **Open Project:** Load an existing folder.
+* **Run App:** Refreshes the Live Preview.
+* **Compile:** Validates and exports to .zip.
+* **Check Updates:** Fetches the latest IDE version from GitHub.
+* **About:** Developer credits.
+
+### Left Panel (File Explorer)
+* Shows the directory tree of your project.
+* Supports Context Menu (Right-Click) operations.
+
+### Center Panel (Code Editor)
+* Tabbed editing for multiple files.
+* Syntax highlighting for HTML, CSS, JS, and JSON.
+* **Auto-Save Enabled:** Saves work automatically 1 second after typing stops.
+
+### Right Panel (Live Preview)
+* A Chromium-based web engine that renders your app in real-time.
+
+### Bottom Panel (Console Log)
+* Displays system messages, errors, and validation statuses.
+
+---
+
+## 4. Project Management
+
+### Creating a New Project
+1. Click **New Project**.
+2. **App Name:** The visible title (e.g., "Super Calculator").
+3. **Type:** 
+   * `app`: Standard windows/utilities.
+   * `game`: Full-screen immersive experiences.
+4. **Location:** Parent directory.
+5. **Icon:** Select a `.ico` file (Mandatory for BJH OS Desktop).
+
+### Project Structure
+BJH OS Studio automatically generates this structure:
+
+
+
+⚠️ **Critical Warning:** Never delete `project_config.js`. It contains the `PROJECT_TYPE` constant that tells BJH OS how to launch your software.
+
+---
+
+## 5. The Editor & Workflow
+
+### Syntax Highlighting
+The editor automatically detects file extensions and colors code accordingly:
+
+* **HTML:** Tags (Blue), Attributes (Light Blue), Strings (Orange)
+* **JS:** Keywords (Purple), Functions (Yellow), Comments (Green)
+* **CSS:** Properties (Purple), Values (Orange)
+
+### Auto-Save System
+You do not need to press Ctrl+S. The IDE features a "Debounce Save" mechanism.
+
+**How it works:** When you stop typing for 1 second, the file is automatically written to the disk.  
+**Feedback:** Check the bottom log panel for `"Saved: filename.ext"`.
+
+---
+
+## 6. Asset Management
+BJH OS Studio v1.0 introduces a robust Context Menu for managing files without leaving the IDE.
+
+### Right-Click Actions (File Tree)
+| Action | Description |
+|--------|-------------|
+| 📄 New File | Creates an empty file (e.g., `utils.js`). |
+| 📂 New Folder | Creates a subdirectory. |
+| ⬇ Import File(s) | Opens a file picker to copy external files (images, music) into the selected folder. |
+| 📦 Import Folder | Copies an entire external directory structure into your project. |
+| ✏ Rename | Renames the selected item. |
+| 🗑 Delete | Safely removes the item (closes open tabs first to prevent crashes). |
+
+---
+
+## 7. BJH OS Integration APIs
+To ensure your app feels "Native," use these integration patterns.
+
+### A. Font Synchronization
+BJH OS users can set a custom system font. Your app inherits this via the mandatory script injected into `index.html`:
+
+```javascript
+// This runs automatically on load
+document.addEventListener('DOMContentLoaded', () => {
+  const storedFont = localStorage.getItem('selectedFont');
+  if (storedFont) {
+    document.body.style.fontFamily = storedFont;
+  }
+});
 ```
-My App (You can develop anything using HTML CSS JS)
-├── index.html       (REQUIRED Main file)
-├── favicon.ico      (REQUIRED - 64x64)
-├── style.css        (optional)
-└── app.js          (optional)
-```
 
-**Step 2: Add icon**
+8\. Compilation & Exporting
+---------------------------
 
-Save PNG to: `My App/favicon.ico` ( same folder)
-Another Info If favicon.ico is not in your app folder then default icon is automatically applied.
-### Step 3: Compress Your App/Project Folder
-Once you have completed your application or game, **compress the entire project folder into a ZIP file**. Make sure it includes all necessary files like `index.html` and `favicon.ico`.  
+When your development is complete, you must package the app for distribution.
+
+### The Compilation Process
+
+1.  Click **Compile**.
+    
+2.  **Validator Runs:**
+    
+    *   Checks if index.html exists.
+        
+    *   Checks if project\_config.js is valid.
+        
+    *   Scans for the Font Sync script.
+        
+3.  **Output:** If successful, a dialog asks where to save the .zip file.
+    
+4.  The IDE compresses the folder, excluding temporary files.
+    
+
+**Distribution:** Send the resulting .zip file to BJH OS users. They can install it via the BJH OS App Store or by extracting it to their apps folder.
+
+9\. Troubleshooting
+-------------------
+
+### Common Issues
+
+*   **Live Preview not updating:** Ensure your browser is Chromium-based and Run App is clicked.
+    
+*   **Compile fails:** Check console log for missing files or invalid project\_config.js.
+    
+*   **Assets not appearing:** Confirm the files are inside the assets/ folder.
+## BJH OS Studio Guide End Here
+---
 
 ### Step 4: User Installation
 1. The user extracts the ZIP file.  
