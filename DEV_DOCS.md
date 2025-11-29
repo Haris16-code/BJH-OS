@@ -436,7 +436,7 @@ Add this to the start menu section:
 **Step 3: Add icon**
 
 Save PNG to: `Root Directory/OS Files/ICONS/my-app.png`
-
+# BJH OS Studio - The Ultimate Developer Guide
 # Developing 3rd-Party Apps Installed Via BJH OS Studio
 ## 📖 Table of Contents For BJH OS Studio
 1. [Introduction To BJH OS Studio](#1-introduction)
