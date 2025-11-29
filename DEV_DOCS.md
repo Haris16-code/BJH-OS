@@ -14,7 +14,7 @@
 4. [Installation & Setup](#installation--setup)
 5. [Architecture & Key Systems](#architecture--key-systems)
 6. [File Descriptions](#file-descriptions)
-7. [Development Guidelines for Developing Built-In Apps And Games for BJH OS (Manual Development)](#development-guidelines-for-creating-built-in-apps-for-bjh-os-manual-development)
+7. [Development Guidelines for Developing Built-In Apps And Games for BJH OS (Manual Development)](#development-guidelines-for-developing-built-in-apps-and-games-for-bjh-os-manually)
 8. [Development Guidelines for Developing 3rd-Party Apps & Games For BJH OS Using BJH OS Studio](#bjh-os-studio---the-ultimate-developer-guide)
 9. [API Reference](#api-reference)
 10. [Troubleshooting](#troubleshooting)
@@ -437,6 +437,7 @@ Add this to the start menu section:
 **Step 3: Add icon**
 
 Save PNG to: `Root Directory/OS Files/ICONS/my-app.png`
+
 Now in this way you develop built in app/game for BJH OS to run your app just run BJH OS and click of bottom left BJH OS icon search for you app name open it and your app is run
 
 ---
