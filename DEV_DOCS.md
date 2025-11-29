@@ -14,7 +14,7 @@
 4. [Installation & Setup](#installation--setup)
 5. [Architecture & Key Systems](#architecture--key-systems)
 6. [File Descriptions](#file-descriptions)
-7. [Development Guidelines For Developing Apps And Games For BJH OS Using BJH OS Studio](#development-guidelines)
+7. [Development Guidelines For Developing Apps And Games For BJH OS Using BJH OS Studio](#development-guidelines-for-developing-apps-and-games-for-bjh-os-using-bjh-os-studio)
 8. [API Reference](#api-reference)
 9. [Troubleshooting](#troubleshooting)
 10. [Contributing](#contributing)
