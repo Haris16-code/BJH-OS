@@ -15,7 +15,7 @@
 5. [Architecture & Key Systems](#architecture--key-systems)
 6. [File Descriptions](#file-descriptions)
 7. [Development Guidelines for Developing Built-In Apps And Games for BJH OS (Manual Development)](#development-guidelines-for-creating-built-in-apps-for-bjh-os-manual-development)
-8. [Development Guidelines for Developing 3rd-Party Apps & Games For BJH OS Using BJH OS Studio](#development-guidelines-for-creating-3rd-party-apps--games-using-bjh-os-studio)
+8. [Development Guidelines for Developing 3rd-Party Apps & Games For BJH OS Using BJH OS Studio](#bjh-os-studio---the-ultimate-developer-guide)
 9. [API Reference](#api-reference)
 10. [Troubleshooting](#troubleshooting)
 11. [Contributing](#contributing)
@@ -319,7 +319,7 @@ Apps are simple HTML files (loaded in iframe windows):
 
 ---
 
-## Development Guidelines For Developing Apps And Games For BJH OS Using BJH OS Studio
+## Development Guidelines For Developing Built In Apps And Games For BJH OS Manually
 
 ### Code Style & Best Practices
 
@@ -358,9 +358,9 @@ Apps are simple HTML files (loaded in iframe windows):
    - Ensure keyboard navigation works
    - Test with screen readers
 
-### How to Develop Apps for BJH OS Manually With BJH OS Studio
+### How to Develop Apps for BJH OS Manually
 
-BJH OS supports **HTML, CSS, and JavaScript** apps natively. This guide covers how to use BJH OS Studio, font integration, step-by-step creation, best practices, and registration.
+BJH OS supports **HTML, CSS, and JavaScript** apps natively. This guide covers folder structure, font integration, step-by-step creation, best practices, and registration.
 
 #### App Folder Structure
 
@@ -437,6 +437,10 @@ Add this to the start menu section:
 **Step 3: Add icon**
 
 Save PNG to: `Root Directory/OS Files/ICONS/my-app.png`
+Now in this way you develop built in app/game for BJH OS to run your app just run BJH OS and click of bottom left BJH OS icon search for you app name open it and your app is run
+
+---
+
 # BJH OS Studio - The Ultimate Developer Guide
 # Developing 3rd-Party Apps Installed Via BJH OS Studio
 ## 📖 Table of Contents For BJH OS Studio
