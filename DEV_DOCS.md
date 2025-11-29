@@ -14,8 +14,8 @@
 4. [Installation & Setup](#installation--setup)
 5. [Architecture & Key Systems](#architecture--key-systems)
 6. [File Descriptions](#file-descriptions)
-7. [Development Guidelines For Developing Apps And Games For BJH OS Using BJH OS Studio](#development-guidelines-for-developing-apps-and-games-for-bjh-os-using-bjh-os-studio)
-8. [BJH OS Studio - The Ultimate Developer Guide](#bjh-os-studio---the-ultimate-developer-guide)
+7. [Development Guidelines For Developing Apps And Games For BJH OS *Without* BJH OS Studio](#development-guidelines-for-developing-apps-and-games-for-bjh-os-using-bjh-os-studio)
+8. [Development Guidelines For Developing Apps And Games For BJH OS *Using* BJH OS Studio](#bjh-os-studio---the-ultimate-developer-guide)
 9. [API Reference](#api-reference)
 10. [Troubleshooting](#troubleshooting)
 11. [Contributing](#contributing)
@@ -358,7 +358,7 @@ Apps are simple HTML files (loaded in iframe windows):
    - Ensure keyboard navigation works
    - Test with screen readers
 
-### How to Develop Apps for BJH OS Using BJH OS Studio
+### How to Develop Apps for BJH OS Manually With BJH OS Studio
 
 BJH OS supports **HTML, CSS, and JavaScript** apps natively. This guide covers how to use BJH OS Studio, font integration, step-by-step creation, best practices, and registration.
 
