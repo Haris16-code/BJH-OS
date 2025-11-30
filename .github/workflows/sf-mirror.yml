@@ -1,6 +1,5 @@
 name: Mirror to SourceForge
 
-# Trigger on push to main or master
 on:
   push:
     branches:
@@ -24,10 +23,9 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa git.code.sf.net >> ~/.ssh/known_hosts
 
-      # Add SourceForge remote
+      # Add SourceForge remote (use only the URL)
       - name: Add SourceForge remote
-        run: |
-          git remote add sourceforge "ssh://haris-23@git.code.sf.net/p/bjh-os/code"
+        run: git remote add sourceforge "ssh://haris-23@git.code.sf.net/p/bjh-os/code"
 
       # Push all branches and tags to SourceForge
       - name: Push to SourceForge
