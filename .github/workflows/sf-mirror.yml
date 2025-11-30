@@ -23,7 +23,7 @@ jobs:
 
       - name: Add SourceForge remote
         run: |
-          git remote add sourceforge "ssh://haris-23@git.code.sf.net/p/bjh-os/code"
+          git remote add sourceforge "ssh://haris-23@git.code.sf.net/p/bjh-os/code bjh-os-code"
 
       - name: Push to SourceForge
         run: |
