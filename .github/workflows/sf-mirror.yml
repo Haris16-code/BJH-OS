@@ -11,9 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout GitHub repo
+      # Checkout GitHub repo with full history
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # important! fetch all commits
 
       # Set up SSH
       - name: Set up SSH
@@ -23,11 +25,11 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa git.code.sf.net >> ~/.ssh/known_hosts
 
-      # Add SourceForge remote (use only the URL)
+      # Add SourceForge remote
       - name: Add SourceForge remote
         run: git remote add sourceforge "ssh://haris-23@git.code.sf.net/p/bjh-os/code"
 
-      # Push all branches and tags to SourceForge
+      # Push all branches and tags
       - name: Push to SourceForge
         run: |
           git push sourceforge --all
