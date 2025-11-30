@@ -1,7 +1,7 @@
 {
-    "name": "Windows Ripen",
-    "short_name": "Win RGOS", 
-    "description": "Windows Ripen is an RGOS initiative open-sourced concept based on the Windows Operating System.",
+    "name": "BJH OS",
+    "short_name": "BJH OS", 
+    "description": "BJH OS is a web based operating system",
     "start_url": ".",
     "theme_color": "#ff7b00",
     "background_color": "#000000",

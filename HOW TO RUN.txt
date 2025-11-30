@@ -1,0 +1,1 @@
+Simply double-click the Setup.html file inside the extracted folder. It will automatically open in your browser and launch BJH OS.

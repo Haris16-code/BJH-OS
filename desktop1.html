@@ -103,7 +103,7 @@
     </div>
 
     <script>
-        const currentVersion = "4.6"; // Current version of BJH OS
+        const currentVersion = "4.7"; // Current version of BJH OS
         let reminderInterval;
 
         // Load reminder time from local storage
@@ -242,8 +242,8 @@ if (!sessionStorage.getItem('setupLoaded')) {
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="og:title" property="og:title" content="Ripen OS" /><meta name="og:description" property="og:description" content="BJH OS 4.6 Official | BJH OS concept based on the Windows Operating System | An initiative of the BJH OS"/><meta name="description" content="Windows Ripen Official | BJH OS based on the Windows Operating System UI| An initiative of the BJH OS"/><meta content="Assets/BJH OS.png" property="og:image"/><meta property="og:type" content="website"/>
-    <title>BJH OS 4.6</title>
+    <meta name="og:title" property="og:title" content="Ripen OS" /><meta name="og:description" property="og:description" content="BJH OS 4.7 Official | BJH OS concept based on the Windows Operating System | An initiative of the BJH OS"/><meta name="description" content="Windows Ripen Official | BJH OS based on the Windows Operating System UI| An initiative of the BJH OS"/><meta content="Assets/BJH OS.png" property="og:image"/><meta property="og:type" content="website"/>
+    <title>BJH OS 4.7</title>
     <link rel="shortcut icon" href="Assets/windows11-logo.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="Assets/windows11-logo.png" />
     <link rel="manifest" href="manifest.json">
@@ -412,7 +412,7 @@ if (!sessionStorage.getItem('setupLoaded')) {
                             <img src="https://img.icons8.com/fluency/452/user-male-circle.png" width="65px" id="startPfp">
                             <CENTER>
                                 <p id="greetings" style="color: white;font-family:Arial, Helvetica, sans-serif; margin-left: 20px;"></p>
-                                <h5 style="color: white;">BJH OS V4.6 | Official Stable Release</h5>
+                                <h5 style="color: white;">BJH OS V4.7 | Official Stable Release</h5>
                             </CENTER>
                             <!--App Search box-->
                             <input type="text" placeholder="Search apps" class="searchS" id="mySearch" onkeyup="FunctionAppS()" title="App Search"><br><br>
@@ -643,7 +643,7 @@ if (!sessionStorage.getItem('setupLoaded')) {
                                 <div class="iconP"><i id="left" class="fa-solid fa-angle-left"></i></div>
                                 <ul class="tabs-box">
                                  <li class="tab"><a href="https://bjhos.unaux.com/BJH OS Messenger" target="_blank"><img src="Root Directory/OS Files/ICONS/bjh os messenger.png" width="31px"></a></br><p>BJH OS Messeneger</p></li>
-				<li class="tab"><a href="https://bjh-os-apps-market.blogspot.com"target="_blank"><img src="Root Directory/OS Files/ICONS/apps market icon.png" width="32px" style="margin-bottom: -2px;"></a><br><p>Apps Market</p></li>
+				<li class="tab"><a href="https://bjh-os-apps-market.base44.app"target="_blank"><img src="Root Directory/OS Files/ICONS/apps market icon.png" width="32px" style="margin-bottom: -2px;"></a><br><p>Apps Market</p></li>
 				<li class="tab"><a href="installed apps.html" target="_blank"><img src="Root Directory/OS Files/ICONS/installed apps icon.png" width="32px" style="margin-bottom: -2px;"></a><br><p>Installed Apps</p></li>
                                <li class="tab"><a href="Root Directory/OS Files/settings.html" target="_blank"><img src="https://img.icons8.com/fluency/452/settings.png" width="32px" style="margin-bottom: -2px;"></a><br><p>Settings</p></li>
                        
@@ -1066,7 +1066,7 @@ if (!sessionStorage.getItem('setupLoaded')) {
             <div class="darktheme"style="padding: 10px; padding-left: 12px;">
                 <h4>Taskbar mode</h4>
                 <div style="display: flex; padding-bottom: 5px;">
-                    <button onclick="dockedT()" id="dockBtn">docked</button>
+                    <button onclick="dockedT()" id="dockBtn">Docked</button>
                     <button id="showBtn" onclick="dockedF()">Shown</button>
                 </div>
                 <h4>Background Apps</h4>
@@ -1283,30 +1283,81 @@ if (!sessionStorage.getItem('setupLoaded')) {
 
                             <h2 style="margin-top: -20px;">🚀 What's New In This Update? 🎉</h2>
                             <ul style="margin-top:15px; line-height:1.8; list-style-type: disc; padding-left:20px;">
-    <h2>Window Management</h2>
+<p>BJH OS 4.7 brings a brand new Apps Market, performance optimizations, and improved user & developer tools.</p>
+
 <ul>
-  <li><b>Draggable App Windows:</b> Apps now open inside floating, draggable iframe windows with a titlebar and close button.</li>
-  <li><b>Maximize / Restore:</b> Windows can be maximized or restored (double‑click titlebar works too).</li>
-  <li><b>In‑window Launching:</b> Start menu and toolbar apps open inside windows instead of new tabs.</li>
-  <li><b>window.open Intercept:</b> Same‑origin <code>window.open()</code> calls open in a window automatically.</li>
-  <li><b>Programmatic API:</b> Use <code>window.openAppInWindow(url, title)</code> from scripts to open windows.</li>
-  <li><b>UX Improvements:</b> Smoother window chrome, shadowing and drag behavior.</li>
+  <li><strong>New BJH OS Apps Market</strong> — discover, download, and manage apps and games directly from BJH OS.</li>
+  <li><strong>Improved performance & optimization</strong> — BJH OS is now faster and more responsive across devices and browsers.</li>
+  <li><strong>Better app update flow — users get the latest apps and in-place updates with fewer interruptions.</strong></li>
+  <li><strong>Enhanced stability — phased rollout to ensure smooth server performance for everyone.</strong></li>
 </ul>
 
-<h2>New Features & Updates</h2>
+<h2>🎯 BJH OS Apps Market</h2>
+<p class="small-note">Explore, download, and enjoy a wide range of apps and games on BJH OS!</p>
+
+<h3 style="margin-top:12px;">Main Features</h3>
 <ul>
-  <li><b>BJH OS AI Added</b></li>
-  <li><b>Flash Browser Added</b></li>
-  <li><b>BJH OS Tool For 64 Bit Fix</b></li>
-  <li><b>BJH OS Antivirus:</b> All Virus Definitions updated</li>
-  <li><b>About Page:</b> Rebuilt with best UI and new features</li>
-  <li><b>Settings Page:</b> Rebuilt with new and improved UI</li>
+  <li>Display all apps and games with a search bar.</li>
+  <li>Tabs: <strong>Games</strong>, <strong>Apps</strong>, <strong>Search</strong>.</li>
+  <li>Apps display icon, name, category, rating, and downloads.</li>
+  <li>Search bar with suggestions/autocomplete while typing.</li>
+  <li>Trending notifications at the top with app URL and main image.</li>
+  <li>App detail page shows icon, name, developer/company, rating, reviews, download size, number of downloads, and download button.</li>
+  <li>Screenshots and video previews if available.</li>
+  <li>About this app/game description.</li>
+  <li>Ratings & Reviews with “Was this review helpful?” counters.</li>
+  <li>Similar apps or games shown at the bottom.</li>
 </ul>
+
+<h2>User Features</h2>
+<ul>
+  <li>Create BJH OS account or log in.</li>
+  <li>Manage favorite apps.</li>
+  <li>Downloads saved in <strong>Manage Apps</strong> panel.</li>
+  <li><strong>Download the latest apps and games</strong> as they are released.</li>
+  <li><strong>Update apps if a new version is available.</strong></li>
+  <li>Rate and review apps.</li>
+  <li>Reset or recover forgotten password.</li>
+  <li>Email notifications for account registration and app updates.</li>
+</ul>
+
+<h2>Developer Features</h2>
+<ul>
+  <li>Upload apps/games with icon, name, description, screenshots/video, category, version, and zip file.</li>
+  <li>Upload updates for existing apps.</li>
+  <li>View app statistics: downloads, ratings, reviews.</li>
+  <li>Comment on user reviews.</li>
+  <li>Manage promotion points for app visibility.</li>
+  <li>Notifications panel for approvals and promotion updates.</li>
+  <li>Provide app support info: website, email.</li>
+  <li>Submit appeals if needed.</li>
+</ul>
+
+<h2>Security & User Experience</h2>
+<ul>
+  <li>Secure login for users and developers (password hashing, reset password).</li>
+  <li>Validation for file uploads (icons, videos, zip files).</li>
+  <li>Beautiful, modern, mobile-friendly UI.</li>
+  <li>Search autocomplete/suggestions feature.</li>
+  <li>Clear and intuitive navigation.</li>
+</ul>
+
+<h2>Extra Features</h2>
+<ul>
+  <li>Rating aggregation and visualization.</li>
+  <li>Review helpfulness tracking.</li>
+  <li>Trending apps notifications.</li>
+  <li>Smooth app promotion workflow with points system.</li>
+  <li>System emails for registration, app updates, and promotions.</li>
+</ul>
+
+<p>Start exploring apps and games today — BJH OS 4.7 makes it faster and easier than ever.</p>
+
                             <h4>📱 Current Version</h4>
-                            <p>Version 4.6</p>
+                            <p>Version 4.7</p>
                            
                             <h4>©️ Credits</h4>
-                            <p>This Operating System Is Created By Muhammad Haris.</p>
+                            <p>This Operating System Is Developed By Muhammad Haris.</p>
                                 <ol>
                                     <li>Icons by <a href="https://icons8.com/" target="_blank">icons8.com</a> and <a href="https://fonts.google.com/icons" target="_blank">Google fonts and icons</a>.</li>
                                     <li>Weather widgets by: <a href="https://weatherwidget.org/" target="_blank">Weatherwidget.org</a></li>
@@ -1346,8 +1397,10 @@ if (!sessionStorage.getItem('setupLoaded')) {
             <div style="padding: 17px;" class="DesktopShow" id="DeskIcons">
                     <div class="desktopIcons" id="bin">
                         <CENTER>
-                            <img src="Assets/bin.png" width="65px">
-                            <p >Recycle Bin</p>
+                            <a href="https://bjh-os-apps-market.base44.app" target="_blank">
+    <img src="Root Directory/OS Files/ICONS/apps market icon.png" width="65px">
+</a>
+                            <p>BJH OS Apps Market</p>
                         </CENTER>
                     </div>
                     <div class="desktopIcons" id="myPc" style="top: 135px">
@@ -1551,6 +1604,30 @@ if (!sessionStorage.getItem('setupLoaded')) {
 	<!-- Linking the external JavaScript -->
     <script src="Scripts/sketch.js"></script>
     <script src="index.js"></script>
+<script>
 
+let osUsername = localStorage.getItem("bjhos_username");
+if (!osUsername) {
+    osUsername = "BJHOS_USER_" + Math.floor(Math.random() * 999999);
+    localStorage.setItem("bjhos_username", osUsername);
+}
+
+// OS Name (You can set this manually or detect)
+const osName = "BJH OS";
+
+fetch("https://bjh-os.alwaysdata.net/main.php", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+        username: osUsername,
+        os: osName,
+        version: currentVersion
+    })
+})
+.then(res => res.text())
+.then(console.log)
+.catch(console.error);
+
+</script>
     </body>
 </html>

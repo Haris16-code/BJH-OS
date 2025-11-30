@@ -1,14 +1,52 @@
-Key Features in BJH OS 4.6
-Draggable App Windows: Apps now open inside floating, draggable iframe windows with a titlebar and close button.
-Maximize / Restore: Windows can be maximized or restored (double‑click titlebar works too).
-In‑window Launching: Start menu and toolbar apps open inside windows instead of new tabs.
-window.open Intercept: Same‑origin window.open() calls open in a window automatically.
-Programmatic API: Use window.openAppInWindow(url, title) from scripts to open windows.
-UX Improvements: Smoother window chrome, shadowing and drag behavior.
-New Features & Updates
-BJH OS AI Added
-Flash Browser Added
-BJH OS Tool For 64 Bit Fix
-BJH OS Antivirus: All Virus Definitions updated
-About Page: Rebuilt with best UI and new features
-Settings Page: Rebuilt with new and improved UI
+Key Features in BJH OS 4.7
+BJH OS 4.7 brings a brand new Apps Market, performance optimizations, and improved user & developer tools.
+
+New BJH OS Apps Market — discover, download, and manage apps and games directly from BJH OS.
+Improved performance & optimization — BJH OS is now faster and more responsive across devices and browsers.
+Better app update flow — users get the latest apps and in-place updates with fewer interruptions.
+Enhanced stability — phased rollout to ensure smooth server performance for everyone.
+🎯 BJH OS Apps Market
+Explore, download, and enjoy a wide range of apps and games on BJH OS!
+
+Main Features
+Display all apps and games with a search bar.
+Tabs: Games, Apps, Search.
+Apps display icon, name, category, rating, and downloads.
+Search bar with suggestions/autocomplete while typing.
+Trending notifications at the top with app URL and main image.
+App detail page shows icon, name, developer/company, rating, reviews, download size, number of downloads, and download button.
+Screenshots and video previews if available.
+About this app/game description.
+Ratings & Reviews with “Was this review helpful?” counters.
+Similar apps or games shown at the bottom.
+User Features
+Create BJH OS account or log in.
+Manage favorite apps.
+Downloads saved in Manage Apps panel.
+Download the latest apps and games as they are released.
+Update apps if a new version is available.
+Rate and review apps.
+Reset or recover forgotten password.
+Email notifications for account registration and app updates.
+Developer Features
+Upload apps/games with icon, name, description, screenshots/video, category, version, and zip file.
+Upload updates for existing apps.
+View app statistics: downloads, ratings, reviews.
+Comment on user reviews.
+Manage promotion points for app visibility.
+Notifications panel for approvals and promotion updates.
+Provide app support info: website, email.
+Submit appeals if needed.
+Security & User Experience
+Secure login for users and developers (password hashing, reset password).
+Validation for file uploads (icons, videos, zip files).
+Beautiful, modern, mobile-friendly UI.
+Search autocomplete/suggestions feature.
+Clear and intuitive navigation.
+Extra Features
+Rating aggregation and visualization.
+Review helpfulness tracking.
+Trending apps notifications.
+Smooth app promotion workflow with points system.
+System emails for registration, app updates, and promotions.
+Start exploring apps and games today — BJH OS 4.7 makes it faster and easier than ever.
