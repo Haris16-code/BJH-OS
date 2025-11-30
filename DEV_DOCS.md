@@ -1,7 +1,7 @@
 # BJH OS 4.6 — Developer Documentation
 
 **Version:** 4.6  
-**Last Updated:** November 28, 2025  
+**Last Updated:** November 30, 2025  
 **Project Status:** Active Development  
 
 ---
@@ -16,9 +16,10 @@
 6. [File Descriptions](#file-descriptions)
 7. [Development Guidelines for Developing Built-In Apps And Games for BJH OS (Manual Development)](#development-guidelines-for-developing-built-in-apps-and-games-for-bjh-os-manually)
 8. [Development Guidelines for Developing 3rd-Party Apps & Games For BJH OS Using BJH OS Studio](#bjh-os-studio---the-ultimate-developer-guide)
-9. [API Reference](#api-reference)
-10. [Troubleshooting](#troubleshooting)
-11. [Contributing](#contributing)
+9. [Uploading Apps/Games To BJH OS Official Apps Market](#how-to-upload-apps-to-bjh-os-apps-market)
+10. [API Reference](#api-reference)
+11. [Troubleshooting](#troubleshooting)
+12. [Contributing](#contributing)
 
 ---
 
@@ -604,9 +605,220 @@ When your development is complete, you must package the app for distribution.
 *   **Assets not appearing:** Confirm the files are inside the assets/ folder.
 ## BJH OS Studio Guide End Here
 ---
+# 🛠️ How To Upload Apps To BJH OS Apps Market?
 
+The **BJH OS Apps Market** allows developers to upload apps and games for BJH OS users. Developers can manage app updates, monitor downloads, view reviews, and interact with users through their dashboard. This guide explains how to upload apps safely, efficiently, and use the points system for promotions.
+
+---
+## 📑 Table of Contents
+
+1. [Introduction](#introduction)
+2. [Requirements Before Uploading](#requirements-before-uploading)
+3. [Supported File Types](#supported-file-types)
+4. [Developer Account & Login](#developer-account--login)
+5. [Accessing the Developer Dashboard](#accessing-the-developer-dashboard)
+6. [How to Upload Your App](#how-to-upload-your-app)
+    - 6.1 [Add App Details](#61-add-app-details)
+    - 6.2 [Upload App Files](#62-upload-app-files)
+    - 6.3 [Submit for Review](#63-submit-for-review)
+7. [App Review Process](#app-review-process)
+8. [App Updates (How to Submit Updates)](#app-updates-how-to-submit-updates)
+9. [Promotion System Overview](#promotion-system-overview)
+    - 9.1 [Promotion Points — How to Earn Them](#91-promotion-points--how-to-earn-them)
+    - 9.2 [What Are Promotion Points Used For?](#92-what-are-promotion-points-used-for)
+    - 9.3 [Methods to Promote Your App](#93-methods-to-promote-your-app)
+10. [Notifications System](#notifications-system)
+11. [Best Practices for Developers](#best-practices-for-developers)
+
+
+## 1. Developer Account Setup
+
+Before uploading apps, you must have a **BJH OS Developer Account**.
+
+1. Go to the [BJH OS Account Registration](https://bjh-os-apps-market.base44.app/profile) page.  
+2. When your account is created and you log in, go to your **profile** at the top right and enable **Developer Mode** in **Developer Settings**.  
+3. Fill in the required details:  
+   - **Developer/Company Name**  
+   - **Your Website** (Optional but recommended)  
+   - **Bio** (Tell users about yourself)  
+4. Click **Save Changes**.  
+5. After this, press your **Profile Picture** at the top right; you will see a new option: **Developer Dashboard**.  
+
+---
+
+## 2. Accessing the Developer Dashboard
+
+1. Click on **Developer Dashboard**.  
+2. The dashboard displays:  
+   - Your uploaded apps/games  
+   - App statistics: downloads, ratings, reviews  
+   - Upload/update options  
+   - **Promotions** (use points to promote apps)  
+   - Notifications from the system/admin  
+
+---
+
+## 3. Uploading a New App/Game
+
+To upload a new app or game:
+
+1. Click **“Upload New App/Game”** on your dashboard.  
+2. Fill in the required details:  
+   - **App/Game Icon** (recommended: 512x512px, PNG)  
+   - **App/Game Name**  
+   - **Description** (brief and full description)  
+   - **Screenshots or Video** (optional; first media item shown in preview)  
+   - **Category** (e.g., Games, Productivity, Tools)  
+   - **Version Number** (e.g., 1.0.0)  
+   - **Download File (ZIP)** containing the app/game  
+   - **Support Email** (optional but recommended)  
+   - **Support Website** (optional but recommended)  
+
+3. Review your app/game details carefully.  
+4. Click **Submit for Review**.  
+   - Admin will review your app.  
+   - Once approved, you will receive an email notification, and the app will appear in the BJH OS Apps Market.  
+   - If rejected, you will receive a notification with the reason.
+
+---
+
+## 4. Updating an Existing App/Game
+
+1. Go to **Your Apps** in the dashboard.  
+2. Click **Update** next to the app.  
+3. Update the fields as needed:  
+   - Version number  
+   - Description  
+   - Screenshots or video  
+   - ZIP file with updated app/game  
+
+4. Submit the update for admin approval.  
+5. After approval, the new version will replace the previous one.
+
+---
+
+## 5. App Statistics & Review Management
+
+- Monitor **downloads**, **ratings**, and **reviews**.  
+- Comment on user reviews to provide support or gather feedback.  
+- Track which updates or features users appreciate most.
+
+---
+
+## 6. Points System
+
+BJH OS Apps Market uses a **points system** to promote apps and reward developers.
+
+**How to earn points:**  
+- Receive **50 points** when you log in as a developer for the first time.  
+- Uploading each app/game grants **50 points**.  
+- Completing your profile and providing support info may earn bonus points (if offered).  
+
+**How to use points:**  
+- Promote your apps in the BJH OS Apps Market.  
+- Choose the promotion audience based on points:  
+  - **High Audience** = more points required  
+  - **Medium Audience** = moderate points  
+  - **Low Audience** = fewer points  
+- Points are deducted when a promotion is approved. If the promotion is rejected, points are refunded.  
+
+**Notes:**  
+- Plan promotions strategically to maximize visibility.  
+- Points reset or earning opportunities may be updated periodically by BJH OS.
+
+---
+
+## 7. How to Promote Your Apps in the BJH OS Apps Market
+
+The BJH OS Apps Market includes a **promotion system** powered by points that developers earn. These points can be used to boost visibility and reach more users.
+
+### ⭐ Ways to Promote Your App
+
+You can promote your app in **two different ways** inside the Developer Dashboard.  
+**Both methods have the same effect — only the way you access the promotion feature is different.**
+
+---
+
+### **Method 1: Promote from the “Promotion” Panel**
+
+1. Open your **Developer Dashboard**.  
+2. Click on the **Promotion** section.  
+3. Select the app you want to promote.  
+4. Enter the number of **points** you want to spend on promotion.  
+5. Submit the promotion request.  
+6. Your request will be sent to the **admin for approval**.  
+
+---
+
+### **Method 2: Promote from the “My Apps” Page**
+
+1. Go to **My Apps** inside your Developer Dashboard.  
+2. Each app will show a **Promote** button.  
+3. Click on **Promote** and enter the number of points you want to spend.  
+4. Submit the promotion request.  
+5. The request will be reviewed by the admin.
+
+---
+
+### 🎯 What Happens After Approval?
+
+Once the admin approves your promotion:
+
+- Your app will appear in **Search Suggestions**  
+- Your app may appear in **Trending / Popular Sections**  
+- Your app may be listed as a **Sponsored App**  
+- Your app may appear in **Top Rated / Highlighted Areas** (depending on points)  
+- Promotion duration depends on **how many points you spent**  
+
+**Higher points = longer visibility**  
+**Lower points = shorter visibility**
+
+---
+
+### 🔔 Notifications
+
+You will be notified in your Developer Dashboard when:
+
+- Promotion is **approved**  
+- Promotion is **rejected** (points are refunded automatically)  
+- Any promotion-related system messages  
+
+---
+
+### ⚡ Tip for Developers
+
+Use promotions when:
+
+- Releasing a new app  
+- Uploading a major update  
+- Wanting to boost downloads  
+- Competing in a crowded category  
+
+Smart use of promotions can help your app reach **thousands of BJH OS users!**
+
+---
+
+## 8. Best Practices
+
+- Use **high-quality icons, screenshots, and videos**.  
+- Keep **descriptions clear and informative**.  
+- Test your app/game thoroughly before upload.  
+- Update apps regularly to fix bugs and add new features.  
+
+---
+
+## 9. Support
+
+If you encounter issues during upload or updates, contact BJH OS support via:  
+- Email: `muhammad.haris662007@gmail.com`  
+- Developer dashboard support form  
+
+This documentation ensures that developers can **upload apps efficiently, track stats, use points to promote apps, and engage users** in BJH OS Apps Market.
+## Here Guide For Uploading Apps And Games To BJH OS Apps Market End
+
+---
 ### Step 4: User Installation
-1. The user extracts the ZIP file.  
+1. The user download the app/game from BJH OS Apps Markets which is built-in in BJH OS, after downloading user extracts the ZIP file.  
 2. Open the **BJH OS Tool** app.  
 3. Click the **Install App** button.  
 4. Select the extracted folder.  
@@ -1083,10 +1295,9 @@ Describe:
 - [Weatherwidget.org](https://weatherwidget.org/) — Weather widget
 
 **Disclaimer:**
-This project is not affiliated with Microsoft or Windows. It is an Web Based Operating System project demonstrating web technologies.
+This project is not affiliated with Microsoft or Windows. It is an Web Based Operating System project.
 
 ---
-
 **End of Developer Documentation**
 
 For questions, issues, or contributions, please contact us on [Discord](https://discord.gg/SdDSUtCbX8)
