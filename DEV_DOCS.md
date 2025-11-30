@@ -16,7 +16,7 @@
 6. [File Descriptions](#file-descriptions)
 7. [Development Guidelines for Developing Built-In Apps And Games for BJH OS (Manual Development)](#development-guidelines-for-developing-built-in-apps-and-games-for-bjh-os-manually)
 8. [Development Guidelines for Developing 3rd-Party Apps & Games For BJH OS Using BJH OS Studio](#bjh-os-studio---the-ultimate-developer-guide)
-9. [Uploading Apps/Games To BJH OS Official Apps Market](#how-to-upload-apps-to-bjh-os-apps-market)
+9. [Uploading Apps/Games To BJH OS Official Apps Market](#%EF%B8%8F-how-to-upload-apps-to-bjh-os-apps-market)
 10. [API Reference](#api-reference)
 11. [Troubleshooting](#troubleshooting)
 12. [Contributing](#contributing)
