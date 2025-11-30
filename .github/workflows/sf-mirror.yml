@@ -1,5 +1,6 @@
 name: Mirror to SourceForge
 
+# Trigger on push to main or master
 on:
   push:
     branches:
@@ -11,9 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout GitHub repo
+      # Checkout GitHub repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Set up SSH
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -21,10 +24,12 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa git.code.sf.net >> ~/.ssh/known_hosts
 
+      # Add SourceForge remote
       - name: Add SourceForge remote
         run: |
-          git remote add sourceforge "ssh://haris-23@git.code.sf.net/p/bjh-os/code bjh-os-code"
+          git remote add sourceforge "ssh://haris-23@git.code.sf.net/p/bjh-os/code"
 
+      # Push all branches and tags to SourceForge
       - name: Push to SourceForge
         run: |
           git push sourceforge --all
