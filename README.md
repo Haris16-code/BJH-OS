@@ -36,6 +36,87 @@ Assalam O Alaikum everyone! 👋 My name is **Muhammad Haris** and I made a **we
   
 - 🌍 **Worldwide Rollout**  
   Updates are being released globally in stages to ensure stability, avoid server overload, and provide a smooth installation experience.
+
+
+
+
+### 🎉 BJH OS Apps Market
+
+The **BJH OS Apps Market** is included in the **BJH OS 4.7 update** and is released in phases to ensure smooth performance and prevent server overload.
+
+---
+
+### ✨ Main Features
+
+- Browse all apps and games with a **search bar** and **autocomplete suggestions**.  
+- Tabs for **Games**, **Apps**, and **Search**.  
+- App display includes: **icon, name, category, rating, and number of downloads**.  
+- Trending notifications at the top with app URL and main image.  
+- App detail page shows:  
+  - Icon & name  
+  - Developer/company name  
+  - Rating and number of reviews  
+  - Download size and number of downloads  
+  - Download button  
+  - Screenshots and video previews  
+  - About this app/game description  
+  - Ratings & Reviews with “Was this review helpful?” counters  
+  - Similar apps or games at the bottom  
+
+---
+
+### 👤 User Features
+
+- **Login or create a BJH OS account** to use the Apps Market.  
+- Manage favorite apps.  
+- Downloads saved in **Manage Apps** panel.  
+- **Download the latest apps and games**.  
+- **Update apps automatically** when a new version is available.  
+- Rate and review apps.  
+- Reset or recover forgotten passwords.  
+- Receive system and email notifications for registration and app updates.  
+
+---
+
+### 💻 Developer Features
+
+- Upload apps/games with: icon, name, description, screenshots/video, category, version, and zip file.  
+- Upload updates for existing apps.  
+- View app statistics: downloads, ratings, reviews.  
+- Comment on user reviews.  
+- Manage promotion points for app visibility.  
+- Notifications panel for approvals and promotion updates.  
+- Provide app support info: website, email.  
+- Submit appeals if needed.  
+
+---
+
+### 🔒 Security & UX
+
+- Secure login for users and developers (password hashing, reset password).  
+- Validation for file uploads (icons, videos, zip files).  
+- Modern, beautiful, mobile-friendly UI.  
+- Clear and intuitive navigation.  
+
+---
+
+### 🌟 Extra Features
+
+- Rating aggregation and visualization.  
+- Review helpfulness tracking.  
+- Trending apps notifications.  
+- Smooth app promotion workflow with points system.  
+- System emails for registration, app updates, and promotions.  
+
+---
+
+### 📢 Rollout Updates
+
+- Introduced in **BJH OS 4.7 update**.  
+- Released in **phases** to reduce server overload and prevent crashes.  
+- Users gradually gain access as the rollout progresses.  
+- Updates and notifications sent via **BJH OS system notifications** and emails.  
+
 ---
 
 ## 🛠️ How to Run BJH OS
