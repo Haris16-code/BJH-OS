@@ -605,7 +605,7 @@ When your development is complete, you must package the app for distribution.
 *   **Assets not appearing:** Confirm the files are inside the assets/ folder.
 ## BJH OS Studio Guide End Here
 ---
-# 🛠️ How To Upload Apps To BJH OS Apps Market?
+# How To Upload Apps To BJH OS Apps Market
 
 The **BJH OS Apps Market** allows developers to upload apps and games for BJH OS users. Developers can manage app updates, monitor downloads, view reviews, and interact with users through their dashboard. This guide explains how to upload apps safely, efficiently, and use the points system for promotions.
 
