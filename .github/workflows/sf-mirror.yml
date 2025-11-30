@@ -1,0 +1,31 @@
+name: Mirror to SourceForge
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SF_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa git.code.sf.net >> ~/.ssh/known_hosts
+
+      - name: Add SourceForge remote
+        run: |
+          git remote add sourceforge "ssh://haris-23@git.code.sf.net/p/bjh-os/code"
+
+      - name: Push to SourceForge
+        run: |
+          git push sourceforge --all
+          git push sourceforge --tags
