@@ -146,7 +146,7 @@ The **BJH OS Apps Market** is included in the **BJH OS 4.7 update** and is relea
 1. ⬇️ **Download the ZIP** from the [BJH OS MAIN REPOSITORY](https://github.com/Haris16-code/BJH-OS)  
 2. 🗂️ **Extract** the ZIP file  
 3. Open the extracted `BJH-OS` folder  
-4. 🖱️ **Double-click** the file named `Setup.html`  
+4. 🖱️ Open the main file by double-clicking `Setup.html` if it exists; otherwise, open `index.html`.
 5. 🌍 BJH OS will launch in your default browser  
 
 > 🧑‍💻 No installation required — just open and go!
