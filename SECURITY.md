@@ -14,7 +14,7 @@ BJH OS provides security support for the following editions:
 If you discover a security vulnerability in BJH OS, please report it responsibly.  
 
 **How to report:**
-- Send a detailed email to **muhammad.haris662007@gmail.com**.  
+- Send a detailed report to **[https://github.com/Haris16-code/BJH-OS/issues](https://github.com/Haris16-code/BJH-OS/issues)**.  
 - Include the following information:
   - Steps to reproduce the vulnerability
   - Affected edition (Self-Hosted or Web Edition)
