@@ -230,7 +230,7 @@ Whether you are a **developer, tester, or BJH OS fan**, there’s a place for yo
 
 ## License
 
-The core BJH OS (This Repository) is licensed under [AGPL-3.0](LICENSE).  
+BJH OS (This Repository) is licensed under [AGPL-3.0](LICENSE).  
 Some future premium features may have separate usage terms.
 
 ---
