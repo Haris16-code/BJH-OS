@@ -1,25 +1,34 @@
-  <!-- Logo -->
-  <div style="text-align:center; margin-top:10px;">
-    <img src="Assets/bjh-os-logo.png" alt="BJH OS Logo">
-  </div>
+<h3 align="center">
+  <img width="120" alt="BJH OS Logo" src="Assets/bjh-os-logo.png">
+</h3>
 
-  <!-- Heading -->
-  <h1 style="text-align:center;">BJH OS - An Free Open Source Web Based Operating System</h1>
+<h3 align="center">BJH OS — A Free, Open-Source, Web-Based Operating System</h3>
+<!--
+<p align="center">
+  <a href="https://haris16-code.github.io/BJH-OS/" target="_blank"><strong>« LIVE DEMO »</strong></a>-->
+  <br><br>
+  <a href="https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md" target="_blank">Developer Documentation</a>
+  ·
+  <a href="https://discord.gg/SdDSUtCbX8" target="_blank">Discord Community</a>
+  ·
+  <a href="https://sourceforge.net/projects/bjh-os/" target="_blank">SourceForge</a>
+</p>
 
-  <!-- Links -->
-  <div style="text-align:center; margin:30px 0;">
-    <a href="https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md" target="_blank">Developer Documentation</a> |
-    <a href="https://discord.gg/SdDSUtCbX8" target="_blank">Discord Community</a> |
-    <a href="https://sourceforge.net/projects/bjh-os/" target="_blank">SourceForge</a> |
-  </div>
+<h3 align="center">
+  <img width="800" alt="BJH OS Preview" src="Assets/screenshot1.png">
+</h3>
 
-  <!-- Screenshots -->
-  <div style="text-align:center;">
-    <img src="Assets/screenshot1.PNG" alt="BJH OS Screenshot 1" width="300">
-    <img src="Assets/screenshot2.PNG" alt="BJH OS Screenshot 2" width="300">
-    <img src="Assets/screenshot3.PNG" alt="BJH OS Screenshot 3" width="300">
-    <img src="Assets/screenshot4.PNG" alt="BJH OS Screenshot 4" width="300">
-  </div>
+<br>
+
+<h3 align="center">Screenshots</h3>
+
+<p align="center">
+  <img src="Assets/screenshot1.PNG" width="300" alt="BJH OS Screenshot 1">
+  <img src="Assets/screenshot2.PNG" width="300" alt="BJH OS Screenshot 2">
+  <img src="Assets/screenshot3.PNG" width="300" alt="BJH OS Screenshot 3">
+  <img src="Assets/screenshot4.PNG" width="300" alt="BJH OS Screenshot 4">
+</p>
+
 # 💻 BJH OS
 
 Assalam O Alaikum everyone! 👋 My name is **Muhammad Haris** and I made a **web-based operating system** named **BJH OS** 🌐💡
