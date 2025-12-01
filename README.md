@@ -1,5 +1,5 @@
   <!-- Logo -->
-  <div style="text-align:center; margin-top:50px;">
+  <div style="text-align:center; margin-top:10px;">
     <img src="Assets/bjh-os-logo.png" alt="BJH OS Logo">
   </div>
 
@@ -15,10 +15,10 @@
 
   <!-- Screenshots -->
   <div style="text-align:center;">
-    <img src="Assets/screenshot1.png" alt="BJH OS Screenshot 1" width="300">
-    <img src="Assets/screenshot2.png" alt="BJH OS Screenshot 2" width="300">
-    <img src="Assets/screenshot3.png" alt="BJH OS Screenshot 3" width="300">
-    <img src="Assets/screenshot4.png" alt="BJH OS Screenshot 4" width="300">
+    <img src="Assets/screenshot1.PNG" alt="BJH OS Screenshot 1" width="300">
+    <img src="Assets/screenshot2.PNG" alt="BJH OS Screenshot 2" width="300">
+    <img src="Assets/screenshot3.PNG" alt="BJH OS Screenshot 3" width="300">
+    <img src="Assets/screenshot4.PNG" alt="BJH OS Screenshot 4" width="300">
   </div>
 # 💻 BJH OS
 
