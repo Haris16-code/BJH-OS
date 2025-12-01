@@ -13,11 +13,6 @@
   ·
   <a href="https://sourceforge.net/projects/bjh-os/" target="_blank">SourceForge</a>
 </p>
-
-<h3 align="center">
-  <img width="800" alt="BJH OS Preview" src="Assets/screenshot1.png">
-</h3>
-
 <br>
 
 <h3 align="center">Screenshots</h3>
