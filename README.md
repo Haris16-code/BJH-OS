@@ -142,7 +142,7 @@ The **BJH OS Apps Market** is included in the **BJH OS 4.7 update** and is relea
 
 ---
 
-## 🛠️ How to Run BJH OS
+## 🛠️ How to Run BJH OS (Self Hostable)
 
 1. ⬇️ **Download the ZIP** from the [BJH OS MAIN REPOSITORY](https://github.com/Haris16-code/BJH-OS)  
 2. 🗂️ **Extract** the ZIP file  
@@ -154,7 +154,7 @@ The **BJH OS Apps Market** is included in the **BJH OS 4.7 update** and is relea
 
 ---
 
-## 🧰 BJH OS TOOL
+## 🧰 BJH OS TOOL (Required For Self Hostable Version)
 
 To make managing BJH OS easier, I developed a Python-based utility called **BJH OS TOOL** 🐍🛠️  
 It lets you:
