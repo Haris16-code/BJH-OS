@@ -3,9 +3,9 @@
 </h3>
 
 <h3 align="center">BJH OS — A Free, Open-Source, Web-Based Operating System</h3>
-<!--
+
 <p align="center">
-  <a href="https://haris16-code.github.io/BJH-OS/" target="_blank"><strong>« LIVE DEMO »</strong></a>-->
+  <a href="https://haris16-code.github.io/BJH-OS/" target="_blank"><strong>Live BJH OS</strong></a>
   <br><br>
   <a href="https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md" target="_blank">Developer Documentation</a>
   ·
