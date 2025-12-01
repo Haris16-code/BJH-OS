@@ -1,26 +1,25 @@
 **Developers can contribute to BJH OS Official Apps Market** by creating apps and games for BJH OS. The BJH OS Apps Market empowers developers to share their work with a growing community of users. Developers can manage updates, track downloads, engage with users through reviews, and boost app visibility using the points system. This guide explains how to upload apps safely, efficiently, and maximize their reach.
 
-
-
 ---
+#### [If you are new and don’t know **how to develop apps for BJH OS**, read this documentation first](https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md#bjh-os-studio---the-ultimate-developer-guide)
+
 
 ## 📑 Table of Contents
-1. [Development Guidelines for Developing Apps & Games For BJH OS Using BJH OS Studio](https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md#bjh-os-studio---the-ultimate-developer-guide)
-2. [Developer Account Setup](#1-developer-account-setup)
-3. [Accessing the Developer Dashboard](#2-accessing-the-developer-dashboard)
-4. [Uploading a New App/Game](#3-uploading-a-new-appgame)
-5. [Updating an Existing App/Game](#4-updating-an-existing-appgame)
-6. [App Statistics & Review Management](#5-app-statistics--review-management)
-7. [Points System](#6-points-system)
+1. [Developer Account Setup](#1-developer-account-setup)
+2. [Accessing the Developer Dashboard](#2-accessing-the-developer-dashboard)
+3. [Uploading a New App/Game](#3-uploading-a-new-appgame)
+4. [Updating an Existing App/Game](#4-updating-an-existing-appgame)
+5. [App Statistics & Review Management](#5-app-statistics--review-management)
+6. [Points System](#6-points-system)
     - [How You Earn Points](#how-you-earn-points)
     - [What You Can Use Points For](#what-you-can-use-points-for)
-8. [How to Promote Your Apps](#7-how-to-promote-your-apps-in-the-bjh-os-apps-market)
+7. [How to Promote Your Apps](#7-how-to-promote-your-apps-in-the-bjh-os-apps-market)
     - [Method 1 — Promotion Panel](#method-1-promote-from-the-promotion-panel)
     - [Method 2 — My Apps Page](#method-2-promote-from-the-my-apps-page)
     - [After Approval](#what-happens-after-approval)
     - [Notifications](#notifications)
-9. [Best Practices](#8-best-practices)
-10. [Support](#9-support)
+8. [Best Practices](#8-best-practices)
+9. [Support](#9-support)
 
 
 ---
@@ -206,6 +205,5 @@ If you encounter issues during upload or updates, contact BJH OS support via:
 - Email: `muhammad.haris662007@gmail.com`  
 
 ---
-
 This documentation ensures developers can **upload apps efficiently, track stats, use points to promote apps, and engage users** in BJH OS Apps Market.
 ## Here Guide For Uploading Apps And Games To BJH OS Apps Market End
