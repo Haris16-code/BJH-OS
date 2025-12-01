@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://haris16-code.github.io/BJH-OS/" target="_blank"><strong>Launch BJH OS
- </strong></a><br>Click here to run BJH OS directly in your browser.
+ </strong></a><br>Click Launch BJH OS to run BJH OS directly in your browser.
   <br><br>
   <a href="https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md" target="_blank">Developer Documentation</a>
   ·
