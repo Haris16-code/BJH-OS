@@ -225,6 +225,10 @@ We are building an active community around **BJH OS**, where you can:
 - Participate in events, contests, and discussions
 
 Whether you are a **developer, tester, or BJH OS fan**, there’s a place for you here!
+## License
+
+The core BJH OS (This Repository) is licensed under [AGPL-3.0](LICENSE).  
+Some future premium features may have separate usage terms.
 
 ---
 **Made with love in Pakistan ❤️**  
