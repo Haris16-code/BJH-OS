@@ -1,4 +1,4 @@
-**Developers can contribute to BJH OS Official Apps Market** by creating apps and games for BJH OS. The BJH OS Apps Market empowers developers to share their work with a growing community of users. Developers can manage updates, track downloads, engage with users through reviews, and boost app visibility using the points system. This guide explains how to upload apps safely, efficiently, and maximize their reach.
+**Developers can contribute to BJH OS Official Apps Market** by developing apps and games for BJH OS. The BJH OS Apps Market empowers developers to share their work with a growing community of users. Developers can manage updates, track downloads, engage with users through reviews, and boost app visibility using the points system. This guide explains how to upload apps safely, efficiently, and maximize their reach.
 
 ---
 #### [If you are new and don’t know **how to develop apps for BJH OS**, read this documentation first](https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md#bjh-os-studio---the-ultimate-developer-guide)
