@@ -29,10 +29,6 @@
   <img src="Assets/screenshot4.PNG" width="300" alt="BJH OS Screenshot 4">
 </p>
 
-# 💻 BJH OS
-
-Assalam O Alaikum everyone! 👋 My name is **Muhammad Haris** and I made a **web-based operating system** named **BJH OS** 🌐💡
-
 **BJH OS** is a **browser-based operating system** developed using **pure HTML, CSS, and JavaScript** — no frameworks, no backend dependencies ⚙️🚫. It’s designed to give you the feel of a real desktop OS, but in your web browser 🖥️✨
 
 ---
