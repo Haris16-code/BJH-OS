@@ -1,6 +1,6 @@
 # BJH OS — Developer Documentation
  
-**Last Updated:** November 30, 2025  
+**Last Updated:** December 2, 2025  
 **Project Status:** Active Development  
 
 ---
