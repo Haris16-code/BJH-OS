@@ -135,10 +135,9 @@ The **BJH OS Apps Market** is included in the **BJH OS 4.7 update** and is relea
 
 ### 📢 Rollout Updates
 
-- Introduced in **BJH OS 4.7 update**.  
 - Released in **phases** to reduce server overload and prevent crashes.  
 - Users gradually gain access as the rollout progresses.  
-- Updates and notifications sent via **BJH OS system notifications** and emails.  
+- Updates and notifications sent via **BJH OS system notifications** 
 
 ---
 
