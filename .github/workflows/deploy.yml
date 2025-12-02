@@ -21,4 +21,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }} 
           password: ${{ secrets.FTP_PASSWORD }} 
           local-dir: ./                         
-          server-dir: /public_html/bjhos.unaux.com/htdocs/main/
+          server-dir: /bjhos.unaux.com/htdocs/main/
