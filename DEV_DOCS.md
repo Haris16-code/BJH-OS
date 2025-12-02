@@ -149,7 +149,7 @@ BJH OS 4.6 new Update/
 
 ---
 
-## Installation & Setup
+## Installation & Setup (Self Hostable Only)
 
 ### Quick Start
 
@@ -443,8 +443,8 @@ Now in this way you develop built in app/game for BJH OS to run your app just ru
 
 ---
 
-# BJH OS Studio - The Ultimate Developer Guide
-# Developing 3rd-Party Apps Installed Via BJH OS Studio
+# BJH OS Studio - The Ultimate Developer Guide (For Self Hosted0
+# Developing 3rd-Party Apps Installed Via BJH OS Studio (For Self Hosted)
 ## 📖 Table of Contents For BJH OS Studio
 1. [Introduction To BJH OS Studio](#1-introduction)
 2. [Installation & Requirements](#2-installation--requirements)
@@ -819,7 +819,7 @@ This documentation ensures developers can **upload apps efficiently, track stats
 
 
 ---
-### Step 4: User Installation
+### Step 4: User Installation (Self Hosted Only)
 1. The user download the app/game from BJH OS Apps Markets which is built-in in BJH OS, after downloading user extracts the ZIP file.  
 2. Open the **BJH OS Tool** app.  
 3. Click the **Install App** button.  
