@@ -669,7 +669,7 @@ Before uploading apps, you must have a **BJH OS Developer Account**.
    - **Category** (e.g., Games, Productivity, Tools)  
    - **Version Number** (e.g., 1.0.0)  
      - **App Live URL** — The URL where your app is hosted for instant access.  
-  ⚠️ Make sure your app is hosted on this server: [Click Here](https://bjhos.unaux.com/Apps), otherwise your app will be rejected.
+  ⚠️ Make sure your app is hosted on this server: [Click Here](https://bjh-os.fwh.is/BJH-OS-Apps-Deployment-Center), otherwise your app will be rejected.
    - **Support Email** (optional but recommended)  
    - **Support Website** (optional but recommended)  
 
