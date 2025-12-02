@@ -1,9 +1,9 @@
 ---
 name: Feature request
 about: Suggest a new feature
-title: ''
-labels: ''
-assignees: ''
+title: Feature Request
+labels: enhancement
+assignees: Haris16-code
 
 ---
 
