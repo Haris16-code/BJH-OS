@@ -668,7 +668,8 @@ Before uploading apps, you must have a **BJH OS Developer Account**.
    - **Screenshots or Video** (optional; first media item shown in preview)  
    - **Category** (e.g., Games, Productivity, Tools)  
    - **Version Number** (e.g., 1.0.0)  
-   - **Download File (ZIP)** containing the app/game  
+     - **App Live URL** — The URL where your app is hosted for instant access.  
+  ⚠️ Make sure your app is hosted on this server: [Click Here](https://bjhos.unaux.com/Apps), otherwise your app will be rejected.
    - **Support Email** (optional but recommended)  
    - **Support Website** (optional but recommended)  
 
@@ -688,7 +689,8 @@ Before uploading apps, you must have a **BJH OS Developer Account**.
    - Version number  
    - Description  
    - Screenshots or video  
-   - ZIP file with updated app/game  
+     - **App Live URL** — The URL where your app is hosted for instant access.  
+  ⚠️ Make sure your app is hosted on this server: [Click Here](https://bjhos.unaux.com/Apps), otherwise your app will be rejected.
 
 4. Submit the update for admin approval.  
 5. After approval, the new version replaces the previous one.
@@ -1016,7 +1018,7 @@ function calculate(prev, current, op) {
 }
 ```
 
-**How to install & run your app in BJH OS**
+**How to install & run your app in BJH OS (Self Hosted Version Only)**
 
 1) Install using BJH OS Tool (recommended)
 
