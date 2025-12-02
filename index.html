@@ -263,13 +263,13 @@ opacity: 0; transition: all 1s;
                 return i;
             }
 
-            function StartDate(){
+            function StartDate() {
     const dToday = new Date();
     let dt = dToday.getDate();
 
-    // Function to get proper suffix
+    // Correct suffix function
     function getDaySuffix(day) {
-        if (day > 3 && day < 21) return "th"; // 4th to 20th
+        if (day > 3 && day < 21) return "th";
         switch (day % 10) {
             case 1: return "st";
             case 2: return "nd";
@@ -280,11 +280,20 @@ opacity: 0; transition: all 1s;
 
     let suffix = getDaySuffix(dt);
 
-    var myDay = dToday.getDay();
-    var weekday = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    // Month names
+    const months = [
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    ];
+
+    // Day names
+    const weekday = [
+        "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
+    ];
 
     document.getElementById('txtdty').innerHTML =
-        dt + suffix + ' ' + dToday.getFullYear() + ' ' + weekday[myDay];
+        dt + suffix + " " + months[dToday.getMonth()] + " " + dToday.getFullYear() +
+        " (" + weekday[dToday.getDay()] + ")";
 
     setTimeout(StartDate, 1000);
 }
@@ -327,5 +336,6 @@ opacity: 0; transition: all 1s;
 <script src="index.js"></script>
     </body>
 </html>
+
 
 
