@@ -1,6 +1,6 @@
 <h1>👋 Contributing to BJH OS</h1>
 
-<p>Thank you for your interest in contributing to BJH OS! We welcome bug fixes, improvements, new features, and documentation contributions. This guide explains how to contribute effectively and safely.</p>
+<p>Thank you for your interest in contributing to BJH OS! We welcome bug fixes, improvements, new features, documentation contributions, and apps or games for the BJH OS Apps Market. This guide explains how to contribute effectively and safely.</p>
 
 <h2>1. Getting Started</h2>
 
@@ -22,7 +22,9 @@
   <li>feature/add-dark-mode</li>
   <li>docs/update-readme</li>
 </ul>
+
 <p>New to contributing? Check out the official guide from GitHub: <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project" target="_blank">How to Contribute to a Project on GitHub</a></p>
+
 <h2>2. Coding Guidelines</h2>
 <ul>
   <li>Follow the existing code style for JS, HTML, and CSS.</li>
@@ -61,20 +63,30 @@
 </ol>
 <blockquote>Important: Do not push directly to <strong>main</strong>. All changes must go through a pull request.</blockquote>
 
-<h2>5. Learn More About Contributing on GitHub</h2>
+<h2>5. Contributing to BJH OS Apps Market</h2>
+<p>You can also contribute by developing <strong>apps and games</strong> for the BJH OS Apps Market. To do this:</p>
+<ul>
+  <li>Follow BJH OS coding and UI guidelines.</li>
+  <li>Test your app or game thoroughly.</li>
+  <li>Submit your project via the BJH OS Apps Deployment platform or repository (see developer docs below).</li>
+  <li>Include instructions on how to use or test the app/game.</li>
+  <li>Read the detailed guide here: <a href="https://github.com/Haris16-code/BJH-OS/blob/main/CONTRIBUTING_TO_BJH_OS_APPS_MARKET.md" target="_blank">BJH OS Apps Market Guide</a></li>
+</ul>
+
+<h2>6. Learn More About Contributing on GitHub</h2>
 <p>New to contributing? Check out the official guide from GitHub: <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project" target="_blank">How to Contribute to a Project on GitHub</a></p>
 
-<h2>6. BJH OS Developer Documentation</h2>
-<p>For detailed BJH OS developer guidelines and API documentation, see: <a href="https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md" target="_blank">BJH OS Developer Documentation</a></p>
+<h2>7. BJH OS Developer Documentation</h2>
+<p>For detailed BJH OS developer guidelines, API documentation, and apps deployment instructions, see: <a href="https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md" target="_blank">BJH OS Developer Documentation</a></p>
 
-<h2>7. Issues</h2>
+<h2>8. Issues</h2>
 <ul>
   <li>Before submitting a new issue, check if it already exists.</li>
   <li>Use the Issue Templates (Bug Report / Feature Request) provided.</li>
   <li>Provide detailed information, screenshots, and steps to reproduce bugs.</li>
 </ul>
 
-<h2>8. Code of Conduct</h2>
+<h2>9. Code of Conduct</h2>
 <p>By contributing, you agree to follow BJH OS’s <a href="https://github.com/Haris16-code/BJH-OS/blob/main/CODE_OF_CONDUCT.md" target="_blank">Code of Conduct</a>:</p>
 <ul>
   <li>Be respectful and professional</li>
@@ -82,8 +94,9 @@
   <li>No spam or offensive content</li>
 </ul>
 
-<h2>9. Thank You</h2>
+<h2>10. Thank You</h2>
 <p>We appreciate your contributions! BJH OS grows stronger with each contribution from the community. 🙌</p>
-<a href="https://github.com/Haris16-code/BJH-OS/blob/main/CONTRIBUTORS.md" target="_blank">List Of All Contributers Who Contributes In BJH OS</a>
+<p><a href="https://github.com/Haris16-code/BJH-OS/blob/main/CONTRIBUTORS.md" target="_blank">List of All Contributors Who Contributed to BJH OS</a></p>
+
 </body>
 </html>
