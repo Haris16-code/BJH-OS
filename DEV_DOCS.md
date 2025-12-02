@@ -15,7 +15,7 @@
 5. [Architecture & Key Systems](#architecture--key-systems)
 6. [File Descriptions](#file-descriptions)
 7. [Development Guidelines for Developing Built-In Apps And Games for BJH OS (Manual Development)](#development-guidelines-for-developing-built-in-apps-and-games-for-bjh-os-manually)
-8. [Development Guidelines for Developing 3rd-Party Apps & Games For BJH OS Using BJH OS Studio](#bjh-os-studio---the-ultimate-developer-guide)
+8. [Development Guidelines for Developing 3rd-Party Apps & Games For BJH OS Using BJH OS Studio (Self Hosted)](#bjh-os-studio---the-ultimate-developer-guide-for-self-hosted)
 9. [Uploading Apps/Games To BJH OS Official Apps Market](#%EF%B8%8F-how-to-upload-apps-to-bjh-os-apps-market)
 10. [API Reference](#api-reference)
 11. [Troubleshooting](#troubleshooting)
@@ -443,7 +443,7 @@ Now in this way you develop built in app/game for BJH OS to run your app just ru
 
 ---
 
-# BJH OS Studio - The Ultimate Developer Guide (For Self Hosted0
+# BJH OS Studio - The Ultimate Developer Guide (For Self Hosted)
 # Developing 3rd-Party Apps Installed Via BJH OS Studio (For Self Hosted)
 ## 📖 Table of Contents For BJH OS Studio
 1. [Introduction To BJH OS Studio](#1-introduction)
