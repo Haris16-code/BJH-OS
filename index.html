@@ -259,45 +259,45 @@ opacity: 0; transition: all 1s;
             }
 
             function checkTime(i) {
-                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                if (i < 10) {i = "0" + i};
                 return i;
             }
 
+            /* ---------------- FIXED DATE FUNCTION ---------------- */
             function StartDate() {
-    const dToday = new Date();
-    let dt = dToday.getDate();
+                const dToday = new Date();
+                let dt = dToday.getDate();
 
-    // Correct suffix function
-    function getDaySuffix(day) {
-        if (day > 3 && day < 21) return "th";
-        switch (day % 10) {
-            case 1: return "st";
-            case 2: return "nd";
-            case 3: return "rd";
-            default: return "th";
-        }
-    }
+                function getDaySuffix(day) {
+                    if (day > 3 && day < 21) return "th";
+                    switch (day % 10) {
+                        case 1: return "st";
+                        case 2: return "nd";
+                        case 3: return "rd";
+                        default: return "th";
+                    }
+                }
 
-    let suffix = getDaySuffix(dt);
+                let suffix = getDaySuffix(dt);
 
-    // Month names
-    const months = [
-        "January","February","March","April","May","June",
-        "July","August","September","October","November","December"
-    ];
+                const months = [
+                    "January","February","March","April","May","June",
+                    "July","August","September","October","November","December"
+                ];
 
-    // Day names
-    const weekday = [
-        "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
-    ];
+                const weekday = [
+                    "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
+                ];
 
-    document.getElementById('txtdty').innerHTML =
-        dt + suffix + " " + months[dToday.getMonth()] + " " + dToday.getFullYear() +
-        " (" + weekday[dToday.getDay()] + ")";
+                document.getElementById('txtdty').innerHTML =
+                    dt + suffix + " " +
+                    months[dToday.getMonth()] + " " +
+                    dToday.getFullYear() + " (" +
+                    weekday[dToday.getDay()] + ")";
 
-    setTimeout(StartDate, 1000);
-}
-
+                setTimeout(StartDate, 1000);
+            }
+            /* ----------------------------------------------------- */
 
             var GreetDate = new Date();
             var hrs = GreetDate.getHours();
@@ -336,6 +336,3 @@ opacity: 0; transition: all 1s;
 <script src="index.js"></script>
     </body>
 </html>
-
-
-
