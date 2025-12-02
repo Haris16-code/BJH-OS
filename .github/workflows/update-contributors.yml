@@ -1,0 +1,36 @@
+name: Update Contributor Badges
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  update-badges:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Add Contributor Badge
+        run: |
+          CONTRIBUTOR="${{ github.event.pull_request.user.login }}"
+          FILE="CONTRIBUTORS.md"
+          BADGE="![${CONTRIBUTOR}](https://img.shields.io/badge/-${CONTRIBUTOR}-brightgreen)"
+          
+          # Add badge only if not already present
+          if ! grep -q "$CONTRIBUTOR" "$FILE"; then
+            echo "$BADGE" >> "$FILE"
+            git config user.name "github-actions"
+            git config user.email "actions@github.com"
+            git add "$FILE"
+            git commit -m "Add contributor badge for $CONTRIBUTOR"
+            git push
+          else
+            echo "$CONTRIBUTOR already has a badge."
+          fi
