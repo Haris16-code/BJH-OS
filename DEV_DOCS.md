@@ -1,6 +1,5 @@
-# BJH OS 4.6 — Developer Documentation
-
-**Version:** 4.6  
+# BJH OS — Developer Documentation
+ 
 **Last Updated:** November 30, 2025  
 **Project Status:** Active Development  
 
