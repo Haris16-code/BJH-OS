@@ -83,7 +83,7 @@ Before uploading apps, you must have a **BJH OS Developer Account**.
    - Description  
    - Screenshots or video  
    - **App Live URL** — The URL where your app is hosted for instant access.  
-  ⚠️ Make sure your app is hosted on this server: [Click Here](https://bjhos.unaux.com/Apps), otherwise your app will be rejected.
+  ⚠️ Make sure your app is hosted on this server: [Click Here](https://bjh-os.fwh.is/BJH-OS-Apps-Deployment-Center), otherwise your app will be rejected.
 
 4. Submit the update for admin approval.  
 5. After approval, the new version replaces the previous one.
