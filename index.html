@@ -264,19 +264,31 @@ opacity: 0; transition: all 1s;
             }
 
             function StartDate(){
-                const dToday = new Date();
-                let dt = dToday.getDate();
+    const dToday = new Date();
+    let dt = dToday.getDate();
 
-                var myDate = new Date();
-                var myDay = myDate.getDay();
+    // Function to get proper suffix
+    function getDaySuffix(day) {
+        if (day > 3 && day < 21) return "th"; // 4th to 20th
+        switch (day % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
+    }
 
-                // Array of days.
-                var weekday = ['Sunday', 'Monday', 'Tuesday',
-                    'Wednesday', 'Thursday', 'Friday', 'Saturday'
-                ];
-                document.getElementById('txtdty').innerHTML =  dt + 'th ' + dToday.getFullYear() + ' ' + weekday[myDay];
-                setTimeout(startTime, 1000);
-            }
+    let suffix = getDaySuffix(dt);
+
+    var myDay = dToday.getDay();
+    var weekday = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    document.getElementById('txtdty').innerHTML =
+        dt + suffix + ' ' + dToday.getFullYear() + ' ' + weekday[myDay];
+
+    setTimeout(StartDate, 1000);
+}
+
 
             var GreetDate = new Date();
             var hrs = GreetDate.getHours();
@@ -315,4 +327,5 @@ opacity: 0; transition: all 1s;
 <script src="index.js"></script>
     </body>
 </html>
+
 
