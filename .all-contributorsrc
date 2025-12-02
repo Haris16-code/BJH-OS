@@ -1,0 +1,27 @@
+{
+  "projectName": "BJH OS",
+  "projectOwner": "Haris16-code",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": ["CONTRIBUTORS.md"],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributorsSortAlphabetically": false,
+  "badgeTemplate": "[![All Contributors](https://img.shields.io/github/all-contributors/Haris16-code/BJH-OS?color=ee8449&style=flat-square)](#contributors)",
+  "contributorTemplate": "<a href='{{profile}}'><img src='{{avatar}}' width='{{size}}px;' alt='{{name}}'/><br /><sub><b>{{name}}</b></sub></a>",
+  "wrapperTemplate": "<table><tr>{{contributors}}</tr></table>",
+  "types": {
+    "code": "💻",
+    "doc": "📄",
+    "design": "🎨",
+    "bug": "🐛",
+    "test": "✅",
+    "review": "👀",
+    "ideas": "💡"
+  },
+  "linkToUsage": true,
+  "skipCi": true,
+  "contributors": []
+}
