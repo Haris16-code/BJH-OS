@@ -2,8 +2,8 @@
 name: Bug report
 about: Create a report to help us improve
 title: Bug Reported
-labels: ''
-assignees: ''
+labels: bug
+assignees: Haris16-code
 
 ---
 
