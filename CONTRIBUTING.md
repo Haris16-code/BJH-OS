@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>BJH OS Contribution Guide</title>
-</head>
-<body>
-
 <h1>👋 Contributing to BJH OS</h1>
 
 <p>Thank you for your interest in contributing to BJH OS! We welcome bug fixes, improvements, new features, and documentation contributions. This guide explains how to contribute effectively and safely.</p>
