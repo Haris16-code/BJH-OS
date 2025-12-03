@@ -105,6 +105,23 @@
         .dark .glass-card:hover {
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
         }
+
+        /* Loader Animation */
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #FFF;
+            border-bottom-color: #3b82f6;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-[#0f172a] dark:text-f8fafc">
@@ -138,7 +155,7 @@
         </button>
     );
 
-    const AppCard = ({ app, delay }) => {
+    const AppCard = ({ app, delay, onOpen }) => {
         const [imgError, setImgError] = useState(false);
 
         return (
@@ -177,18 +194,82 @@
 
                 <div className="mt-auto w-full">
                     {app.live_url && app.live_url.trim() !== '' ? (
-                        <a 
-                            href={app.live_url} 
+                        <button 
+                            onClick={() => onOpen(app)}
                             className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-500/20 dark:shadow-blue-900/20 transition-all duration-200 active:scale-95 group-hover:shadow-blue-500/30"
                         >
                             <span>Open App</span>
-                            <Icon name="external-link" size={14} />
-                        </a>
+                            <Icon name="play-circle" size={14} />
+                        </button>
                     ) : (
                         <button disabled className="w-full py-2.5 px-4 bg-slate-200 dark:bg-slate-700/50 text-slate-400 dark:text-slate-500 text-sm font-medium rounded-xl cursor-not-allowed border border-transparent dark:border-white/5">
                             Not Available
                         </button>
                     )}
+                </div>
+            </div>
+        );
+    };
+
+    const AppViewer = ({ app, onClose }) => {
+        const [loading, setLoading] = useState(true);
+
+        return (
+            <div className="fixed inset-0 z-[100] bg-white dark:bg-[#0f172a] flex flex-col animate-fade-up">
+                {/* Header Bar */}
+                <div className="h-14 border-b border-slate-200 dark:border-white/10 flex items-center justify-between px-4 bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-md sticky top-0 z-10">
+                    <div className="flex items-center gap-3">
+                        <button 
+                            onClick={onClose}
+                            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-slate-300 transition-colors"
+                        >
+                            <Icon name="arrow-left" size={20} />
+                        </button>
+                        <div className="flex items-center gap-2">
+                             {app.app_icon && <img src={app.app_icon} className="w-6 h-6 rounded-md" />}
+                            <h2 className="font-semibold text-slate-800 dark:text-white truncate max-w-[200px] sm:max-w-md">
+                                {app.app_name}
+                            </h2>
+                        </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                        {loading && (
+                            <div className="flex items-center gap-2 text-sm text-blue-500 animate-pulse font-medium mr-2">
+                                <Icon name="loader-2" size={16} className="animate-spin" />
+                                <span className="hidden sm:inline">Loading...</span>
+                            </div>
+                        )}
+                        <a 
+                            href={app.live_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 text-slate-600 dark:text-slate-300 transition-colors"
+                            title="Open in new tab"
+                        >
+                            <Icon name="external-link" size={20} />
+                        </a>
+                    </div>
+                </div>
+
+                {/* Content Area */}
+                <div className="flex-1 relative w-full h-full bg-slate-50 dark:bg-black/20">
+                    {loading && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center z-0">
+                            <span className="loader mb-4 border-slate-200 dark:border-slate-700 !border-b-blue-500"></span>
+                            <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Launching application...</p>
+                            <p className="text-xs text-slate-400 mt-2">If it fails to load, try the button in top right.</p>
+                        </div>
+                    )}
+                    <iframe 
+                        src={app.live_url}
+                        title={app.app_name}
+                        className={`w-full h-full border-0 relative z-10 transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}
+                        allowFullScreen
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        onLoad={() => setLoading(false)}
+                    />
                 </div>
             </div>
         );
@@ -286,6 +367,9 @@
         const [search, setSearch] = useState('');
         const [userEmail, setUserEmail] = useState('');
         
+        // Active App for Viewer
+        const [activeApp, setActiveApp] = useState(null);
+        
         // Load theme from localStorage or default to 'light'
         const [theme, setTheme] = useState(() => {
             return localStorage.getItem('bjh_os_theme') || 'light';
@@ -366,7 +450,8 @@
                         headers: {
                             'api_key': '1811ad3b42354132a6d87dc34b7ed2ec',
                             'Content-Type': 'application/json'
-                        }
+                        },
+                        credentials: 'include'
                     });
 
                     if (!response.ok) throw new Error('Failed to fetch data');
@@ -393,7 +478,12 @@
 
         // -- Rendering States --
 
-        // 1. Not Logged In
+        // 1. App Viewer Active
+        if (activeApp) {
+            return <AppViewer app={activeApp} onClose={() => setActiveApp(null)} />;
+        }
+
+        // 2. Not Logged In
         if (!loading && !userEmail) {
             return (
                 <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-slate-50 dark:bg-[#0f172a] transition-colors duration-300">
@@ -449,7 +539,7 @@
                         ) : filteredApps.length > 0 ? (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                 {filteredApps.map((app, index) => (
-                                    <AppCard key={index} app={app} delay={index * 100} />
+                                    <AppCard key={index} app={app} delay={index * 100} onOpen={setActiveApp} />
                                 ))}
                             </div>
                         ) : (
