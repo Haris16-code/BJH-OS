@@ -140,6 +140,7 @@ The **BJH OS Apps Market** is included in the **BJH OS 4.7 update** and is relea
 - Updates and notifications sent via **BJH OS system notifications** 
 
 ---
+# Getting Started
 
 ## 🛠️ How to Run BJH OS (Self Hostable)
 
@@ -191,6 +192,8 @@ It lets you:
 ✅ Ensure the file or folder exists before proceeding.
 
 ---
+## BJH OS Is Also Available as a hosted services at: [Live BJH OS](https://haris16-code.github.io/BJH-OS)
+---
 ## 🧑‍💻 Developer Documentation
 
 BJH OS 4.6 developer docs provide everything you need to **build, extend, and create apps or games** for the web-based desktop experience.  
@@ -198,6 +201,7 @@ BJH OS 4.6 developer docs provide everything you need to **build, extend, and cr
 **Highlights:**
 - **Step-by-Step App & Game Development For BJH OS:** Learn how to create apps and games for BJH OS from scratch, including folder structure, required files, optional assets, and best practices.  
 - **Project Structure:** Clear layout of core files and directories:
+- **Uploading Apps And Games To BJH OS Apps Market:** Learn How To Upload Apps And Games To BJH OS Apps Market.
 - **Window & Taskbar Systems:** Full guidance on draggable, resizable windows, maximize/restore behavior, taskbar icons, and in-window app launching.  
 - **App Models:** Supports both built-in apps (pre-installed) and 3rd-party apps (installed via BJH OS TOOL).  
 - **App Folder Template & Installer Flow:** Proper folder setup with required files (`index.html`, `favicon.ico`) and optional files (`style.css`, `app.js`, `constants.js`, assets). Includes installer instructions for seamless integration into BJH OS.  
