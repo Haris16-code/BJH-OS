@@ -113,7 +113,7 @@
 
 <script type="text/babel">
 
-    const { useState, useEffect, useMemo } = React;
+    const { useState, useEffect, useMemo, useRef } = React;
 
     // --- Components ---
 
@@ -254,6 +254,31 @@
         );
     };
 
+    const ManualLogin = ({ onLogin }) => {
+        const [inputEmail, setInputEmail] = useState('');
+        
+        return (
+             <div className="mt-6 pt-6 border-t border-slate-200 dark:border-white/10 w-full animate-fade-up">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Can't detect login? Enter email manually:</p>
+                <div className="flex gap-2">
+                    <input 
+                        type="email" 
+                        placeholder="Enter BJH OS Email"
+                        value={inputEmail}
+                        onChange={(e) => setInputEmail(e.target.value)}
+                        className="flex-1 bg-white dark:bg-slate-800 border border-slate-300 dark:border-white/20 text-slate-900 dark:text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 transition-colors"
+                    />
+                    <button 
+                        onClick={() => onLogin(inputEmail)}
+                        className="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                    >
+                        Save
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
     const MainApp = () => {
         const [apps, setApps] = useState([]);
         const [loading, setLoading] = useState(true);
@@ -281,27 +306,54 @@
             setTheme(prev => prev === 'light' ? 'dark' : 'light');
         };
 
+        const attemptGetUserEmail = () => {
+             let email = null;
+            
+            // 1. Local Storage (Iframe Scope)
+            try { email = localStorage.getItem('bjh_user_email'); } catch (e) {}
+            if (email) return email;
+
+            // 2. Session Storage
+            try { email = sessionStorage.getItem('bjh_user_email'); } catch (e) {}
+            if (email) return email;
+
+            // 3. Parent Local Storage (Same Origin only)
+            try { 
+                if (window.parent && window.parent !== window) {
+                    email = window.parent.localStorage.getItem('bjh_user_email');
+                }
+            } catch (e) { console.warn('Parent access blocked (CORS):', e); }
+            if (email) return email;
+
+            // 4. Top Local Storage (Same Origin only)
+            try { 
+                if (window.top && window.top !== window) {
+                    email = window.top.localStorage.getItem('bjh_user_email');
+                }
+            } catch (e) { console.warn('Top access blocked (CORS):', e); }
+            if (email) return email;
+
+            // 5. URL Query Parameters (?email=...)
+            try {
+                const params = new URLSearchParams(window.location.search);
+                email = params.get('email') || params.get('user_email') || params.get('bjh_user_email');
+            } catch(e) {}
+            
+            return email;
+        }
+
+        const handleManualLogin = (email) => {
+            if (email && email.includes('@')) {
+                localStorage.setItem('bjh_user_email', email);
+                setUserEmail(email);
+                setLoading(true); // Retrigger fetch
+            }
+        };
+
         // Fetch Data
         useEffect(() => {
             const fetchData = async () => {
-                // Try getting email from local storage (iframe scope) or parent's local storage
-                let email = null;
-                
-                try {
-                    email = localStorage.getItem('bjh_user_email');
-                } catch (e) {
-                    console.warn("Could not access local storage:", e);
-                }
-
-                // If not found in local scope, try accessing parent scope (useful for iframes)
-                if (!email) {
-                    try {
-                        email = window.parent.localStorage.getItem('bjh_user_email');
-                    } catch (e) {
-                        console.warn("Could not access parent local storage (Cross-origin blocked):", e);
-                    }
-                }
-
+                const email = attemptGetUserEmail();
                 setUserEmail(email);
 
                 if (!email) {
@@ -333,7 +385,7 @@
             };
 
             fetchData();
-        }, []);
+        }, [userEmail]); // Re-run if userEmail is set manually
 
         const filteredApps = apps.filter(app => 
             (app.app_name || '').toLowerCase().includes(search.toLowerCase())
@@ -364,6 +416,8 @@
                                 No app is installed. Please login to <a href="https://bjh-os-apps-market.base44.app" target="_blank" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline hover:text-blue-700 dark:hover:text-blue-300 transition-colors">BJH OS apps market</a> to install apps.
                             </p>
                         </div>
+                        
+                        <ManualLogin onLogin={handleManualLogin} />
                     </div>
                 </div>
             );
