@@ -14,8 +14,8 @@
     - [How You Earn Points](#how-you-earn-points)
     - [What You Can Use Points For](#what-you-can-use-points-for)
 7. [How to Promote Your Apps](#7-how-to-promote-your-apps-in-the-bjh-os-apps-market)
-    - [Method 1 — Promotion Panel](#method-1-promote-from-the-promotion-panel)
-    - [Method 2 — My Apps Page](#method-2-promote-from-the-my-apps-page)
+    - [Method 1 — Promotion Panel](#method-1--promote-from-the-promotion-panel)
+    - [Method 2 — My Apps Page](#method-2--promote-from-the-my-apps-page)
     - [After Approval](#what-happens-after-approval)
     - [Notifications](#notifications)
 8. [Best Practices](#8-best-practices)
@@ -83,7 +83,7 @@ Before uploading apps, you must have a **BJH OS Developer Account**.
    - Description  
    - Screenshots or video  
    - **App Live URL** — The URL where your app is hosted for instant access.  
-⚠️ Make sure to follow this guide to get your app's live link: <a href="https://github.com/Haris16-code/BJH-OS/blob/main/APP_DEPLOYMENT_GUIDE.md" target="_blank">Click Here</a>. Apps not following this guide may be rejected.
+⚠️ Make sure to follow this guide to get your app's live link: [Click Here](https://github.com/Haris16-code/BJH-OS/blob/main/APP_DEPLOYMENT_GUIDE.md). Apps not following this guide may be rejected.
 
 4. Submit the update for admin approval.  
 5. After approval, the new version replaces the previous one.
