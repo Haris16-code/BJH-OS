@@ -8,7 +8,7 @@ Welcome to **BJH OS Apps Deployment Center**! This platform allows you to host y
 
 ##### Create an Account
 
-1.  Navigate to the <a href="https://bjh-os.fwh.is/BJH-OS-Apps-Deployment-Center" target="_blank">BJH OS Apps Deployment Center Home Page</a>
+1.  Navigate to the <a href="https://bjhos.unaux.com/BJH_OS_Apps_Deployment_Center" target="_blank">BJH OS Apps Deployment Center Home Page</a>
 2.  Click on the Register tab.
 3.  Fill in your Full Name, Email, Password, and a short Bio.
 4.  Click Register.
