@@ -284,7 +284,24 @@
         // Fetch Data
         useEffect(() => {
             const fetchData = async () => {
-                const email = localStorage.getItem('bjh_user_email');
+                // Try getting email from local storage (iframe scope) or parent's local storage
+                let email = null;
+                
+                try {
+                    email = localStorage.getItem('bjh_user_email');
+                } catch (e) {
+                    console.warn("Could not access local storage:", e);
+                }
+
+                // If not found in local scope, try accessing parent scope (useful for iframes)
+                if (!email) {
+                    try {
+                        email = window.parent.localStorage.getItem('bjh_user_email');
+                    } catch (e) {
+                        console.warn("Could not access parent local storage (Cross-origin blocked):", e);
+                    }
+                }
+
                 setUserEmail(email);
 
                 if (!email) {
