@@ -1,6 +1,6 @@
 # BJH OS — Developer Documentation
  
-**Last Updated:** December 03, 2025  
+**Last Updated:** December 06, 2025  
 **Project Status:** Active Development  
 
 ---
@@ -15,7 +15,7 @@
 6. [File Descriptions](#file-descriptions)
 7. [Development Guidelines for Developing Built-In Apps And Games for BJH OS](#development-guidelines-for-developing-built-in-apps-and-games-for-bjh-os-manually)
 8. [How To Develop Apps And Games For BJH OS Apps Market](#how-to-develop-apps-and-games-for-bjh-os-apps-market)
-9. [Uploading Apps/Games To BJH OS Official Apps Market](#how-to-develop-apps-and-games-for-bjh-os-apps-market)
+9. [Uploading Apps/Games To BJH OS Official Apps Market](#how-to-upload-apps-and-games-on-bjh-os-apps-market)
 10. [Installing Apps And Games In BJH OS](#bjh-os-apps--games-installation-guide)
 11. [API Reference](#api-reference)
 12. [Troubleshooting](#troubleshooting)
