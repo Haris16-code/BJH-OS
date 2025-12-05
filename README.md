@@ -63,76 +63,109 @@
 
 
 
-### 🎉 BJH OS Apps Market
+🌟 BJH OS Apps Market - Feature Highlights
+=========================================
 
-The **BJH OS Apps Market** is included in the **BJH OS 4.7 update** and is released in phases to ensure smooth performance and prevent server overload.
+Welcome to the next generation of web application deployment and discovery. The **BJH OS App Market** connects developers with users through a secure, high-performance, and visually stunning platform.
 
----
+🚀 For Users: A Premium App Store Experience
+--------------------------------------------
 
-### ✨ Main Features
+### 1\. Modern Glassmorphism UI
 
-- Browse all apps and games with a **search bar** and **autocomplete suggestions**.  
-- Tabs for **Games**, **Apps**, and **Search**.  
-- App display includes: **icon, name, category, rating, and number of downloads**.  
-- Trending notifications at the top with app URL and main image.  
-- App detail page shows:  
-  - Icon & name  
-  - Developer/company name  
-  - Rating and number of reviews  
-  - Download size and number of downloads  
-  - Download button  
-  - Screenshots and video previews  
-  - About this app/game description  
-  - Ratings & Reviews with “Was this review helpful?” counters  
-  - Similar apps or games at the bottom  
+*   **Visual Excellence:** A fully responsive interface featuring modern glass-morphic cards, smooth transitions, and high-quality visuals.
+    
+*   **Theme Support:** Toggle between a crisp **Light Mode** and a sleek **Dark Mode**. Your preference is saved automatically.
+    
 
----
+### 2\. Intelligent Discovery
 
-### 👤 User Features
+*   **Smart Search:** Instantly find apps, games, or tools using the real-time search bar.
+    
+*   **Categorization:** Browse through dedicated tabs for **"For You"**, **"Utilities"**, and **"Games"**.
+    
+*   **Smart Ranking:** The store automatically highlights trending apps based on download activity and freshness.
+    
 
-- **Login or create a BJH OS account** to use the Apps Market.  
-- Manage favorite apps.  
-- Downloads saved in **Manage Apps** panel.  
-- **Download the latest apps and games**.  
-- **Update apps automatically** when a new version is available.  
-- Rate and review apps.  
-- Reset or recover forgotten passwords.  
-- Receive system and email notifications for registration and app updates.  
+### 3\. Personal Library & Instant Launch
 
----
+*   **One-Click Install:** Add apps to your library instantly. No complex installation wizards.
+    
+*   **Cloud Library:** Your apps are tied to your account. Log in from any device to access your installed software.
+    
+*   **Instant App Viewer:** Apps launch immediately within a secure, full-screen overlay without leaving the OS environment.
+    
 
-### 💻 Developer Features
+### 4\. Secure Authentication
 
-- Upload apps/games with: icon, name, description, screenshots/video, category, version, and zip file.  
-- Upload updates for existing apps.  
-- View app statistics: downloads, ratings, reviews.  
-- Comment on user reviews.  
-- Manage promotion points for app visibility.  
-- Notifications panel for approvals and promotion updates.  
-- Provide app support info: website, email.  
-- Submit appeals if needed.  
+*   **OTP Verification:** Accounts are secured via Email One-Time Passwords (OTP) during registration and login attempts from new contexts.
+    
+*   **Password Recovery:** Secure "Forgot Password" flow to regain access easily.
+    
 
----
+🛠️ For Developers: Powerful Deployment Tools
+---------------------------------------------
 
-### 🔒 Security & UX
+### 1\. Zero-Downtime Updates
 
-- Secure login for users and developers (password hashing, reset password).  
-- Validation for file uploads (icons, videos, zip files).  
-- Modern, beautiful, mobile-friendly UI.  
-- Clear and intuitive navigation.  
+*   **Seamless Transitions:** When you update an app, the old version remains live for users until the new version is approved by admins. Users never experience broken links.
+    
+*   **Shadow Copy System:** Updates are staged safely in a review environment before merging with the live product.
+    
 
----
+### 2\. Drag & Drop Deployment
 
-### 🌟 Extra Features
+*   **Effortless Uploads:** Simply drag your project folder containing index.html and assets into the dashboard.
+    
+*   **Parallel Processing:** The upload engine handles multiple files simultaneously for lightning-fast deployments.
+    
 
-- Rating aggregation and visualization.  
-- Review helpfulness tracking.  
-- Trending apps notifications.  
-- Smooth app promotion workflow with points system.  
-- System emails for registration, app updates, and promotions.  
+### 3\. Analytics & Insights
 
----
+*   **Visual Data:** View beautiful charts showing download trends over the last 7 days.
+    
+*   **Performance Tracking:** Monitor total downloads directly from your dashboard card view.
+    
 
+### 4\. Communication & Support
+
+*   **Issue Reporting:** Built-in ticketing system to report bugs or request help from Admins.
+    
+*   **Feedback Loop:** If an app is rejected, developers receive specific feedback/reasons from Admins directly on the dashboard to help them fix and resubmit.
+    
+
+🛡️ Security & Administration
+-----------------------------
+
+### 1\. Human-Verified Ecosystem
+
+*   **Pre-Approval Workflow:** No app goes live without Admin review. This prevents malware, phishing, and low-quality content from reaching users.
+    
+*   **Content Safety:** Strict guidelines against NSFW and malicious content ensure a family-friendly environment.
+    
+
+### 2\. Real-Time Notifications
+
+*   **Instant Alerts:** Users and Developers receive instant popup notifications and emails for critical events (App Approvals, Rejections, Account Status changes).
+    
+*   **Notification Center:** A built-in bell icon stores history of all system messages.
+    
+
+### 3\. Account Safety System
+
+*   **Suspension Management:** Automated systems allow Admins to suspend violating accounts instantly.
+    
+*   **Appeals Process:** Banned users have a dedicated interface to submit appeals, which Admins can review and Approve/Reject with a single click.
+    
+
+⚡ Technical Performance
+-----------------------
+
+*   **Fast Load Times:** Optimized asset delivery and database queries ensure the store loads instantly.
+    
+*   **Robust Error Handling:** The system gracefully handles network issues, providing "Retry" options instead of crashing.
+    
+*   **Cloud Storage Integration:** Powered by high-speed cloud infrastructure for reliable asset hosting.
 ### 📢 Rollout Updates
 
 - Released in **phases** to reduce server overload and prevent crashes.  
