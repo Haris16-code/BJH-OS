@@ -453,7 +453,7 @@ Now in this way you develop built in app/game for BJH OS to run your app just ru
 How To Upload Apps And Games On BJH OS Apps Market?
 ==============================
 
-Welcome to the **BJH OS App Market Developer Platform**. This guide will walk you through setting up your account, deploying your first application, managing updates, and adhering to our community guidelines.
+Welcome to the **BJH OS Apps Market Developer Platform**. This guide will walk you through setting up your account, deploying your first application, managing updates, and adhering to our community guidelines.
 
 1\. Getting Started
 -------------------
