@@ -134,10 +134,8 @@
 <script type="text/babel">
     const { useState, useEffect, useCallback } = React;
     
+    // Configure API URL for GitHub Pages / Remote setup
     const API_URL = 'https://bjhos.unaux.com/Apps-Market/api.php';
-    // REPLACED PHP TAGS WITH DEFAULTS FOR PURE HTML FILE
-    const INITIAL_LOGGED_IN = false; // Will be updated by useEffect fetch
-    const USER_NAME = "User"; // Will be updated on login
     const FALLBACK_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48cmVjdCB3aWR0aD0iODAiIGhlaWdodD0iODAiIGZpbGw9IiNmZmZmZmYiIHJ4PSIxOCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIyMHB4IiBmaWxsPSIjY2NjIj5BUFA8L3RleHQ+PC9zdmc+";
 
     const Icon = ({ name, size = 20, className }) => {
@@ -240,7 +238,8 @@
             fd.append('password', password);
 
             try {
-                const res = await fetch(API_URL, { method: 'POST', body: fd });
+                // Important: credentials: 'include' for CORS session sharing
+                const res = await fetch(API_URL, { method: 'POST', body: fd, credentials: 'include' });
                 const data = await res.json();
                 if (data.status === 'success') {
                     onLoginSuccess(data.user_name || 'User');
@@ -263,7 +262,7 @@
                             <Icon name="lock" size={32} className="text-white" />
                         </div>
                         <h2 className="text-3xl font-bold mb-2 text-slate-800 dark:text-white tracking-tight">Welcome Back</h2>
-                        <p className="text-slate-600 dark:text-slate-300">Sign in to BJH OS</p>
+                        <p className="text-slate-600 dark:text-slate-300">Sign in to access your apps</p>
                     </div>
 
                     <form onSubmit={handleLogin} className="space-y-4">
@@ -309,8 +308,8 @@
 
     // --- LAUNCHER APP ---
     const Launcher = () => {
-        const [isLoggedIn, setIsLoggedIn] = useState(INITIAL_LOGGED_IN);
-        const [userName, setUserName] = useState(USER_NAME);
+        const [isLoggedIn, setIsLoggedIn] = useState(false); // Default to false until checked
+        const [userName, setUserName] = useState('User');
         const [apps, setApps] = useState([]);
         const [loading, setLoading] = useState(true);
         const [activeApp, setActiveApp] = useState(null); // Tracks which app is open
@@ -329,7 +328,8 @@
             const fd = new FormData();
             fd.append('action', 'fetch_user_library');
             
-            fetch(API_URL, { method: 'POST', body: fd })
+            // Important: credentials: 'include' for CORS session sharing
+            fetch(API_URL, { method: 'POST', body: fd, credentials: 'include' })
             .then(r => r.text()) 
             .then(text => {
                 try {
@@ -377,7 +377,7 @@
                  <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="text-white text-center">
                         <div className="os-loader mb-4 mx-auto"></div>
-                        <p className="text-lg font-medium animate-pulse drop-shadow-md">Opening Installed Apps...</p>
+                        <p className="text-lg font-medium animate-pulse drop-shadow-md">Starting BJH OS...</p>
                     </div>
                  </div>
              );
@@ -473,4 +473,3 @@
 </script>
 </body>
 </html>
-
