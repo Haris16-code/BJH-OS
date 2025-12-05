@@ -664,19 +664,21 @@ Start your BJH OS on your device by opening [BJH OS](https://haris16-code.github
 
 ## 4. Open Installed Apps
 1. Go back to **BJH OS** main screen.  
-2. Open **Installed Apps** from the start menu.  
-3. Enter the **email address** you used for BJH OS Apps Market (required only once).  
-4. Your installed apps will appear.  
-5. Press **Open** to run any app or game.
+2. Open **Apps Market** from the start menu.  
+3. Enter the **email address** you used for BJH OS Apps Market (required only once).
+4. On Top Bar their is a Library button click on it.
+5. Your installed apps will appear.  
+6. Press **Launch** to run any app or game.
 
 ---
 
 ## 5. Uninstall Apps
 1. Open **BJH OS Apps Market**.  
-2. Go to **My Apps**.  
+2. Go to **Library**.  
 3. Find the app you want to uninstall.  
-4. Press **Delete**.  
-5. The app is now successfully uninstalled.
+4. Press **Bin Icon**.
+5. It will show popup of app uninstall confirmation. Press **Yes,Uninstall** Button
+6. The app is now successfully uninstalled.
 
 ---
 
