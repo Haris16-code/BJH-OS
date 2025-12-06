@@ -1,31 +1,28 @@
-<iframe id="appsMarketFrame" src="https://bjh-os.alwaysdata.net/Apps-Market" 
-style="width:100%; height:100vh; border:none;"></iframe>
+<iframe 
+    id="bjhosFrame" 
+    src="https://bjh-os.alwaysdata.net/Apps-Market"
+    style="width:100%; height:100vh; border:none;">
+</iframe>
 
 <script>
-// -------------------------------
-// BJH OS Apps Market Auto-Session
-// -------------------------------
+// Save session coming from iframe
+window.addEventListener("message", (event) => {
+    if (event.data?.type === "LOGIN_SUCCESS") {
+        localStorage.setItem("BJHOS_SESSION", event.data.session);
+    }
 
-// 1. Save session token when user logs in
-window.addEventListener("message", (e) => {
-    if (!e.data) return;
-
-    // If the Apps Market sends login data
-    if (e.data.type === "bjhos-login-success") {
-        localStorage.setItem("bjhos_session", e.data.session);
-        console.log("Session saved:", e.data.session);
+    if (event.data?.type === "LOGOUT") {
+        localStorage.removeItem("BJHOS_SESSION");
     }
 });
 
-// 2. When iframe loads, restore session
-document.getElementById("appsMarketFrame").addEventListener("load", () => {
-    const session = localStorage.getItem("bjhos_session");
-
-    if (session) {
-        // Send session back to Apps Market iframe
-        document.getElementById("appsMarketFrame").contentWindow.postMessage({
-            type: "bjhos-restore-session",
-            session: session
+// Send session to iframe on load
+document.getElementById("bjhosFrame").addEventListener("load", () => {
+    const savedSession = localStorage.getItem("BJHOS_SESSION");
+    if (savedSession) {
+        event.target.contentWindow.postMessage({
+            type: "RESTORE_SESSION",
+            session: savedSession
         }, "*");
     }
 });
