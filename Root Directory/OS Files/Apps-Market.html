@@ -1,3 +1,33 @@
+<!-- Your Iframe -->
+<iframe id="appsMarketFrame" src="https://bjh-os.alwaysdata.net/Apps-Market" 
+style="width:100%; height:100vh; border:none;"></iframe>
+
 <script>
-  window.location.href = "https://bjh-os.alwaysdata.net/Apps-Market";
+// -------------------------------
+// BJH OS Apps Market Auto-Session
+// -------------------------------
+
+// 1. Save session token when user logs in
+window.addEventListener("message", (e) => {
+    if (!e.data) return;
+
+    // If the Apps Market sends login data
+    if (e.data.type === "bjhos-login-success") {
+        localStorage.setItem("bjhos_session", e.data.session);
+        console.log("Session saved:", e.data.session);
+    }
+});
+
+// 2. When iframe loads, restore session
+document.getElementById("appsMarketFrame").addEventListener("load", () => {
+    const session = localStorage.getItem("bjhos_session");
+
+    if (session) {
+        // Send session back to Apps Market iframe
+        document.getElementById("appsMarketFrame").contentWindow.postMessage({
+            type: "bjhos-restore-session",
+            session: session
+        }, "*");
+    }
+});
 </script>
