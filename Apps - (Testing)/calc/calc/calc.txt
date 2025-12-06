@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Calculator</title>
+      <style>
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: transparent;
+}
+.center{
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  padding: 5px;
+  top: 50%;
+  transform: translateY(-47.5%);
+  -webkit-transform: translateY(-47.5%);
+}
+input[type="text"]{
+  height: 50px;
+  width: 100%;
+  color: beige;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: right;
+  padding-right: 20px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(241, 241, 241, 0.095);
+}
+form .buttons{
+  margin: 10px;
+  margin-left: 0px;
+  width: 100%;
+  height: 100vh;
+}
+input[type="button"]{
+  width: 23.5%;
+  height:14vh;
+  margin-bottom: 5.5px;
+  font-size: 22px;
+  border-radius: 8px;
+  color: beige;
+  border:0.25px solid rgba(241, 241, 241, 0.1176470588);;
+  background: rgba(241, 241, 241, 0.095);;
+}
+input[type="button"]:hover{
+  transition: all 0.3s;
+  background: rgba(241, 241, 241, 0.25);;
+}
+input#clear{
+  background: rgba(255, 26, 26, 0.5);
+  border: 1px solid #cc0000;
+  color: white;
+}
+input#equal{
+  width: 98%;
+  height: 10vh;
+  margin: 5px 0 10px 0;
+  font-size: 30px;
+  color: white;
+  background: rgba(255, 98, 0, 0.5);
+  border: 1px solid #b32a00;
+}
+
+input#equal:hover{
+  background: rgba(145, 55, 0, 0.5);
+}
+</style>
+      <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+   </head>
+   <body>
+      <div class="center">
+         <form name="forms">
+            <input type="text" id="display" name="display" disabled>
+            <div class="buttons">
+               <input type="button" id="seven" value="7">
+               <input type="button" id="eight" value="8">
+               <input type="button" id="nine" value="9">
+               <input type="button" id="divide" value="/"><br>
+               <input type="button" id="four" value="4">
+               <input type="button" id="five" value="5">
+               <input type="button" id="six" value="6">
+               <input type="button" id="multi" value="*"><br>
+               <input type="button" id="one" value="1">
+               <input type="button" id="two" value="2">
+               <input type="button" id="three" value="3">
+               <input type="button" id="subs" value="-"><br>
+               <input type="button" id="dot" value=".">
+               <input type="button" id="zero" value="0">
+               <input type="button" id="add" value="+">
+               <input type="button" id="clear" value="C"><br>
+               <input type="button" id="equal" value="=">
+            </div>
+         </form>
+      </div>
+      <script>
+         $(document).ready(function(){
+           $('#one').click(function(){
+             document.forms.display.value += 1;
+           });
+           $('#two').click(function(){
+             document.forms.display.value += 2;
+           });
+           $('#three').click(function(){
+             document.forms.display.value += 3;
+           });
+           $('#four').click(function(){
+             document.forms.display.value += 4;
+           });
+           $('#five').click(function(){
+             document.forms.display.value += 5;
+           });
+           $('#six').click(function(){
+             document.forms.display.value += 6;
+           });
+           $('#seven').click(function(){
+             document.forms.display.value += 7;
+           });
+           $('#eight').click(function(){
+             document.forms.display.value += 8;
+           });
+           $('#nine').click(function(){
+             document.forms.display.value += 9;
+           });
+           $('#zero').click(function(){
+             document.forms.display.value += 0;
+           });
+           $('#add').click(function(){
+             document.forms.display.value += '+';
+           });
+           $('#subs').click(function(){
+             document.forms.display.value += '-';
+           });
+           $('#multi').click(function(){
+             document.forms.display.value += '*';
+           });
+           $('#divide').click(function(){
+             document.forms.display.value += '/';
+           });
+           $('#dot').click(function(){
+             document.forms.display.value += '.';
+           });
+           $('#equal').click(function(){
+             if (display.value == "") {
+               alert("Please enter any numbers to calculate!");
+             }else{
+               document.forms.display.value =
+               eval(document.forms.display.value).toFixed(1);
+
+             }
+           });
+           $('#clear').click(function(){
+             document.forms.display.value = "";
+           });
+         })
+      </script>
+   </body>
+</html>
