@@ -7,12 +7,12 @@ body {
 	overflow: hidden;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 15px;
-	cursor: url('../Customize BJH OS/Cursor/cursor.svg'), auto;
+	cursor: url('./Customize BJH OS/Cursor/cursor.svg'), auto;
 	background-color: black;
 }
 
 body img { -webkit-user-drag: none;}
-a { color: white; text-transform: none;cursor: url('../Customize BJH OS/Cursor/cursor.svg'), auto;}
+a { color: white; text-transform: none;cursor: url('./Customize BJH OS/Cursor/cursor.svg'), auto;}
 
 h5 {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -262,4 +262,5 @@ input:checked + .slider2:before {
   .popup.online .reconnect {
 	pointer-events: none;
   }
+
   
