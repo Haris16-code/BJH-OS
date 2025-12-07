@@ -12,7 +12,7 @@ To publish apps on BJH OS, you must register as a Developer.
 
 1.  Navigate to the [**Login/Register**](https://bjh-os.alwaysdata.net/Apps-Market) page.
     
-2.  Switch to the **"Create Account"** tab.
+2.  Switch to the **"Register"** tab.
     
 3.  **Crucial Step:** Under "Account Type", select **Developer** (Build Apps).
     
