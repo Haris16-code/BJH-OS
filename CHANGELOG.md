@@ -1,7 +1,7 @@
 # BJH OS Changelog
 
 ## 4.7 — New Apps Market Launch
-**Release Date:** 30 December 2025  
+**Release Date:** 30 November 2025  
 **Type:** Major Update — Worldwide Rollout
 
 ---
