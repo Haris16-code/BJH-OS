@@ -9,7 +9,7 @@
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
+ethumbs.db
 Thumbs.db
 Desktop.ini
 $RECYCLE.BIN/
@@ -101,6 +101,9 @@ htmlcov/
 # ===========================
 # Package Manager Files
 # ===========================
+# Note: package-lock.json is ignored for this project as it's a pure client-side
+# web app with no production dependencies. If dependencies are added in the future,
+# consider removing this line to ensure reproducible builds.
 package-lock.json
 yarn.lock
 pnpm-lock.yaml

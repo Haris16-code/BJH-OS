@@ -1,6 +1,7 @@
 # EditorConfig is awesome: https://EditorConfig.org
 # BJH OS - Editor Configuration
 # This file helps maintain consistent coding styles across different editors and IDEs
+# Note: The existing codebase primarily uses 4-space indentation, which is reflected here
 
 # Top-most EditorConfig file
 root = true

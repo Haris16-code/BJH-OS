@@ -7,7 +7,7 @@
     "start": "npx http-server -p 8000 -c-1",
     "dev": "npx http-server -p 8000 -c-1 -o",
     "serve": "python -m http.server 8000",
-    "lint:html": "npx htmlhint '*.html' 'Root Directory/**/*.html'",
+    "lint:html": "npx htmlhint '*.html' 'Root\\ Directory/**/*.html'",
     "lint:css": "npx stylelint '**/*.css'",
     "lint:js": "npx eslint '**/*.js' --ignore-pattern 'node_modules'",
     "format": "npx prettier --write '**/*.{html,css,js,json,md}'",
