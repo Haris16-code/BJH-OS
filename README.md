@@ -173,8 +173,3 @@ Social templates (copy & paste)
 
 Made with ❤️ in Pakistan  
 © 2025 BJH OS — by Muhammad Haris (Haris16-code)
-
-If you want, I can:
-- open a PR with this README,  
-- create a short demo GIF and add it to /Assets (and embed it here),  
-- or auto-create three "good first issue" tickets to seed contributor activity — tell me which one to do next.
