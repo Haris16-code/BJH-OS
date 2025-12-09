@@ -174,58 +174,48 @@ Welcome to the next generation of web application deployment and discovery. The 
 
 ---
 # Getting Started
-
-## 🛠️ How to Run BJH OS (Self Hostable)
+## BJH OS Is Also Available as a hosted services at: [Live BJH OS](https://haris16-code.github.io/BJH-OS)
+# 🛠️ How to Run BJH OS (Self-Hostable)
 
 1. ⬇️ **Download the ZIP** from the [BJH OS MAIN REPOSITORY](https://github.com/Haris16-code/BJH-OS)  
 2. 🗂️ **Extract** the ZIP file  
 3. Open the extracted `BJH-OS` folder  
-4. 🖱️ Open the main file by double-clicking `Setup.html` if it exists; otherwise, open `index.html`.
+4. 🖱️ Open the main file by double-clicking `index.html` if it exists; otherwise, open `Setup.html`.  
 5. 🌍 BJH OS will launch in your default browser  
 
-> 🧑‍💻 No installation required — just open and go!
+> 🧑‍💻 No installation required — just open and go!  
 
 ---
 
-## 🧰 BJH OS TOOL (Required For Self Hostable Version)
+## 💻 Run on Any Operating System
 
-To make managing BJH OS easier, I developed a Python-based utility called **BJH OS TOOL** 🐍🛠️  
-It lets you:
-
-- 📦 Install BJH OS updates  
-- 🎮 Install apps and games  
-- 🖼️ Install wallpapers and cursors  
-
-### 🖥️ BJH OS TOOL 64-Bit
-
-- 🛠️ Install BJH OS Update: Extract the latest ZIP → Open BJH OS TOOL → Click "Install Update" → Select the extracted folder → Refresh BJH OS.  
-- 🖱️ Install Cursor: Select `.svg` file → Refresh BJH OS.  
-- 🖼️ Install Wallpaper: Select `.jpg` or `.png` image → Refresh BJH OS.  
-- 🎮 Install Apps/Games: Select the app folder → Open from BJH OS home screen.
-
-### 🖥️ BJH OS TOOL 32-Bit
-
-- ▶️ Run Tool: Double-click to start.  
-- 🛠️ Install Update: Provide the folder path for the update.  
-- 🎯 Install Cursor: Provide full path to `.svg` file.  
-- 🖼️ Install Wallpaper: Provide full path to image.  
-- 📦 Install App: Provide the directory path containing `index.html`.
+- **Windows, macOS, Linux:** Open `index.html` in any modern browser like Chrome, Firefox, Edge, or Safari.  
+- **Android, iOS:** Use a mobile phone as BJH OS Self-Hosted Server. Install a local web server app (e.g., **Simple HTTP Server**, **Servers Ultimate**, **KSWeb**, Or Any Other Web Server App For Android, For iOS use **Any Web Server App for iOS**), copy the `BJH-OS-main` folder to the server’s root directory, start the server, and access BJH OS via your phone’s local IP address (`http://192.168.x.x`). This allows you to run BJH OS directly from your mobile device and share it with other devices on the same network.  
+- **Other OS:** As long as there is a modern web browser, BJH OS will run.  
 
 ---
 
-## 📁 General Notes on File Paths
+## 📱 Use Android or iPhone as a Server
 
-- 🧭 **Absolute Path:** Full path from the root of the filesystem.  
-- 🧮 **Relative Path:** Path relative to your current directory.  
+1. Install a **local web server app** on your phone  
+   - Android: **Simple HTTP Server**, **Servers Ultimate**, **KSWeb**, Or Any Other Web Server App For Android.
+   - iOS: **Any Web Server App for iOS**  
+2. Copy the `BJH-OS-main` folder to the server’s root directory.  
+3. Start the server in the app.  
+4. Open a browser on any device in the same network and enter your phone’s **local IP address** (e.g., `http://192.168.x.x/BJH-OS-main`).  
+5. BJH OS will now run from your phone as a server.  
 
-**Examples:**  
-- Absolute: `C:\Users\YourName\Documents\myfile.jpg`  
-- Relative: `.\Documents\myfile.jpg`
-
-✅ Ensure the file or folder exists before proceeding.
+> ⚡ This allows you to host and test BJH OS anywhere without a PC.
 
 ---
-## BJH OS Is Also Available as a hosted services at: [Live BJH OS](https://haris16-code.github.io/BJH-OS)
+
+## 🌐 Host as a Static Website
+
+1. Upload the contents of the `BJH-OS` folder to any **static hosting service** (e.g., GitHub Pages, Netlify, Vercel).  
+2. Set the root file as `index.html`.  
+3. Access BJH OS via the provided URL and share it online.  
+
+> ⚡ Hosting BJH OS lets you run it anywhere without needing to download the ZIP.
 ---
 ## 🧑‍💻 Developer Documentation
 
