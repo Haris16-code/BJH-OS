@@ -1,0 +1,57 @@
+{
+  "name": "bjh-os",
+  "version": "4.7.0",
+  "description": "BJH OS - A free, open-source, web-based operating system that runs in your browser",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -c-1",
+    "dev": "npx http-server -p 8000 -c-1 -o",
+    "serve": "python -m http.server 8000",
+    "lint:html": "npx htmlhint '*.html' 'Root Directory/**/*.html'",
+    "lint:css": "npx stylelint '**/*.css'",
+    "lint:js": "npx eslint '**/*.js' --ignore-pattern 'node_modules'",
+    "format": "npx prettier --write '**/*.{html,css,js,json,md}'",
+    "format:check": "npx prettier --check '**/*.{html,css,js,json,md}'",
+    "validate": "npm run lint:html && npm run lint:css && npm run lint:js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Haris16-code/BJH-OS.git"
+  },
+  "keywords": [
+    "web-os",
+    "operating-system",
+    "desktop",
+    "pwa",
+    "javascript",
+    "html5",
+    "css3",
+    "web-desktop",
+    "browser-os",
+    "web-app",
+    "progressive-web-app",
+    "open-source"
+  ],
+  "author": {
+    "name": "Muhammad Haris",
+    "email": "",
+    "url": "https://github.com/Haris16-code"
+  },
+  "contributors": [
+    {
+      "name": "BJH OS Contributors",
+      "url": "https://github.com/Haris16-code/BJH-OS/graphs/contributors"
+    }
+  ],
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Haris16-code/BJH-OS/issues"
+  },
+  "homepage": "https://haris16-code.github.io/BJH-OS/",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
