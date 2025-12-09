@@ -68,7 +68,7 @@
 
 Welcome to the next generation of web application deployment and discovery. The **BJH OS App Market** connects developers with users through a secure, high-performance, and visually stunning platform.
 
-🚀 For Users: A Premium App Store Experience
+🚀 For Users: A Premium App Market Experience
 --------------------------------------------
 
 ### 1\. Modern Glassmorphism UI
