@@ -5,177 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BJH OS Player</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
-    </script>
-    <!-- Lucide Icons -->
+    <script>tailwind.config = { darkMode: 'class' }</script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Theme Init Script (Run immediately to prevent flash) -->
     <script>
-        // Load Theme
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        } else { document.documentElement.classList.remove('dark'); }
     </script>
-
     <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #d4d4d8; 
-            border-radius: 4px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: #3f3f46; 
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a1a1aa; 
-        }
-        .dark ::-webkit-scrollbar-thumb:hover {
-            background: #52525b; 
-        }
-
-        /* Range Input Styling */
-        input[type=range] {
-            -webkit-appearance: none; 
-            background: transparent; 
-        }
-        
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 14px;
-            width: 14px;
-            border-radius: 50%;
-            background: #60a5fa;
-            cursor: pointer;
-            margin-top: -5px; 
-            box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
-            transition: transform 0.1s ease-out;
-        }
-
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.15);
-        }
-
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            cursor: pointer;
-            background: #e4e4e7; /* Light mode track */
-            border-radius: 2px;
-            transition: background-color 0.3s ease;
-        }
-        .dark input[type=range]::-webkit-slider-runnable-track {
-            background: #3f3f46; /* Dark mode track */
-        }
-        
-        .glass-panel {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        /* Hide default video controls to use ours */
-        video::-webkit-media-controls {
-            display: none !important;
-        }
-
-        /* Animations */
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(96, 165, 250, 0.1); }
-            50% { box-shadow: 0 0 25px rgba(96, 165, 250, 0.3); }
-        }
-        
-        /* Active File styling */
-        .active-file {
-            background-color: #f3f4f6; /* gray-100 */
-            border-left: 3px solid #60a5fa;
-        }
-        .dark .active-file {
-            background-color: #27272a; /* zinc-800 */
-        }
-
-        /* Smooth Scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* Hardware Acceleration for Smoother Animation */
-        .hw-accel {
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            perspective: 1000px;
-        }
-
-        /* Fullscreen Auto-Hide Logic */
-        #mainStage.user-inactive {
-            cursor: none;
-        }
-        
-        /* Top Header Fade Out */
-        #mainStage.user-inactive .top-overlay {
-            opacity: 0 !important;
-            pointer-events: none;
-        }
-
-        /* Controls Bar Animation */
-        #controlsBar {
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 10rem; /* Enough height for content */
-            opacity: 1;
-            overflow: hidden; /* Essential for height animation */
-        }
-
-        /* When inactive: collapse height, remove padding, fade out */
-        #mainStage.user-inactive #controlsBar {
-            max-height: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-            opacity: 0;
-            border-top-width: 0;
-            pointer-events: none;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #3f3f46; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 14px; border-radius: 50%; background: #60a5fa; cursor: pointer; margin-top: -5px; box-shadow: 0 0 10px rgba(96, 165, 250, 0.5); transition: transform 0.1s ease-out; }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #e4e4e7; border-radius: 2px; transition: background-color 0.3s ease; }
+        .dark input[type=range]::-webkit-slider-runnable-track { background: #3f3f46; }
+        .glass-panel { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        video::-webkit-media-controls { display: none !important; }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px rgba(96, 165, 250, 0.1); } 50% { box-shadow: 0 0 25px rgba(96, 165, 250, 0.3); } }
+        .active-file { background-color: #f3f4f6; border-left: 3px solid #60a5fa; }
+        .dark .active-file { background-color: #27272a; }
+        html { scroll-behavior: smooth; }
+        .hw-accel { transform: translateZ(0); backface-visibility: hidden; perspective: 1000px; }
+        #mainStage.user-inactive { cursor: none; }
+        #mainStage.user-inactive .top-overlay { opacity: 0 !important; pointer-events: none; }
+        #controlsBar { transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); max-height: 10rem; opacity: 1; overflow: hidden; }
+        #mainStage.user-inactive #controlsBar { max-height: 0; padding: 0; opacity: 0; border-top-width: 0; pointer-events: none; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 h-screen w-screen overflow-hidden font-sans select-none transition-colors duration-500 ease-in-out">
 
-    <!-- App Container -->
     <div class="flex h-full w-full" id="app">
         
-        <!-- Sidebar / Playlist -->
+        <!-- Sidebar -->
         <div id="sidebar" class="w-80 flex flex-col bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-800 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] z-20 shadow-xl dark:shadow-none hw-accel">
-            <!-- Header -->
             <div class="p-4 border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between">
                 <div class="flex items-center gap-2 font-bold text-lg truncate min-w-0">
                     <i data-lucide="play-circle" class="w-7 h-7 flex-shrink-0 text-blue-500"></i>
-                    <!-- Enhanced Title Styling -->
                     <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 whitespace-nowrap truncate">BJH OS Player</span>
                 </div>
                 <div class="flex items-center gap-1 flex-shrink-0">
-                    <button id="settingsBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg text-gray-500 dark:text-gray-400 transition-all duration-300 hover:scale-105 active:scale-95" title="Settings">
-                        <i data-lucide="settings" class="w-5 h-5"></i>
-                    </button>
-                    <button id="addLinkBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg tooltip text-gray-500 dark:text-gray-400 transition-all duration-300 hover:scale-105 active:scale-95" title="Add from URL">
-                        <i data-lucide="link" class="w-5 h-5"></i>
-                    </button>
-                    <button id="addFilesBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg tooltip text-gray-500 dark:text-gray-400 transition-all duration-300 hover:scale-105 active:scale-95" title="Open Files">
-                        <i data-lucide="folder-open" class="w-5 h-5"></i>
-                    </button>
+                    <button id="settingsBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg text-gray-500 dark:text-gray-400 transition-all duration-300 hover:scale-105 active:scale-95" title="Settings"><i data-lucide="settings" class="w-5 h-5"></i></button>
+                    <button id="bjhFilesBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg tooltip text-blue-500 dark:text-blue-400 transition-all duration-300 hover:scale-105 active:scale-95" title="Open from BJH OS"><i data-lucide="hard-drive" class="w-5 h-5"></i></button>
+                    <button id="addFilesBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg tooltip text-gray-500 dark:text-gray-400 transition-all duration-300 hover:scale-105 active:scale-95" title="Open Local Files"><i data-lucide="folder-open" class="w-5 h-5"></i></button>
                 </div>
                 <input type="file" id="fileInput" multiple accept="audio/*,video/*,image/*" class="hidden">
             </div>
 
-            <!-- Tabs -->
             <div class="flex text-xs font-medium border-b border-gray-200 dark:border-zinc-800">
                 <button class="flex-1 py-3 text-center hover:bg-gray-50 dark:hover:bg-zinc-800 text-blue-500 dark:text-blue-400 border-b-2 border-blue-500 dark:border-blue-400 tab-btn transition-all duration-300" data-type="all">All</button>
                 <button class="flex-1 py-3 text-center hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-500 tab-btn transition-all duration-300" data-type="video">Video</button>
@@ -183,17 +63,14 @@
                 <button class="flex-1 py-3 text-center hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-500 tab-btn transition-all duration-300" data-type="image">Photo</button>
             </div>
 
-            <!-- Playlist Items -->
             <div id="playlist" class="flex-1 overflow-y-auto p-2 space-y-1 scroll-smooth">
                 <div id="emptyState" class="h-full flex flex-col items-center justify-center text-gray-400 dark:text-zinc-600 text-sm animate-pulse">
                     <i data-lucide="music" class="w-12 h-12 mb-2 opacity-20"></i>
                     <p>Drop files here</p>
                     <p>or click icons above</p>
                 </div>
-                <!-- Items injected by JS -->
             </div>
 
-            <!-- Mini Status Bar -->
             <div class="p-2 bg-gray-50 dark:bg-zinc-950 text-xs text-gray-500 flex justify-between px-4 border-t border-gray-200 dark:border-zinc-800 transition-colors duration-500">
                 <span id="fileCount">0 Files</span>
                 <span id="totalDuration">--:--</span>
@@ -202,8 +79,6 @@
 
         <!-- Main Stage -->
         <div class="flex-1 flex flex-col relative bg-gray-100 dark:bg-black group transition-colors duration-500 ease-in-out overflow-hidden" id="mainStage">
-            
-            <!-- Top Overlay Controls -->
             <div class="absolute top-0 left-0 w-full p-4 flex justify-between items-start z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out pointer-events-none top-overlay">
                 <div class="pointer-events-auto">
                     <button id="toggleSidebar" class="p-2 bg-white/50 dark:bg-black/50 rounded-full hover:bg-white/80 dark:hover:bg-white/20 backdrop-blur text-gray-800 dark:text-white shadow-sm transition-all duration-300 hover:scale-110 active:scale-95">
@@ -216,14 +91,8 @@
                 </div>
             </div>
 
-            <!-- Content Area -->
-            <!-- Updated: The video container will naturally grow when #controlsBar shrinks due to flex layout -->
             <div id="contentArea" class="flex-1 flex items-center justify-center relative overflow-hidden transition-all duration-500 ease-in-out">
-                
-                <!-- Video Player -->
                 <video id="videoElement" class="hidden w-full h-full max-h-screen hw-accel transition-all duration-500 ease-in-out"></video>
-
-                <!-- Audio Visualizer Canvas -->
                 <div id="audioContainer" class="hidden w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-white dark:from-zinc-900 dark:to-black transition-colors duration-1000">
                     <div class="relative w-64 h-64 mb-8">
                         <div class="absolute inset-0 bg-blue-500/20 rounded-full animate-pulse blur-xl"></div>
@@ -233,18 +102,12 @@
                         <canvas id="visualizer" class="absolute inset-0 w-full h-full z-20 hw-accel"></canvas>
                     </div>
                 </div>
-
-                <!-- Image Viewer -->
                 <div id="imageContainer" class="hidden w-full h-full flex items-center justify-center bg-gray-100 dark:bg-black overflow-hidden cursor-move transition-colors duration-500">
                     <img id="imageElement" class="max-w-full max-h-full object-contain transition-transform duration-200 hw-accel" src="" alt="">
                 </div>
             </div>
 
-            <!-- Controls Bar (Glassmorphism) -->
-            <!-- Flex-col parent (mainStage) has flex-1 contentArea. shrinking controlsBar expands contentArea -->
             <div id="controlsBar" class="glass-panel p-4 flex flex-col gap-2 bg-white/90 dark:bg-zinc-900/85 border-t border-gray-200 dark:border-white/10 hw-accel z-30">
-                
-                <!-- Progress Bar -->
                 <div class="w-full flex items-center gap-3 group/progress">
                     <span id="currentTime" class="text-xs text-gray-500 dark:text-zinc-400 font-mono w-10">0:00</span>
                     <div class="relative flex-1 h-1 bg-gray-300 dark:bg-zinc-700 rounded-full cursor-pointer group-hover/progress:h-2 transition-all duration-200" id="progressContainer">
@@ -255,27 +118,18 @@
                     <span id="duration" class="text-xs text-gray-500 dark:text-zinc-400 font-mono w-10 text-right">0:00</span>
                 </div>
 
-                <!-- Buttons Row -->
                 <div class="flex items-center justify-between">
-                    
-                    <!-- Left: Volume & Info -->
                     <div class="flex items-center gap-4 w-1/3">
                         <div class="group/vol flex items-center gap-2">
                             <button id="muteBtn" class="text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200 hover:scale-110 active:scale-95"><i data-lucide="volume-2" class="w-5 h-5"></i></button>
                             <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1" class="w-20 accent-blue-500">
                         </div>
                     </div>
-
-                    <!-- Center: Main Transport -->
                     <div class="flex items-center gap-6 justify-center w-1/3">
                         <button id="prevBtn" class="text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200 hover:scale-110 active:scale-95"><i data-lucide="skip-back" class="w-6 h-6"></i></button>
-                        <button id="playBtn" class="w-12 h-12 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-500/20">
-                            <i data-lucide="play" class="w-6 h-6 fill-current"></i>
-                        </button>
+                        <button id="playBtn" class="w-12 h-12 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-500/20"><i data-lucide="play" class="w-6 h-6 fill-current"></i></button>
                         <button id="nextBtn" class="text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200 hover:scale-110 active:scale-95"><i data-lucide="skip-forward" class="w-6 h-6"></i></button>
                     </div>
-
-                    <!-- Right: Tools -->
                     <div class="flex items-center gap-4 justify-end w-1/3">
                         <button id="loopBtn" class="text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200 hover:scale-110 active:scale-95" title="Loop"><i data-lucide="repeat" class="w-4 h-4"></i></button>
                         <button id="shuffleBtn" class="text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200 hover:scale-110 active:scale-95" title="Shuffle"><i data-lucide="shuffle" class="w-4 h-4"></i></button>
@@ -287,30 +141,24 @@
             </div>
         </div>
 
-        <!-- URL Input Modal -->
-        <div id="urlModal" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300">
-            <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-2xl w-96 border border-gray-200 dark:border-zinc-700 transform transition-all scale-100 animate-[fadeIn_0.2s_ease-out] hw-accel">
-                <h3 class="text-lg font-bold mb-4 dark:text-white">Open from URL</h3>
-                <p class="text-xs text-gray-500 mb-2">Supported: mp4, webm, mp3, wav, jpg, png, etc.</p>
-                <input type="text" id="urlInput" placeholder="https://example.com/video.mp4" class="w-full p-3 rounded-lg bg-gray-100 dark:bg-zinc-800 dark:text-white border border-transparent focus:border-blue-500 outline-none mb-4 transition-colors">
-                <div class="flex justify-end gap-2">
-                    <button id="closeUrlBtn" class="px-4 py-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors hover:bg-gray-200 dark:hover:bg-zinc-700 rounded-lg">Cancel</button>
-                    <button id="loadUrlBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium transition-colors shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50">Load Media</button>
+        <!-- BJH File Picker Modal -->
+        <div id="bjhModal" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300">
+            <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-2xl w-full max-w-lg h-[60vh] flex flex-col border border-gray-200 dark:border-zinc-700">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold dark:text-white flex items-center gap-2"><i data-lucide="hard-drive" class="text-blue-500"></i> BJH OS Files</h3>
+                    <button onclick="document.getElementById('bjhModal').classList.add('hidden')" class="text-gray-500 hover:text-gray-700 dark:hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
+                <div id="bjhFileList" class="flex-1 overflow-y-auto space-y-1 p-2 bg-gray-50 dark:bg-black/20 rounded-lg"></div>
             </div>
         </div>
 
         <!-- Settings Modal -->
         <div id="settingsModal" class="hidden absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300">
-            <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-2xl w-80 border border-gray-200 dark:border-zinc-700 transform transition-all scale-100 animate-[fadeIn_0.2s_ease-out] hw-accel">
+            <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-2xl w-80 border border-gray-200 dark:border-zinc-700">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-bold dark:text-white flex items-center gap-2">
-                        <i data-lucide="settings" class="w-5 h-5"></i> Settings
-                    </h3>
+                    <h3 class="text-lg font-bold dark:text-white flex items-center gap-2"><i data-lucide="settings" class="w-5 h-5"></i> Settings</h3>
                     <button id="closeSettingsBtn" class="text-gray-500 hover:text-gray-700 dark:hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
-                
-                <!-- Appearance -->
                 <div class="mb-6">
                     <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Appearance</h4>
                     <div class="flex items-center justify-between p-2 bg-gray-100 dark:bg-zinc-800 rounded-lg">
@@ -320,794 +168,177 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Video Settings -->
-                <div class="mb-6">
-                    <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Video Fit</h4>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button class="video-fit-btn p-2 text-xs rounded-md border border-transparent hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all text-center" data-fit="contain">
-                            <div class="w-full h-8 bg-gray-200 dark:bg-zinc-700 rounded mb-1 flex items-center justify-center"><div class="w-4 h-6 border border-gray-400 dark:border-gray-500"></div></div>
-                            Contain
-                        </button>
-                        <button class="video-fit-btn p-2 text-xs rounded-md border border-transparent hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all text-center" data-fit="cover">
-                             <div class="w-full h-8 bg-gray-200 dark:bg-zinc-700 rounded mb-1 flex items-center justify-center overflow-hidden"><div class="w-8 h-8 border border-gray-400 dark:border-gray-500"></div></div>
-                            Cover
-                        </button>
-                        <button class="video-fit-btn p-2 text-xs rounded-md border border-transparent hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all text-center" data-fit="fill">
-                             <div class="w-full h-8 bg-gray-200 dark:bg-zinc-700 rounded mb-1 flex items-center justify-center"><div class="w-6 h-6 border border-gray-400 dark:border-gray-500 w-full h-full"></div></div>
-                            Fill
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Playback Speed -->
-                 <div class="mb-4">
-                    <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Playback Speed</h4>
-                    <select id="speedSelect" class="w-full p-2 text-sm bg-gray-100 dark:bg-zinc-800 border-none rounded-md dark:text-white outline-none focus:ring-2 ring-blue-500">
-                        <option value="0.5">0.5x Slower</option>
-                        <option value="1.0" selected>1.0x Normal</option>
-                        <option value="1.5">1.5x Faster</option>
-                        <option value="2.0">2.0x 2x Speed</option>
-                    </select>
-                </div>
-
             </div>
         </div>
-
     </div>
 
     <script>
-        // --- State Management ---
-        const state = {
-            files: [],
-            playlist: [], // indices of state.files
-            currentIndex: -1,
-            isPlaying: false,
-            isMuted: false,
-            volume: 1,
-            isShuffle: false,
-            isLoop: false,
-            filter: 'all', // all, video, audio, image
-            slideshowInterval: null,
-            imageZoom: 1,
-            imagePan: { x: 0, y: 0 },
-            // New Settings State
-            settings: {
-                videoFit: 'contain', // contain, cover, fill
-                playbackSpeed: 1.0
-            }
-        };
-
-        // --- DOM Elements ---
-        const els = {
-            html: document.getElementById('htmlRoot'),
-            app: document.getElementById('app'),
-            fileInput: document.getElementById('fileInput'),
-            addFilesBtn: document.getElementById('addFilesBtn'),
-            addLinkBtn: document.getElementById('addLinkBtn'),
-            settingsBtn: document.getElementById('settingsBtn'), // New
-            playlist: document.getElementById('playlist'),
-            emptyState: document.getElementById('emptyState'),
-            video: document.getElementById('videoElement'),
-            image: document.getElementById('imageElement'),
-            visualizerCanvas: document.getElementById('visualizer'),
-            audioContainer: document.getElementById('audioContainer'),
-            imageContainer: document.getElementById('imageContainer'),
-            contentArea: document.getElementById('contentArea'),
-            controlsBar: document.getElementById('controlsBar'),
-            playBtn: document.getElementById('playBtn'),
-            progressBar: document.getElementById('progressBar'),
-            progressContainer: document.getElementById('progressContainer'),
-            currentTime: document.getElementById('currentTime'),
-            duration: document.getElementById('duration'),
-            volumeSlider: document.getElementById('volumeSlider'),
-            title: document.getElementById('currentTitle'),
-            typeLabel: document.getElementById('currentType'),
-            tabBtns: document.querySelectorAll('.tab-btn'),
-            slideshowBtn: document.getElementById('slideshowBtn'),
-            pipBtn: document.getElementById('pipBtn'),
-            // URL Modal
-            urlModal: document.getElementById('urlModal'),
-            urlInput: document.getElementById('urlInput'),
-            closeUrlBtn: document.getElementById('closeUrlBtn'),
-            loadUrlBtn: document.getElementById('loadUrlBtn'),
-            // Settings Modal
-            settingsModal: document.getElementById('settingsModal'),
-            closeSettingsBtn: document.getElementById('closeSettingsBtn'),
-            modalThemeToggle: document.getElementById('modalThemeToggle'),
-            videoFitBtns: document.querySelectorAll('.video-fit-btn'),
-            speedSelect: document.getElementById('speedSelect'),
-            // For Auto Hide
-            mainStage: document.getElementById('mainStage')
-        };
-
-        // --- Audio Context for Visualizer ---
+        const state = { files: [], playlist: [], currentIndex: -1, isPlaying: false, isMuted: false, volume: 1, isShuffle: false, isLoop: false, filter: 'all', slideshowInterval: null, imageZoom: 1, imagePan: { x: 0, y: 0 }, settings: { videoFit: 'contain', playbackSpeed: 1.0 } };
+        const els = { html: document.getElementById('htmlRoot'), app: document.getElementById('app'), fileInput: document.getElementById('fileInput'), addFilesBtn: document.getElementById('addFilesBtn'), bjhFilesBtn: document.getElementById('bjhFilesBtn'), settingsBtn: document.getElementById('settingsBtn'), playlist: document.getElementById('playlist'), emptyState: document.getElementById('emptyState'), video: document.getElementById('videoElement'), image: document.getElementById('imageElement'), visualizerCanvas: document.getElementById('visualizer'), audioContainer: document.getElementById('audioContainer'), imageContainer: document.getElementById('imageContainer'), contentArea: document.getElementById('contentArea'), controlsBar: document.getElementById('controlsBar'), playBtn: document.getElementById('playBtn'), progressBar: document.getElementById('progressBar'), progressContainer: document.getElementById('progressContainer'), currentTime: document.getElementById('currentTime'), duration: document.getElementById('duration'), volumeSlider: document.getElementById('volumeSlider'), title: document.getElementById('currentTitle'), typeLabel: document.getElementById('currentType'), tabBtns: document.querySelectorAll('.tab-btn'), slideshowBtn: document.getElementById('slideshowBtn'), pipBtn: document.getElementById('pipBtn'), settingsModal: document.getElementById('settingsModal'), closeSettingsBtn: document.getElementById('closeSettingsBtn'), modalThemeToggle: document.getElementById('modalThemeToggle'), mainStage: document.getElementById('mainStage'), bjhModal: document.getElementById('bjhModal'), bjhFileList: document.getElementById('bjhFileList') };
         let audioCtx, analyser, audioSource;
 
-        // --- Initialization ---
         lucide.createIcons();
-        loadSettings(); // Load LocalStorage settings
+        loadSettings();
+        
+        // Check URL Params for File ID from BJH OS
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoFileId = urlParams.get('id');
+        if (autoFileId) loadFromBJH(autoFileId);
 
-        // --- Event Listeners ---
         els.addFilesBtn.addEventListener('click', () => els.fileInput.click());
         els.fileInput.addEventListener('change', handleFileSelect);
-        
-        // Modal Events
-        els.addLinkBtn.addEventListener('click', () => {
-            els.urlModal.classList.remove('hidden');
-            setTimeout(() => els.urlInput.focus(), 50);
-        });
-        els.closeUrlBtn.addEventListener('click', () => els.urlModal.classList.add('hidden'));
-        els.loadUrlBtn.addEventListener('click', handleUrlSubmit);
-        
-        // Settings Events
+        els.bjhFilesBtn.addEventListener('click', showBJHFiles);
         els.settingsBtn.addEventListener('click', () => els.settingsModal.classList.remove('hidden'));
         els.closeSettingsBtn.addEventListener('click', () => els.settingsModal.classList.add('hidden'));
         els.modalThemeToggle.addEventListener('click', toggleTheme);
-        
-        els.videoFitBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const fit = btn.dataset.fit;
-                updateVideoFit(fit);
-            });
-        });
-
-        els.speedSelect.addEventListener('change', (e) => {
-            const speed = parseFloat(e.target.value);
-            state.settings.playbackSpeed = speed;
-            if(els.video) els.video.playbackRate = speed;
-            saveSettings();
-        });
-
-        // Drag and Drop
         document.body.addEventListener('dragover', e => e.preventDefault());
         document.body.addEventListener('drop', handleDrop);
-
-        // Controls
         els.playBtn.addEventListener('click', togglePlay);
         document.getElementById('prevBtn').addEventListener('click', playPrev);
         document.getElementById('nextBtn').addEventListener('click', playNext);
         document.getElementById('muteBtn').addEventListener('click', toggleMute);
         document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
-        document.getElementById('toggleSidebar').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('-ml-80');
-        });
-        
-        els.volumeSlider.addEventListener('input', (e) => {
-            state.volume = e.target.value;
-            if(els.video) els.video.volume = state.volume;
-        });
-
+        document.getElementById('toggleSidebar').addEventListener('click', () => { document.getElementById('sidebar').classList.toggle('-ml-80'); });
+        els.volumeSlider.addEventListener('input', (e) => { state.volume = e.target.value; els.video.volume = state.volume; });
         els.progressContainer.addEventListener('click', seek);
-
-        document.getElementById('loopBtn').addEventListener('click', function() {
-            state.isLoop = !state.isLoop;
-            this.classList.toggle('text-blue-500', state.isLoop);
-        });
-
-        document.getElementById('shuffleBtn').addEventListener('click', function() {
-            state.isShuffle = !state.isShuffle;
-            this.classList.toggle('text-blue-500', state.isShuffle);
-            if(state.isShuffle) shufflePlaylist();
-            else filterPlaylist(state.filter);
-        });
-
+        document.getElementById('loopBtn').addEventListener('click', function() { state.isLoop = !state.isLoop; this.classList.toggle('text-blue-500', state.isLoop); });
+        document.getElementById('shuffleBtn').addEventListener('click', function() { state.isShuffle = !state.isShuffle; this.classList.toggle('text-blue-500', state.isShuffle); if(state.isShuffle) shufflePlaylist(); else filterPlaylist(state.filter); });
         els.slideshowBtn.addEventListener('click', toggleSlideshow);
         els.pipBtn.addEventListener('click', togglePiP);
-
-        // Filter Tabs
-        els.tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                els.tabBtns.forEach(b => {
-                    b.classList.remove('text-blue-500', 'dark:text-blue-400', 'border-b-2', 'border-blue-500', 'dark:border-blue-400');
-                    b.classList.add('text-gray-500');
-                });
-                btn.classList.add('text-blue-500', 'dark:text-blue-400', 'border-b-2', 'border-blue-500', 'dark:border-blue-400');
-                btn.classList.remove('text-gray-500');
-                state.filter = btn.dataset.type;
-                filterPlaylist(state.filter);
-            });
-        });
-
-        // Keyboard Shortcuts
-        document.addEventListener('keydown', (e) => {
-            if(e.code === 'Space' && els.urlModal.classList.contains('hidden') && els.settingsModal.classList.contains('hidden')) { 
-                e.preventDefault(); 
-                togglePlay(); 
-            }
-            if(e.code === 'ArrowRight') skip(5);
-            if(e.code === 'ArrowLeft') skip(-5);
-            if(e.code === 'KeyF') toggleFullscreen();
-            if(e.code === 'KeyM') toggleMute();
-            if(e.code === 'Escape') {
-                els.urlModal.classList.add('hidden');
-                els.settingsModal.classList.add('hidden');
-            }
-        });
-
-        // Image Zoom/Pan Logic
-        let isDragging = false;
-        let startPos = {x:0, y:0};
-
-        els.imageContainer.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            const delta = e.deltaY * -0.001;
-            state.imageZoom = Math.min(Math.max(0.5, state.imageZoom + delta), 5);
-            updateImageTransform();
-        });
-
-        els.imageContainer.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startPos = { x: e.clientX - state.imagePan.x, y: e.clientY - state.imagePan.y };
-            els.imageContainer.style.cursor = 'grabbing';
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            if(!isDragging) return;
-            e.preventDefault();
-            state.imagePan.x = e.clientX - startPos.x;
-            state.imagePan.y = e.clientY - startPos.y;
-            updateImageTransform();
-        });
-
-        window.addEventListener('mouseup', () => {
-            isDragging = false;
-            els.imageContainer.style.cursor = 'grab';
-        });
-
-        function updateImageTransform() {
-            els.image.style.transform = `translate(${state.imagePan.x}px, ${state.imagePan.y}px) scale(${state.imageZoom})`;
-        }
-
-        // --- Auto Hide Controls Logic ---
-        let hideControlsTimeout;
-
-        function showControls() {
-            els.mainStage.classList.remove('user-inactive');
-            clearTimeout(hideControlsTimeout);
-        }
-
-        function startHideTimer() {
-            clearTimeout(hideControlsTimeout);
-            // Only hide if we are in fullscreen AND playing AND not hovering settings/modals (handled by pointer-events mostly)
-            if (document.fullscreenElement && state.isPlaying) {
-                hideControlsTimeout = setTimeout(() => {
-                    // Check again before hiding
-                    if (document.fullscreenElement && state.isPlaying) {
-                        els.mainStage.classList.add('user-inactive');
-                    }
-                }, 3000); // 3 seconds delay
-            }
-        }
-
-        // Add Listeners for Auto Hide
-        document.addEventListener('mousemove', () => {
-            showControls();
-            startHideTimer();
-        });
+        els.tabBtns.forEach(btn => { btn.addEventListener('click', () => { els.tabBtns.forEach(b => { b.classList.remove('text-blue-500', 'dark:text-blue-400', 'border-b-2', 'border-blue-500', 'dark:border-blue-400'); b.classList.add('text-gray-500'); }); btn.classList.add('text-blue-500', 'dark:text-blue-400', 'border-b-2', 'border-blue-500', 'dark:border-blue-400'); btn.classList.remove('text-gray-500'); state.filter = btn.dataset.type; filterPlaylist(state.filter); }); });
         
-        document.addEventListener('click', () => {
-            showControls();
-            startHideTimer();
-        });
-
-        // Reset when fullscreen changes
-        document.addEventListener('fullscreenchange', () => {
-            const sidebar = document.getElementById('sidebar');
-            if (!document.fullscreenElement) {
-                showControls(); // Ensure visible when exiting
-                // Auto open sidebar on exit fullscreen
-                if(sidebar) sidebar.classList.remove('-ml-80');
-            } else {
-                startHideTimer();
-                // Auto close sidebar on fullscreen
-                if(sidebar) sidebar.classList.add('-ml-80');
-            }
-        });
-
-        // Video state listeners for auto-hide
-        els.video.addEventListener('play', startHideTimer);
-        els.video.addEventListener('pause', showControls);
-        els.video.addEventListener('ended', showControls);
-
-
-        // --- Settings Functions ---
-
-        function loadSettings() {
-            const stored = localStorage.getItem('bjh_settings');
-            if(stored) {
-                try {
-                    const saved = JSON.parse(stored);
-                    state.settings = { ...state.settings, ...saved };
-                } catch(e) { console.error("Settings parse error", e); }
-            }
-            // Apply Loaded Settings
-            applyVideoFitStyles(state.settings.videoFit);
-            els.speedSelect.value = state.settings.playbackSpeed;
-            if(els.video) els.video.playbackRate = state.settings.playbackSpeed;
-        }
-
-        function saveSettings() {
-            localStorage.setItem('bjh_settings', JSON.stringify(state.settings));
-        }
-
-        function updateVideoFit(fitMode) {
-            state.settings.videoFit = fitMode;
-            applyVideoFitStyles(fitMode);
-            saveSettings();
-        }
-
-        function applyVideoFitStyles(fitMode) {
-            // Remove previous
-            els.video.classList.remove('object-contain', 'object-cover', 'object-fill');
-            
-            // Add new
-            els.video.classList.add(`object-${fitMode}`);
-
-            // Update UI buttons
-            els.videoFitBtns.forEach(btn => {
-                if(btn.dataset.fit === fitMode) {
-                    btn.classList.add('bg-blue-100', 'dark:bg-blue-900', 'border-blue-500', 'text-blue-700', 'dark:text-blue-300');
-                    btn.classList.remove('border-transparent');
-                } else {
-                    btn.classList.remove('bg-blue-100', 'dark:bg-blue-900', 'border-blue-500', 'text-blue-700', 'dark:text-blue-300');
-                    btn.classList.add('border-transparent');
+        // BJH OS Integration
+        function loadFromBJH(id) {
+            try {
+                const fs = JSON.parse(localStorage.getItem('bjh_os_fs') || '[]');
+                const file = fs.find(f => f.id === id);
+                if (file) {
+                    // Check if content is Base64 Data URI
+                    let src = file.content;
+                    // If content is raw text/blob and not data URI, we might need to handle it, but OS saves as DataURI for media
+                    processFiles([{
+                        name: file.name,
+                        type: file.mime,
+                        src: src, // Pass directly
+                        isBJH: true
+                    }]);
                 }
+            } catch(e) { console.error("Error loading from BJH OS", e); }
+        }
+
+        function showBJHFiles() {
+            try {
+                const fs = JSON.parse(localStorage.getItem('bjh_os_fs') || '[]');
+                const mediaFiles = fs.filter(f => f.type !== 'folder' && (f.mime.startsWith('audio') || f.mime.startsWith('video') || f.mime.startsWith('image')));
+                els.bjhFileList.innerHTML = '';
+                if(mediaFiles.length === 0) els.bjhFileList.innerHTML = '<div class="text-center p-4 text-gray-500">No media files found in BJH OS.</div>';
+                
+                mediaFiles.forEach(f => {
+                    const div = document.createElement('div');
+                    div.className = 'flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-zinc-700 rounded cursor-pointer';
+                    div.innerHTML = `<i data-lucide="file" class="w-4 h-4"></i> <span class="truncate text-sm dark:text-gray-200">${f.name}</span>`;
+                    div.onclick = () => {
+                        loadFromBJH(f.id);
+                        els.bjhModal.classList.add('hidden');
+                    };
+                    els.bjhFileList.appendChild(div);
+                });
+                lucide.createIcons();
+                els.bjhModal.classList.remove('hidden');
+            } catch(e) {}
+        }
+
+        // Standard Logic
+        function handleFileSelect(e) { processFiles(e.target.files); }
+        function handleDrop(e) { e.preventDefault(); if (e.dataTransfer.files) processFiles(e.dataTransfer.files); }
+        function processFiles(input) {
+            // Check if input is array of File objects or our custom BJH objects
+            const newFiles = Array.from(input).map(file => {
+                let type = 'unknown';
+                let url = '';
+                if (file.isBJH) {
+                    type = getFileType(file.type);
+                    url = file.src; // Data URI
+                } else {
+                    type = getFileType(file.type);
+                    url = URL.createObjectURL(file);
+                }
+                return { file: file, name: file.name, url: url, type: type, isNetwork: false };
             });
-        }
-
-        // --- Core Functions ---
-
-        function toggleTheme() {
-            if (els.html.classList.contains('dark')) {
-                els.html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                els.html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        function handleFileSelect(e) {
-            processFiles(e.target.files);
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            if (e.dataTransfer.files) {
-                processFiles(e.dataTransfer.files);
-            }
-        }
-
-        function handleUrlSubmit() {
-            const url = els.urlInput.value.trim();
-            if(!url) return;
-
-            const name = url.split('/').pop() || "Network Stream";
-            const type = getFileTypeFromUrl(url);
-
-            const newFile = {
-                file: null, // No file object for URLs
-                name: name,
-                url: url,
-                type: type,
-                isNetwork: true
-            };
-
-            state.files.push(newFile);
-            filterPlaylist(state.filter);
-            els.emptyState.style.display = 'none';
-            els.urlInput.value = '';
-            els.urlModal.classList.add('hidden');
-            
-            // Auto play the new URL
-            loadMedia(state.files.length - 1);
-            updateStats();
-        }
-
-        function getFileTypeFromUrl(url) {
-            const ext = url.split('.').pop().toLowerCase().split('?')[0]; // simple extension check
-            const videoExts = ['mp4', 'webm', 'ogg', 'mov', 'm4v', 'mkv'];
-            const audioExts = ['mp3', 'wav', 'flac', 'aac', 'm4a', 'opus'];
-            const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
-            
-            if (videoExts.some(e => ext === e)) return 'video';
-            if (audioExts.some(e => ext === e)) return 'audio';
-            if (imageExts.some(e => ext === e)) return 'image';
-            
-            // Fallback for youtube or generic links -> default to video usually safest
-            return 'video'; 
-        }
-
-        function processFiles(files) {
-            const newFiles = Array.from(files).map(file => ({
-                file: file,
-                name: file.name,
-                url: URL.createObjectURL(file),
-                type: getFileType(file.type),
-                isNetwork: false
-            }));
 
             if(newFiles.length > 0) {
                 state.files = [...state.files, ...newFiles];
                 filterPlaylist(state.filter);
                 els.emptyState.style.display = 'none';
-                
-                // If it's the first load, play the first file
-                if(state.currentIndex === -1) {
-                    loadMedia(state.playlist[0]);
-                }
+                // Play last added
+                loadMedia(state.files.length - 1); 
                 updateStats();
             }
         }
-
-        function getFileType(mime) {
-            if(mime.startsWith('video/')) return 'video';
-            if(mime.startsWith('audio/')) return 'audio';
-            if(mime.startsWith('image/')) return 'image';
-            return 'unknown';
-        }
-        
-        // Remove file function
+        function getFileType(mime) { if(!mime) return 'unknown'; if(mime.startsWith('video/')) return 'video'; if(mime.startsWith('audio/')) return 'audio'; if(mime.startsWith('image/')) return 'image'; return 'unknown'; }
         function removeFile(index) {
-            // Check if removing currently playing
             if (index === state.currentIndex) {
-                // Stop playback
-                els.video.pause();
-                els.video.src = '';
-                els.video.classList.add('hidden');
-                els.audioContainer.classList.add('hidden');
-                els.imageContainer.classList.add('hidden');
-                state.isPlaying = false;
-                state.currentIndex = -1;
-                updatePlayBtn();
-                els.title.innerText = "No Media Playing";
-                els.typeLabel.innerText = "Idle";
-                // Reset controls
-                els.progressBar.style.width = '0%';
-                els.currentTime.innerText = '0:00';
-                els.duration.innerText = '0:00';
-            } else if (index < state.currentIndex) {
-                state.currentIndex--;
-            }
-
-            state.files.splice(index, 1);
-            
-            // Update UI
-            filterPlaylist(state.filter);
-            updateStats();
-            
-            if (state.files.length === 0) {
-                els.emptyState.style.display = 'flex';
-            }
+                els.video.pause(); els.video.src = ''; els.video.classList.add('hidden'); els.audioContainer.classList.add('hidden'); els.imageContainer.classList.add('hidden'); state.isPlaying = false; state.currentIndex = -1; updatePlayBtn(); els.title.innerText = "No Media Playing"; els.typeLabel.innerText = "Idle"; els.progressBar.style.width = '0%'; els.currentTime.innerText = '0:00'; els.duration.innerText = '0:00';
+            } else if (index < state.currentIndex) { state.currentIndex--; }
+            state.files.splice(index, 1); filterPlaylist(state.filter); updateStats(); if (state.files.length === 0) els.emptyState.style.display = 'flex';
         }
-
         function filterPlaylist(type) {
-            const list = document.getElementById('playlist');
-            list.innerHTML = ''; // Clear current view
-            
-            // Filter global files index
-            state.playlist = state.files.map((f, i) => ({...f, globalIndex: i}))
-                                       .filter(f => type === 'all' || f.type === type)
-                                       .map(f => f.globalIndex);
-
-            if(state.isShuffle && type === 'all') {
-                shuffleArray(state.playlist);
-            }
-
+            const list = document.getElementById('playlist'); list.innerHTML = '';
+            state.playlist = state.files.map((f, i) => ({...f, globalIndex: i})).filter(f => type === 'all' || f.type === type).map(f => f.globalIndex);
+            if(state.isShuffle && type === 'all') shuffleArray(state.playlist);
             state.playlist.forEach(globalIndex => {
-                const file = state.files[globalIndex];
-                const item = document.createElement('div');
+                const file = state.files[globalIndex]; const item = document.createElement('div');
                 item.className = `flex items-center gap-3 p-3 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-zinc-800 group transition-all duration-200 ${globalIndex === state.currentIndex ? 'active-file' : ''}`;
                 item.onclick = () => loadMedia(globalIndex);
-                
-                let icon = 'file';
-                if(file.type === 'video') icon = 'film';
-                if(file.type === 'audio') icon = 'music';
-                if(file.type === 'image') icon = 'image';
-                if(file.isNetwork) icon = 'link';
-
-                item.innerHTML = `
-                    <div class="flex items-center gap-3 flex-1 overflow-hidden">
-                        <div class="text-gray-500 dark:text-zinc-500 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"><i data-lucide="${icon}" class="w-5 h-5"></i></div>
-                        <div class="overflow-hidden">
-                            <p class="text-sm truncate text-gray-700 dark:text-zinc-300 group-hover:text-black dark:group-hover:text-white font-medium transition-colors">${file.name}</p>
-                            <p class="text-xs text-gray-500 dark:text-zinc-600 uppercase flex gap-2">
-                                <span>${file.type}</span>
-                                ${file.isNetwork ? '<span class="text-blue-500">URL</span>' : ''}
-                            </p>
-                        </div>
-                    </div>
-                    <button class="remove-btn p-1.5 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 text-gray-400 hover:text-red-500 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all" title="Remove">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                `;
-                
-                // Add click listener to remove button
-                const removeBtn = item.querySelector('.remove-btn');
-                removeBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    removeFile(globalIndex);
-                };
-
-                list.appendChild(item);
+                let icon = 'file'; if(file.type === 'video') icon = 'film'; if(file.type === 'audio') icon = 'music'; if(file.type === 'image') icon = 'image';
+                item.innerHTML = `<div class="flex items-center gap-3 flex-1 overflow-hidden"><div class="text-gray-500 dark:text-zinc-500 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"><i data-lucide="${icon}" class="w-5 h-5"></i></div><div class="overflow-hidden"><p class="text-sm truncate text-gray-700 dark:text-zinc-300 group-hover:text-black dark:group-hover:text-white font-medium transition-colors">${file.name}</p><p class="text-xs text-gray-500 dark:text-zinc-600 uppercase flex gap-2"><span>${file.type}</span></p></div></div><button class="remove-btn p-1.5 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 text-gray-400 hover:text-red-500 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all" title="Remove"><i data-lucide="trash-2" class="w-4 h-4"></i></button>`;
+                const removeBtn = item.querySelector('.remove-btn'); removeBtn.onclick = (e) => { e.stopPropagation(); removeFile(globalIndex); }; list.appendChild(item);
             });
             lucide.createIcons();
         }
-
         async function loadMedia(index) {
             if(index === undefined || index < 0) return;
-            
-            // Reset stuff
-            stopSlideshow();
-            state.currentIndex = index;
-            const media = state.files[index];
-            
-            // UI Updates
-            els.title.innerText = media.name;
-            els.typeLabel.innerText = media.type;
-            document.querySelectorAll('#playlist > div').forEach(el => el.classList.remove('active-file'));
-            
-            // Highlight in playlist
-            filterPlaylist(state.filter);
-
-            // Hide all players
-            els.video.classList.add('hidden');
-            els.audioContainer.classList.add('hidden');
-            els.imageContainer.classList.add('hidden');
-            els.pipBtn.classList.add('hidden');
-            els.slideshowBtn.classList.add('hidden');
-            
-            // Pause previous
-            els.video.pause();
-            els.video.src = '';
-
+            stopSlideshow(); state.currentIndex = index; const media = state.files[index];
+            els.title.innerText = media.name; els.typeLabel.innerText = media.type;
+            document.querySelectorAll('#playlist > div').forEach(el => el.classList.remove('active-file')); filterPlaylist(state.filter);
+            els.video.classList.add('hidden'); els.audioContainer.classList.add('hidden'); els.imageContainer.classList.add('hidden'); els.pipBtn.classList.add('hidden'); els.slideshowBtn.classList.add('hidden');
+            els.video.pause(); els.video.src = '';
             if (media.type === 'video' || media.type === 'audio') {
-                els.video.src = media.url;
-                els.video.volume = state.volume;
-                els.video.playbackRate = state.settings.playbackSpeed; // Apply saved speed
-                
-                // Ensure Audio Context is resumed (browser autoplay policy)
-                if(audioCtx && audioCtx.state === 'suspended') {
-                    await audioCtx.resume();
-                }
-
-                if(media.type === 'video') {
-                    els.video.classList.remove('hidden');
-                    els.pipBtn.classList.remove('hidden');
-                    applyVideoFitStyles(state.settings.videoFit); // Re-apply scale
-                } else {
-                    els.audioContainer.classList.remove('hidden');
-                    // Setup visualizer if not active
-                    initAudioContext();
-                }
-
-                try {
-                    await els.video.play();
-                    state.isPlaying = true;
-                    updatePlayBtn();
-                } catch (e) {
-                    console.log("Auto-play prevented", e);
-                    state.isPlaying = false;
-                    updatePlayBtn();
-                }
-
-                els.controlsBar.style.transform = 'translateY(0)';
-            } 
-            else if (media.type === 'image') {
-                els.imageContainer.classList.remove('hidden');
-                els.image.src = media.url;
-                els.slideshowBtn.classList.remove('hidden');
-                
-                // Reset Zoom
-                state.imageZoom = 1;
-                state.imagePan = {x:0, y:0};
-                updateImageTransform();
-                
-                state.isPlaying = false; // It's an image
-                updatePlayBtn();
+                els.video.src = media.url; els.video.volume = state.volume; els.video.playbackRate = state.settings.playbackSpeed;
+                if(audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
+                if(media.type === 'video') { els.video.classList.remove('hidden'); els.pipBtn.classList.remove('hidden'); } 
+                else { els.audioContainer.classList.remove('hidden'); initAudioContext(); }
+                try { await els.video.play(); state.isPlaying = true; updatePlayBtn(); } catch (e) { state.isPlaying = false; updatePlayBtn(); }
+            } else if (media.type === 'image') {
+                els.imageContainer.classList.remove('hidden'); els.image.src = media.url; els.slideshowBtn.classList.remove('hidden');
+                state.imageZoom = 1; state.imagePan = {x:0, y:0}; updateImageTransform(); state.isPlaying = false; updatePlayBtn();
             }
         }
-
-        // --- Audio/Video Logic ---
-        
-        els.video.addEventListener('timeupdate', () => {
-            const pct = (els.video.currentTime / els.video.duration) * 100;
-            els.progressBar.style.width = `${pct}%`;
-            els.currentTime.innerText = formatTime(els.video.currentTime);
-            els.duration.innerText = formatTime(els.video.duration || 0);
-        });
-
-        els.video.addEventListener('ended', () => {
-            if(state.isLoop) {
-                els.video.currentTime = 0;
-                els.video.play();
-            } else {
-                playNext();
-            }
-        });
-
-        async function togglePlay() {
-            const media = state.files[state.currentIndex];
-            if(!media) return;
-
-            // Ensure Audio Context is resumed
-            if(audioCtx && audioCtx.state === 'suspended') {
-                await audioCtx.resume();
-            }
-
-            if(media.type === 'image') {
-                toggleSlideshow();
-                return;
-            }
-
-            if(els.video.paused) {
-                els.video.play();
-                state.isPlaying = true;
-            } else {
-                els.video.pause();
-                state.isPlaying = false;
-            }
-            updatePlayBtn();
-        }
-
-        function updatePlayBtn() {
-            const icon = state.isPlaying ? 'pause' : 'play';
-            els.playBtn.innerHTML = `<i data-lucide="${icon}" class="w-6 h-6 fill-current"></i>`;
-            lucide.createIcons();
-        }
-
-        function seek(e) {
-            const media = state.files[state.currentIndex];
-            if(!media || media.type === 'image') return;
-            
-            const rect = els.progressContainer.getBoundingClientRect();
-            const pos = (e.clientX - rect.left) / rect.width;
-            els.video.currentTime = pos * els.video.duration;
-        }
-
-        function skip(amount) {
-            if(els.video) els.video.currentTime += amount;
-        }
-
-        function playNext() {
-            const currentPlaylistIndex = state.playlist.indexOf(state.currentIndex);
-            let nextIndex = currentPlaylistIndex + 1;
-            if(nextIndex >= state.playlist.length) nextIndex = 0; // Loop list
-            loadMedia(state.playlist[nextIndex]);
-        }
-
-        function playPrev() {
-            const currentPlaylistIndex = state.playlist.indexOf(state.currentIndex);
-            let prevIndex = currentPlaylistIndex - 1;
-            if(prevIndex < 0) prevIndex = state.playlist.length - 1;
-            loadMedia(state.playlist[prevIndex]);
-        }
-
-        function toggleMute() {
-            if(els.video.volume > 0) {
-                els.video.volume = 0;
-                els.volumeSlider.value = 0;
-                state.isMuted = true;
-            } else {
-                els.video.volume = 1;
-                els.volumeSlider.value = 1;
-                state.isMuted = false;
-            }
-        }
-
-        // --- Visualizer ---
-        function initAudioContext() {
-            if(audioCtx) return;
-            
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                analyser = audioCtx.createAnalyser();
-                // Connect the video element (which handles audio files too) to the context
-                audioSource = audioCtx.createMediaElementSource(els.video);
-                audioSource.connect(analyser);
-                analyser.connect(audioCtx.destination);
-                
-                analyser.fftSize = 256;
-                const bufferLength = analyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
-                
-                const canvas = els.visualizerCanvas;
-                const canvasCtx = canvas.getContext('2d');
-                
-                function draw() {
-                    requestAnimationFrame(draw);
-                    // Handle canvas resize
-                    canvas.width = canvas.parentElement.offsetWidth;
-                    canvas.height = canvas.parentElement.offsetHeight;
-
-                    analyser.getByteFrequencyData(dataArray);
-
-                    canvasCtx.fillStyle = 'rgba(0, 0, 0, 0)'; // Transparent
-                    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    const barWidth = (canvas.width / bufferLength) * 2.5;
-                    let barHeight;
-                    let x = 0;
-
-                    for(let i = 0; i < bufferLength; i++) {
-                        barHeight = dataArray[i];
-                        
-                        // Dynamic Gradient
-                        const gradient = canvasCtx.createLinearGradient(0, canvas.height, 0, 0);
-                        gradient.addColorStop(0, '#3b82f6'); // Blue 500
-                        gradient.addColorStop(1, '#a855f7'); // Purple 500
-
-                        canvasCtx.fillStyle = gradient;
-                        canvasCtx.fillRect(x, canvas.height - barHeight / 1.5, barWidth, barHeight / 1.5);
-
-                        x += barWidth + 1;
-                    }
-                }
-                draw();
-            } catch(e) {
-                console.error("Audio Context Error (likely CORS or file:// protocol)", e);
-            }
-        }
-
-        // --- Utilities ---
-        
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return `${m}:${s < 10 ? '0' + s : s}`;
-        }
-
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                els.app.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        }
-
-        async function togglePiP() {
-            try {
-                if (document.pictureInPictureElement) {
-                    await document.exitPictureInPicture();
-                } else if (document.pictureInPictureEnabled && els.video) {
-                    await els.video.requestPictureInPicture();
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        function toggleSlideshow() {
-            if(state.slideshowInterval) {
-                stopSlideshow();
-            } else {
-                state.isPlaying = true;
-                updatePlayBtn();
-                els.slideshowBtn.classList.add('text-blue-500');
-                state.slideshowInterval = setInterval(playNext, 3000);
-            }
-        }
-
-        function stopSlideshow() {
-            clearInterval(state.slideshowInterval);
-            state.slideshowInterval = null;
-            state.isPlaying = false;
-            els.slideshowBtn.classList.remove('text-blue-500');
-            updatePlayBtn();
-        }
-
-        function updateStats() {
-            document.getElementById('fileCount').innerText = `${state.files.length} Files`;
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
+        els.video.addEventListener('timeupdate', () => { const pct = (els.video.currentTime / els.video.duration) * 100; els.progressBar.style.width = `${pct}%`; els.currentTime.innerText = formatTime(els.video.currentTime); els.duration.innerText = formatTime(els.video.duration || 0); });
+        els.video.addEventListener('ended', () => { if(state.isLoop) { els.video.currentTime = 0; els.video.play(); } else { playNext(); } });
+        async function togglePlay() { const media = state.files[state.currentIndex]; if(!media) return; if(audioCtx && audioCtx.state === 'suspended') await audioCtx.resume(); if(media.type === 'image') { toggleSlideshow(); return; } if(els.video.paused) { els.video.play(); state.isPlaying = true; } else { els.video.pause(); state.isPlaying = false; } updatePlayBtn(); }
+        function updatePlayBtn() { const icon = state.isPlaying ? 'pause' : 'play'; els.playBtn.innerHTML = `<i data-lucide="${icon}" class="w-6 h-6 fill-current"></i>`; lucide.createIcons(); }
+        function seek(e) { const media = state.files[state.currentIndex]; if(!media || media.type === 'image') return; const rect = els.progressContainer.getBoundingClientRect(); const pos = (e.clientX - rect.left) / rect.width; els.video.currentTime = pos * els.video.duration; }
+        function playNext() { const currentPlaylistIndex = state.playlist.indexOf(state.currentIndex); let nextIndex = currentPlaylistIndex + 1; if(nextIndex >= state.playlist.length) nextIndex = 0; loadMedia(state.playlist[nextIndex]); }
+        function playPrev() { const currentPlaylistIndex = state.playlist.indexOf(state.currentIndex); let prevIndex = currentPlaylistIndex - 1; if(prevIndex < 0) prevIndex = state.playlist.length - 1; loadMedia(state.playlist[prevIndex]); }
+        function toggleMute() { if(els.video.volume > 0) { els.video.volume = 0; els.volumeSlider.value = 0; state.isMuted = true; } else { els.video.volume = 1; els.volumeSlider.value = 1; state.isMuted = false; } }
+        function initAudioContext() { if(audioCtx) return; try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); analyser = audioCtx.createAnalyser(); audioSource = audioCtx.createMediaElementSource(els.video); audioSource.connect(analyser); analyser.connect(audioCtx.destination); analyser.fftSize = 256; const bufferLength = analyser.frequencyBinCount; const dataArray = new Uint8Array(bufferLength); const canvas = els.visualizerCanvas; const canvasCtx = canvas.getContext('2d'); function draw() { requestAnimationFrame(draw); canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; analyser.getByteFrequencyData(dataArray); canvasCtx.clearRect(0, 0, canvas.width, canvas.height); const barWidth = (canvas.width / bufferLength) * 2.5; let barHeight; let x = 0; for(let i = 0; i < bufferLength; i++) { barHeight = dataArray[i]; const gradient = canvasCtx.createLinearGradient(0, canvas.height, 0, 0); gradient.addColorStop(0, '#3b82f6'); gradient.addColorStop(1, '#a855f7'); canvasCtx.fillStyle = gradient; canvasCtx.fillRect(x, canvas.height - barHeight / 1.5, barWidth, barHeight / 1.5); x += barWidth + 1; } } draw(); } catch(e) {} }
+        function formatTime(seconds) { const m = Math.floor(seconds / 60); const s = Math.floor(seconds % 60); return `${m}:${s < 10 ? '0' + s : s}`; }
+        function toggleFullscreen() { if (!document.fullscreenElement) els.app.requestFullscreen(); else document.exitFullscreen(); }
+        async function togglePiP() { try { if (document.pictureInPictureElement) await document.exitPictureInPicture(); else if (document.pictureInPictureEnabled && els.video) await els.video.requestPictureInPicture(); } catch (error) {} }
+        function toggleSlideshow() { if(state.slideshowInterval) stopSlideshow(); else { state.isPlaying = true; updatePlayBtn(); els.slideshowBtn.classList.add('text-blue-500'); state.slideshowInterval = setInterval(playNext, 3000); } }
+        function stopSlideshow() { clearInterval(state.slideshowInterval); state.slideshowInterval = null; state.isPlaying = false; els.slideshowBtn.classList.remove('text-blue-500'); updatePlayBtn(); }
+        function updateStats() { document.getElementById('fileCount').innerText = `${state.files.length} Files`; }
+        function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } }
+        function updateImageTransform() { els.image.style.transform = `translate(${state.imagePan.x}px, ${state.imagePan.y}px) scale(${state.imageZoom})`; }
+        els.imageContainer.addEventListener('wheel', (e) => { e.preventDefault(); const delta = e.deltaY * -0.001; state.imageZoom = Math.min(Math.max(0.5, state.imageZoom + delta), 5); updateImageTransform(); });
+        let isDragging = false, startPos = {x:0, y:0};
+        els.imageContainer.addEventListener('mousedown', (e) => { isDragging = true; startPos = { x: e.clientX - state.imagePan.x, y: e.clientY - state.imagePan.y }; els.imageContainer.style.cursor = 'grabbing'; });
+        window.addEventListener('mousemove', (e) => { if(!isDragging) return; e.preventDefault(); state.imagePan.x = e.clientX - startPos.x; state.imagePan.y = e.clientY - startPos.y; updateImageTransform(); });
+        window.addEventListener('mouseup', () => { isDragging = false; els.imageContainer.style.cursor = 'grab'; });
+        function toggleTheme() { if (els.html.classList.contains('dark')) { els.html.classList.remove('dark'); localStorage.setItem('theme', 'light'); } else { els.html.classList.add('dark'); localStorage.setItem('theme', 'dark'); } }
+        function loadSettings() { const stored = localStorage.getItem('bjh_settings'); if(stored) try { const saved = JSON.parse(stored); state.settings = { ...state.settings, ...saved }; } catch(e) {} }
+        function saveSettings() { localStorage.setItem('bjh_settings', JSON.stringify(state.settings)); }
     </script>
 </body>
 </html>
