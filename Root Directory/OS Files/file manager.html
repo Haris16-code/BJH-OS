@@ -3,57 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open File Explorer</title>
+    <title>BJH OS File Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .startAppsbutton {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .startAppsbutton:hover {
-            background-color: #45a049;
-        }
-
-        .startAppsbutton img {
-            width: 20px;
-            margin-right: 10px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .context-menu { transition: opacity 0.1s ease-in-out; }
+        .file-item.selected { background-color: #e0e7ff; border-color: #6366f1; }
+        .file-item.cut-mode { opacity: 0.5; }
+        .modal { background-color: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+        .drag-active { background-color: #f0f9ff; border: 2px dashed #6366f1; }
+        .drop-target { background-color: #dbeafe !important; border: 2px dashed #3b82f6 !important; transform: scale(1.05); }
+        .prose h1 { font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: #1e293b; }
+        .prose h2 { font-size: 1.25rem; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #334155; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.25rem; }
+        .prose h3 { font-size: 1.1rem; font-weight: bold; margin-top: 1rem; margin-bottom: 0.25rem; color: #475569; }
+        .prose p { margin-bottom: 0.75rem; line-height: 1.6; color: #475569; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #6366f1; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
-    <h1>Open File Explorer</h1>
-    <p>Click the "File Explorer" button below to open the file explorer</p>
-    
-    <!-- The button for opening the file explorer -->
-    <button class="startAppsbutton" onclick="openFileExplorer()">
-        <img src="Assets/Windows_11_Explorer.png" alt="">
-        File Explorer
-    </button>
+<body 
+    class="bg-slate-100 h-screen w-screen overflow-hidden flex flex-col text-slate-800 font-sans select-none" 
+    oncontextmenu="return false;"
+    ondragover="handleExternalDragOver(event)" 
+    ondragleave="handleExternalDragLeave(event)" 
+    ondrop="handleExternalDrop(event)"
+    onkeydown="handleKeyDown(event)">
 
-    <!-- The hidden file input element -->
-    <input type="file" id="fileInput" style="display: none;">
+    <div id="drag-overlay" class="hidden absolute inset-0 bg-indigo-50/90 z-50 flex items-center justify-center pointer-events-none">
+        <div class="text-indigo-600 text-2xl font-bold border-4 border-dashed border-indigo-400 p-10 rounded-xl">
+            <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Drop files to upload
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 p-4 flex items-center justify-between shadow-sm z-10 shrink-0">
+        <div class="flex items-center space-x-4">
+            <div class="text-indigo-600 text-2xl font-bold flex items-center">
+                <i class="fa-solid fa-hard-drive mr-2"></i> BJH OS
+            </div>
+            <span class="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-full font-semibold border border-orange-200">
+                <i class="fa-solid fa-database mr-1"></i> Local Workspace
+            </span>
+            <div class="flex items-center space-x-2 text-slate-500 bg-slate-100 rounded-lg p-1 border border-slate-200">
+                <button onclick="navigateUp()" id="btn-up" class="p-2 hover:bg-white hover:text-indigo-600 rounded transition disabled:opacity-50" title="Go Up"><i class="fa-solid fa-arrow-up"></i></button>
+                <button onclick="refreshView()" id="btn-refresh" class="p-2 hover:bg-white hover:text-indigo-600 rounded transition" title="Refresh"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div id="breadcrumbs" class="flex items-center text-sm text-slate-600 px-2 overflow-hidden whitespace-nowrap"></div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <div class="relative hidden sm:block">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="search-input" placeholder="Search..." class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 w-48 lg:w-64 transition">
+            </div>
+            
+            <!-- Source Code Button -->
+            <a href="https://github.com/Haris16-code/BJH-OS/blob/main/Root%20Directory/OS%20Files/file%20manager.html" target="_blank" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center shadow-sm">
+                <i class="fa-brands fa-github mr-2"></i> Source Code
+            </a>
+
+            <input type="file" id="file-upload-input" class="hidden" onchange="handleFileUpload(event)">
+            <button onclick="triggerUpload()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center shadow-sm">
+                <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Upload
+            </button>
+
+            <div class="flex bg-slate-100 rounded-lg p-1 border border-slate-200">
+                <button onclick="openCreateModal('folder')" class="px-3 py-1.5 hover:bg-white rounded text-sm font-medium text-slate-600 transition" title="New Folder"><i class="fa-solid fa-folder-plus"></i></button>
+                <button onclick="openCreateModal('file')" class="px-3 py-1.5 hover:bg-white rounded text-sm font-medium text-slate-600 transition" title="New Text File"><i class="fa-solid fa-file-circle-plus"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-1 flex overflow-hidden">
+        <aside class="w-64 bg-slate-50 border-r border-slate-200 flex flex-col hidden md:flex shrink-0">
+            <div class="p-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">BJH System</div>
+            <ul class="space-y-1 px-2">
+                <li><button onclick="navigateToRoot()" class="w-full text-left px-3 py-2 rounded-md text-sm text-slate-700 hover:bg-white hover:text-indigo-600 hover:shadow-sm transition flex items-center"><i class="fa-solid fa-house w-6 text-center mr-2"></i> Home</button></li>
+                <li><button onclick="filterByType('image')" class="w-full text-left px-3 py-2 rounded-md text-sm text-slate-700 hover:bg-white hover:text-indigo-600 hover:shadow-sm transition flex items-center"><i class="fa-solid fa-images w-6 text-center mr-2"></i> Images</button></li>
+                <li><button onclick="filterByType('media')" class="w-full text-left px-3 py-2 rounded-md text-sm text-slate-700 hover:bg-white hover:text-indigo-600 hover:shadow-sm transition flex items-center"><i class="fa-solid fa-film w-6 text-center mr-2"></i> Media</button></li>
+                <li class="pt-4">
+                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 pl-2">System</div>
+                    <button onclick="openDocsModal()" class="w-full text-left px-3 py-2 rounded-md text-sm text-slate-700 hover:bg-white hover:text-indigo-600 hover:shadow-sm transition flex items-center"><i class="fa-solid fa-book-open w-6 text-center mr-2"></i> Help & API</button>
+                    <button onclick="openSettingsModal()" class="w-full text-left px-3 py-2 rounded-md text-sm text-slate-700 hover:bg-white hover:text-indigo-600 hover:shadow-sm transition flex items-center"><i class="fa-solid fa-gear w-6 text-center mr-2"></i> Settings</button>
+                </li>
+            </ul>
+        </aside>
+
+        <div class="flex-1 overflow-y-auto p-6 bg-slate-50 transition-colors duration-200" id="main-area">
+            <div id="empty-state" class="hidden flex flex-col items-center justify-center h-full text-slate-400">
+                <i class="fa-regular fa-folder-open text-6xl mb-4 text-slate-300"></i>
+                <p class="text-lg font-medium text-slate-500">Folder is empty</p>
+                <p class="text-sm text-slate-400 mt-2">Drag files here to upload</p>
+            </div>
+            <div id="file-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 pb-20"></div>
+        </div>
+    </main>
+
+    <!-- Status Bar -->
+    <footer class="bg-white border-t border-slate-200 px-4 py-2 text-xs text-slate-500 flex justify-between shrink-0 select-none">
+        <span id="status-count">0 items</span>
+        <div class="flex space-x-4">
+            <span id="status-size">0 KB</span>
+            <span id="status-path" class="font-mono text-slate-600">root</span>
+        </div>
+    </footer>
+
+    <!-- Modals & Context -->
+    <div id="context-menu" class="hidden fixed bg-white border border-slate-200 shadow-xl rounded-lg w-52 py-1 z-50 text-sm text-slate-700"></div>
+
+    <!-- Create Modal -->
+    <div id="create-modal" class="hidden fixed inset-0 modal flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-96 p-6 border border-slate-200">
+            <h3 class="text-lg font-bold text-slate-800 mb-4" id="create-modal-title">Create New</h3>
+            <div class="space-y-4">
+                <input type="text" id="create-input" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Untitled">
+                <div class="flex justify-end space-x-2 mt-6">
+                    <button onclick="closeModal('create-modal')" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm">Cancel</button>
+                    <button onclick="submitCreate()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm shadow-sm">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rename Modal -->
+    <div id="rename-modal" class="hidden fixed inset-0 modal flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-96 p-6 border border-slate-200">
+            <h3 class="text-lg font-bold text-slate-800 mb-4">Rename Item</h3>
+            <input type="text" id="rename-input" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <div class="flex justify-end space-x-2 mt-6">
+                <button onclick="closeModal('rename-modal')" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg text-sm">Cancel</button>
+                <button onclick="submitRename()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm">Rename</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Properties Modal -->
+    <div id="properties-modal" class="hidden fixed inset-0 modal flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-96 p-6 border border-slate-200">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-bold text-slate-800">Properties</h3><button onclick="closeModal('properties-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button></div>
+            <div id="properties-content" class="space-y-3 text-sm text-slate-600"></div>
+            <div class="flex justify-end mt-6"><button onclick="closeModal('properties-modal')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm">Close</button></div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="hidden fixed inset-0 modal flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-2xl w-96 p-6 border border-slate-200">
+             <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-bold text-slate-800">Settings</h3><button onclick="closeModal('settings-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button></div>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between"><span class="text-sm text-slate-700">Show Hidden Files</span><input type="checkbox" class="accent-indigo-600 w-4 h-4"></div>
+                <div class="flex items-center justify-between"><span class="text-sm text-slate-700">Dark Mode</span><input type="checkbox" class="accent-indigo-600 w-4 h-4" disabled title="Coming soon"></div>
+                <hr>
+                <div class="pt-2">
+                     <p class="text-xs text-slate-500 mb-2">Data Management</p>
+                     <button onclick="exportSystemData()" class="w-full bg-slate-100 text-slate-700 hover:bg-slate-200 py-2 rounded text-sm mb-2 transition flex items-center justify-center"><i class="fa-solid fa-file-export mr-2"></i> Export Backup (JSON)</button>
+                     <button onclick="fetchGitHubSystem(false)" class="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 py-2 rounded text-sm mb-2 transition flex items-center justify-center"><i class="fa-brands fa-github mr-2"></i> Force Sync System Files</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text Editor Modal (Only for text/code) -->
+    <div id="editor-modal" class="hidden fixed inset-0 modal flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden border border-slate-200">
+            <div class="bg-slate-50 border-b border-slate-200 px-4 py-3 flex justify-between items-center shrink-0">
+                <div class="flex items-center"><i id="editor-icon" class="fa-solid fa-file text-indigo-500 mr-2"></i><span id="editor-filename" class="font-semibold text-slate-700">file</span></div>
+                <div class="flex space-x-2 items-center">
+                    <div id="editor-loading" class="hidden mr-3"><div class="loader"></div></div>
+                    <button onclick="closeModal('editor-modal')" class="px-3 py-1.5 text-slate-600 hover:bg-slate-200 rounded text-sm transition">Close</button>
+                    <button id="editor-save-btn" onclick="saveFileContent()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-sm shadow-sm transition">Save Changes</button>
+                </div>
+            </div>
+            <div class="flex-1 bg-slate-900 overflow-hidden relative flex items-center justify-center" id="editor-body"></div>
+        </div>
+    </div>
+
+    <!-- Docs Modal -->
+    <div id="docs-modal" class="hidden fixed inset-0 modal flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[80vh] flex flex-col overflow-hidden border border-slate-200">
+            <div class="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shrink-0">
+                <h2 class="text-xl font-bold text-slate-800">Help & Documentation</h2>
+                <button onclick="closeModal('docs-modal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-8 prose max-w-none">
+                <h1>BJH OS Developer Guide</h1>
+                <h2>Developer API Reference</h2>
+                <p>BJH OS exposes a global <code>BJH</code> object. Use these methods to interact with the file system.</p>
+                <ul>
+                    <li><code>BJH.ls(folderId)</code>: Returns array of items in folder.</li>
+                    <li><code>BJH.cat(fileId)</code>: Returns file content.</li>
+                    <li><code>BJH.touch(name, content)</code>: Creates new file.</li>
+                    <li><code>BJH.mkdir(name)</code>: Creates new folder.</li>
+                    <li><code>BJH.rm(id)</code>: Deletes item.</li>
+                </ul>
+                <h2>User Guide</h2>
+                <p><strong>Media Player:</strong> Opening audio, video, or image files will launch the BJH OS Media Player in a new window.</p>
+                <p><strong>Drag & Drop:</strong> Drag files internally to move. Drag from desktop to upload.</p>
+                <p><strong>Source Code:</strong> Click the "Source Code" button in the toolbar to view the GitHub repository.</p>
+            </div>
+        </div>
+    </div>
 
     <script>
-        function openFileExplorer() {
-            var fileInput = document.getElementById("fileInput");
-            fileInput.click(); // Trigger the file input element
+        const REPO_USER = 'Haris16-code';
+        const REPO_NAME = 'BJH-OS';
+        const REPO_BRANCH = 'main';
+
+        const DEFAULT_FS = [
+            { id: 'root', parentId: null, name: 'Root', type: 'folder', created: Date.now(), readOnly: false },
+            { id: '1', parentId: 'root', name: 'Documents', type: 'folder', created: Date.now() },
+            { id: '2', parentId: 'root', name: 'Media', type: 'folder', created: Date.now() },
+            { id: '3', parentId: '1', name: 'Welcome.txt', type: 'file', mime: 'text/plain', content: 'Welcome to BJH OS!\n\nTry Copy/Paste (Ctrl+C/V).\nDrag files to move them.\nRight-Click to Download files.', created: Date.now(), size: 85 },
+        ];
+
+        let fileSystem = [];
+        let currentFolderId = 'root';
+        let selectedItems = [];
+        let contextTargetId = null;
+        let renameTargetId = null;
+        let createType = 'folder';
+        let editorTargetId = null;
+        let draggedItemId = null;
+        let clipboard = null; 
+
+        function init() {
+            const saved = localStorage.getItem('bjh_os_fs');
+            if (saved) { try { fileSystem = JSON.parse(saved); } catch(e) { fileSystem = JSON.parse(JSON.stringify(DEFAULT_FS)); } } 
+            else { fileSystem = JSON.parse(JSON.stringify(DEFAULT_FS)); }
+            
+            saveData();
+            fetchGitHubSystem(true);
+            exposeAPI();
+            render();
+
+            document.addEventListener('contextmenu', handleGlobalRightClick);
+            document.addEventListener('click', (e) => { if (!e.target.closest('#context-menu')) hideContextMenu(); });
+            document.getElementById('search-input').addEventListener('input', (e) => render(e.target.value));
         }
 
-        // Listen for changes to the selected file
-        document.getElementById("fileInput").addEventListener("change", function(event) {
-            var selectedFile = event.target.files[0];
-            if (selectedFile) {
-                alert("You selected the file: " + selectedFile.name);
+        // --- CORE FUNCTIONS ---
+        function isReadOnlyLocation(folderId) {
+            let current = getItem(folderId);
+            while (current) {
+                if (current.isSystem || current.readOnly || current.isRemote) return true;
+                if (!current.parentId) break;
+                current = getItem(current.parentId);
             }
-        });
+            return false;
+        }
+        function isItemReadOnly(itemId) {
+            const item = getItem(itemId);
+            if (!item) return false;
+            return item.isRemote || item.readOnly || isReadOnlyLocation(item.parentId);
+        }
+        function saveData() { try { localStorage.setItem('bjh_os_fs', JSON.stringify(fileSystem)); } catch(e) {} }
+        function getItemsInFolder(folderId) { return fileSystem.filter(item => item.parentId === folderId); }
+        function getItem(id) { return fileSystem.find(item => item.id === id); }
+        function getBreadcrumbs(folderId) {
+            const path = []; let current = getItem(folderId);
+            while (current) { path.unshift(current); current = getItem(current.parentId); }
+            return path;
+        }
+        function formatSize(bytes) {
+            if (bytes === 0) return '0 B'; const k = 1024; const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k)); return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        // --- KEYBOARD & CLIPBOARD ---
+        function handleKeyDown(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.ctrlKey && e.key === 'c' && selectedItems.length > 0) { clipboard = { id: selectedItems[0], mode: 'copy' }; }
+            if (e.ctrlKey && e.key === 'x' && selectedItems.length > 0) {
+                if (isItemReadOnly(selectedItems[0])) { alert("Cannot cut system files."); return; }
+                clipboard = { id: selectedItems[0], mode: 'cut' }; render(); 
+            }
+            if (e.ctrlKey && e.key === 'v' && clipboard) { pasteItem(currentFolderId); }
+        }
+        function pasteItem(targetFolderId) {
+            if (!clipboard || !clipboard.id) return;
+            const item = getItem(clipboard.id);
+            if (!item) return;
+            if (isReadOnlyLocation(targetFolderId)) { alert("Destination is Read-Only."); return; }
+            if (clipboard.mode === 'cut') {
+                if (item.id === targetFolderId) return; 
+                if (item.type === 'folder') {
+                     let check = getItem(targetFolderId);
+                     while(check) { if(check.id === item.id) { alert("Cannot move folder into itself."); return; } check = getItem(check.parentId); }
+                }
+                item.parentId = targetFolderId; clipboard = null; 
+            } else { copyRecursive(item.id, targetFolderId); }
+            saveData(); render();
+        }
+        function copyRecursive(itemId, newParentId) {
+            const original = getItem(itemId); if(!original) return;
+            const newId = Date.now().toString() + Math.random().toString().substr(2, 5);
+            let newName = original.name; let counter = 1;
+            while(fileSystem.find(i => i.parentId === newParentId && i.name === newName)) { newName = `Copy ${counter > 1 ? `(${counter}) ` : ''}of ${original.name}`; counter++; }
+            const newItem = { ...original, id: newId, parentId: newParentId, name: newName, created: Date.now(), readOnly: false, isRemote: false, isSystem: false };
+            fileSystem.push(newItem);
+            if (original.type === 'folder') { getItemsInFolder(itemId).forEach(child => copyRecursive(child.id, newId)); }
+        }
+
+        // --- DOWNLOAD & EXPORT ---
+        function downloadItem(id) {
+            const item = getItem(id); if(!item || item.type === 'folder') return;
+            let blob;
+            if(item.content && item.content.startsWith('data:')) {
+                const arr = item.content.split(','); const mime = arr[0].match(/:(.*?);/)[1]; const bstr = atob(arr[1]);
+                let n = bstr.length; const u8arr = new Uint8Array(n); while(n--){ u8arr[n] = bstr.charCodeAt(n); }
+                blob = new Blob([u8arr], {type:mime});
+            } else { blob = new Blob([item.content || ''], { type: item.mime || 'text/plain' }); }
+            downloadBlob(blob, item.name);
+        }
+        function downloadBlob(blob, filename) {
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        }
+        function exportSystemData() {
+            const data = JSON.stringify(fileSystem, null, 2); const blob = new Blob([data], {type: 'application/json'});
+            downloadBlob(blob, 'bjh_os_backup.json');
+        }
+
+        // --- FILTER FUNCTION (FIXED) ---
+        function filterByType(category) {
+            const grid = document.getElementById('file-grid');
+            const emptyState = document.getElementById('empty-state');
+            const breadcrumbs = document.getElementById('breadcrumbs');
+            
+            breadcrumbs.innerHTML = `<span class="text-gray-500"><i class="fa-solid fa-filter mr-1"></i> Filter: ${category.charAt(0).toUpperCase() + category.slice(1)}</span>`;
+            grid.innerHTML = '';
+            
+            let items = [];
+            
+            const scan = (pid) => {
+                fileSystem.filter(i => i.parentId === pid).forEach(i => {
+                    if (i.type === 'folder') scan(i.id);
+                    else {
+                        const m = (i.mime || '').toLowerCase();
+                        const n = i.name.toLowerCase();
+                        if (category === 'image' && (m.includes('image') || n.match(/\.(jpg|jpeg|png|gif|webp|svg)$/))) items.push(i);
+                        if (category === 'media' && (m.includes('audio') || m.includes('video') || n.match(/\.(mp3|wav|ogg|mp4|webm|mkv)$/))) items.push(i);
+                    }
+                });
+            }
+            scan('root');
+
+            if (items.length === 0) {
+                emptyState.classList.remove('hidden');
+                grid.classList.add('hidden');
+                document.querySelector('#empty-state p').innerText = `No ${category} files found`;
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            grid.classList.remove('hidden');
+
+            items.forEach(item => {
+                const el = document.createElement('div');
+                el.className = `file-item flex flex-col items-center justify-start p-3 rounded-xl cursor-pointer hover:bg-slate-200 transition border border-transparent group relative`;
+                el.draggable = true;
+                el.ondragstart = (e) => handleItemDragStart(e, item.id);
+                el.ondragend = handleItemDragEnd;
+                
+                el.onclick = (e) => handleItemClick(e, item.id);
+                el.ondblclick = () => openItem(item.id);
+                el.dataset.id = item.id; 
+
+                const iconClass = getIconClass(item);
+                const showLock = (item.isRemote || item.readOnly) && item.id !== 'src_code_live';
+                const statusIcon = item.isRemote ? '<i class="fa-solid fa-cloud text-[10px] absolute top-2 right-2 text-blue-500" title="Cloud File"></i>' : 
+                                   showLock ? '<i class="fa-solid fa-lock text-[10px] absolute top-2 right-2 text-slate-400" title="Read Only"></i>' : '';
+                const sizeText = `<span class="text-[10px] text-slate-400 mt-0.5">${formatSize(item.size || 0)}</span>`;
+
+                el.innerHTML = `
+                    ${statusIcon}
+                    <div class="w-16 h-12 flex items-center justify-center mb-1 text-4xl transform group-hover:scale-105 transition-transform duration-200">
+                        <i class="${iconClass}"></i>
+                    </div>
+                    <span class="text-xs text-center font-medium text-slate-700 truncate w-full px-1 select-none break-all line-clamp-2 leading-tight">${item.name}</span>
+                    ${sizeText}
+                `;
+                grid.appendChild(el);
+            });
+            
+            document.getElementById('status-count').innerText = `${items.length} items found`;
+        }
+
+        // --- RENDER ---
+        function getIconClass(item) {
+            if (item.type === 'folder') return item.isSystem ? 'fa-solid fa-server text-indigo-500' : 'fa-solid fa-folder text-indigo-400';
+            const name = item.name.toLowerCase();
+            if (name.match(/\.(jpg|png|gif|webp)$/)) return 'fa-solid fa-file-image text-purple-500';
+            if (name.match(/\.(mp3|wav)$/)) return 'fa-solid fa-file-audio text-pink-500';
+            if (name.match(/\.(mp4|webm)$/)) return 'fa-solid fa-file-video text-rose-500';
+            if (name.match(/\.(js|html|css|json|py)$/)) return 'fa-solid fa-file-code text-emerald-500';
+            if (name.endsWith('.pdf')) return 'fa-solid fa-file-pdf text-red-500';
+            return 'fa-solid fa-file-lines text-slate-400';
+        }
+
+        function render(searchQuery = '') {
+            const grid = document.getElementById('file-grid'); const emptyState = document.getElementById('empty-state');
+            const breadcrumbsContainer = document.getElementById('breadcrumbs'); const btnUp = document.getElementById('btn-up');
+            grid.innerHTML = '';
+            let items = getItemsInFolder(currentFolderId);
+            if (searchQuery) items = items.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            items.sort((a, b) => { if (a.type === b.type) return a.name.localeCompare(b.name); return a.type === 'folder' ? -1 : 1; });
+
+            if (items.length === 0) { 
+                emptyState.classList.remove('hidden'); 
+                grid.classList.add('hidden'); 
+                document.querySelector('#empty-state p').innerText = "Folder is empty";
+            }
+            else { emptyState.classList.add('hidden'); grid.classList.remove('hidden'); }
+
+            items.forEach(item => {
+                const el = document.createElement('div');
+                el.className = `file-item flex flex-col items-center justify-start p-3 rounded-xl cursor-pointer hover:bg-slate-200 transition border border-transparent group relative ${selectedItems.includes(item.id) ? 'selected' : ''} ${clipboard && clipboard.id === item.id && clipboard.mode === 'cut' ? 'cut-mode' : ''}`;
+                el.draggable = true;
+                el.ondragstart = (e) => handleItemDragStart(e, item.id); el.ondragend = handleItemDragEnd;
+                if(item.type === 'folder') { el.ondragover = (e) => handleItemDragOver(e, item.id); el.ondragleave = handleItemDragLeave; el.ondrop = (e) => handleItemDrop(e, item.id); }
+                el.onclick = (e) => handleItemClick(e, item.id); el.ondblclick = () => openItem(item.id); el.dataset.id = item.id;
+                const iconClass = getIconClass(item);
+                const showLock = (item.isRemote || item.readOnly) && item.id !== 'src_code_live';
+                const statusIcon = item.isRemote ? '<i class="fa-solid fa-cloud text-[10px] absolute top-2 right-2 text-blue-500" title="Cloud File"></i>' : showLock ? '<i class="fa-solid fa-lock text-[10px] absolute top-2 right-2 text-slate-400" title="Read Only"></i>' : '';
+                const sizeText = item.type === 'folder' ? '' : `<span class="text-[10px] text-slate-400 mt-0.5">${formatSize(item.size || 0)}</span>`;
+                el.innerHTML = `${statusIcon}<div class="w-16 h-12 flex items-center justify-center mb-1 text-4xl transform group-hover:scale-105 transition-transform duration-200"><i class="${iconClass}"></i></div><span class="text-xs text-center font-medium text-slate-700 truncate w-full px-1 select-none break-all line-clamp-2 leading-tight">${item.name}</span>${sizeText}`;
+                grid.appendChild(el);
+            });
+
+            const path = getBreadcrumbs(currentFolderId);
+            breadcrumbsContainer.innerHTML = path.map((folder, index) => {
+                const isLast = index === path.length - 1;
+                return `<span class="flex items-center"><button onclick="navigateTo('${folder.id}')" class="hover:bg-slate-100 px-2 py-1 rounded transition ${isLast ? 'font-bold text-slate-800' : 'text-slate-500'}">${folder.name === 'Root' ? '<i class="fa-solid fa-server"></i>' : folder.name}</button>${!isLast ? '<i class="fa-solid fa-chevron-right text-[10px] mx-1 text-slate-300"></i>' : ''}</span>`;
+            }).join('');
+            btnUp.disabled = currentFolderId === 'root';
+            document.getElementById('status-count').innerText = `${items.length} items`;
+            document.getElementById('status-path').innerText = path.map(p => p.name).join('/');
+            const size = items.reduce((a, b) => a + (b.size || 0), 0);
+            document.getElementById('status-size').innerText = formatSize(size);
+        }
+
+        // --- CONTEXT MENU ---
+        function handleGlobalRightClick(e) {
+            e.preventDefault(); const itemEl = e.target.closest('.file-item'); const menu = document.getElementById('context-menu');
+            if (itemEl) {
+                const id = itemEl.dataset.id; contextTargetId = id; selectedItems = [id]; render();
+                const item = getItem(id); const ro = item.readOnly || item.isRemote; const disabled = ro ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-50 hover:text-indigo-600';
+                menu.innerHTML = `
+                    <div class="px-3 py-2 text-xs font-semibold text-slate-400 border-b border-slate-100 mb-1">${item.name.substring(0,20)}</div>
+                    <button onclick="contextAction('open')" class="w-full text-left px-4 py-2 hover:bg-indigo-50 hover:text-indigo-600 flex items-center"><i class="fa-solid fa-arrow-up-right-from-square w-5 mr-2 text-slate-400"></i> Open</button>
+                    <button onclick="contextAction('copy')" class="w-full text-left px-4 py-2 hover:bg-indigo-50 hover:text-indigo-600 flex items-center"><i class="fa-regular fa-copy w-5 mr-2 text-slate-400"></i> Copy</button>
+                    <button onclick="${ro ? '' : `contextAction('cut')`}" class="w-full text-left px-4 py-2 flex items-center ${disabled}"><i class="fa-solid fa-scissors w-5 mr-2 text-slate-400"></i> Cut</button>
+                    <button onclick="contextAction('download')" class="w-full text-left px-4 py-2 hover:bg-indigo-50 hover:text-indigo-600 flex items-center"><i class="fa-solid fa-download w-5 mr-2 text-slate-400"></i> Download</button>
+                    <div class="h-px bg-slate-100 my-1"></div>
+                    <button onclick="${ro ? '' : `contextAction('rename')`}" class="w-full text-left px-4 py-2 flex items-center ${disabled}"><i class="fa-solid fa-pen w-5 mr-2 text-slate-400"></i> Rename</button>
+                    <button onclick="${ro ? '' : `contextAction('delete')`}" class="w-full text-left px-4 py-2 flex items-center ${ro ? 'opacity-50 text-slate-400' : 'text-red-500 hover:bg-red-50'}"><i class="fa-solid fa-trash w-5 mr-2"></i> Delete</button>
+                `;
+            } else {
+                contextTargetId = null; selectedItems = []; render(); const ro = isReadOnlyLocation(currentFolderId); const disabled = ro ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-50 hover:text-indigo-600';
+                menu.innerHTML = `
+                    <div class="px-3 py-2 text-xs font-semibold text-slate-400 border-b border-slate-100 mb-1">BJH OS</div>
+                    <button onclick="${ro ? '' : `openCreateModal('folder'); hideContextMenu()`}" class="w-full text-left px-4 py-2 flex items-center ${disabled}"><i class="fa-solid fa-folder-plus w-5 mr-2 text-slate-400"></i> New Folder</button>
+                    <button onclick="${ro ? '' : `openCreateModal('file'); hideContextMenu()`}" class="w-full text-left px-4 py-2 flex items-center ${disabled}"><i class="fa-solid fa-file-circle-plus w-5 mr-2 text-slate-400"></i> New File</button>
+                    <button onclick="${ro || !clipboard ? '' : `contextAction('paste')`}" class="w-full text-left px-4 py-2 flex items-center ${ro || !clipboard ? 'opacity-50' : 'hover:bg-indigo-50 hover:text-indigo-600'}"><i class="fa-solid fa-paste w-5 mr-2 text-slate-400"></i> Paste</button>
+                    <div class="h-px bg-slate-100 my-1"></div>
+                    <button onclick="refreshView(); hideContextMenu()" class="w-full text-left px-4 py-2 hover:bg-indigo-50 hover:text-indigo-600 flex items-center"><i class="fa-solid fa-rotate w-5 mr-2 text-slate-400"></i> Refresh</button>
+                    <button onclick="${ro ? '' : `triggerUpload(); hideContextMenu()`}" class="w-full text-left px-4 py-2 flex items-center ${disabled}"><i class="fa-solid fa-cloud-arrow-up w-5 mr-2 text-slate-400"></i> Upload</button>
+                `;
+            }
+            let x = e.clientX; let y = e.clientY; if(x+200 > window.innerWidth) x = window.innerWidth-210; if(y+250 > window.innerHeight) y = window.innerHeight-260;
+            menu.style.left = `${x}px`; menu.style.top = `${y}px`; menu.classList.remove('hidden');
+        }
+        function hideContextMenu() { document.getElementById('context-menu').classList.add('hidden'); }
+        function contextAction(action) {
+            if (action === 'paste') { pasteItem(currentFolderId); hideContextMenu(); return; }
+            if (!contextTargetId) return; const item = getItem(contextTargetId); hideContextMenu();
+            switch (action) {
+                case 'open': openItem(contextTargetId); break;
+                case 'copy': clipboard = { id: contextTargetId, mode: 'copy' }; break;
+                case 'cut': if(isItemReadOnly(contextTargetId)){alert("Cannot cut read-only."); return;} clipboard = { id: contextTargetId, mode: 'cut' }; render(); break;
+                case 'download': downloadItem(contextTargetId); break;
+                case 'rename': if (isItemReadOnly(contextTargetId)) { alert("Cannot rename system file."); return; } renameTargetId = contextTargetId; document.getElementById('rename-input').value = item.name; document.getElementById('rename-modal').classList.remove('hidden'); document.getElementById('rename-input').focus(); break;
+                case 'delete': if (isItemReadOnly(contextTargetId)) { alert("Cannot delete system file."); return; } deleteItem(contextTargetId); break;
+            }
+        }
+
+        // --- ACTIONS & NAV ---
+        function navigateTo(folderId) { currentFolderId = folderId; selectedItems = []; document.getElementById('search-input').value = ''; render(); }
+        function navigateUp() { const current = getItem(currentFolderId); if (current && current.parentId) navigateTo(current.parentId); }
+        function navigateToRoot() { navigateTo('root'); }
+        function refreshView() { const btn = document.getElementById('btn-refresh'); btn.querySelector('i').classList.add('fa-spin'); if(isReadOnlyLocation(currentFolderId)) fetchGitHubSystem(false); else setTimeout(() => { btn.querySelector('i').classList.remove('fa-spin'); render(); }, 500); }
+        function handleItemClick(e, id) { e.stopPropagation(); selectedItems = [id]; render(); }
+        function openCreateModal(type) { if (isReadOnlyLocation(currentFolderId)) { alert("Read-only folder."); return; } createType = type; document.getElementById('create-modal-title').innerText = type === 'folder' ? 'Create Folder' : 'Create Text File'; document.getElementById('create-input').value = ''; document.getElementById('create-modal').classList.remove('hidden'); document.getElementById('create-input').focus(); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); if(modalId === 'editor-modal') document.getElementById('editor-body').innerHTML = ''; }
+        function openDocsModal() { document.getElementById('docs-modal').classList.remove('hidden'); }
+        function openSettingsModal() { document.getElementById('settings-modal').classList.remove('hidden'); }
+        function submitCreate() { const name = document.getElementById('create-input').value.trim(); if (!name) return; if(fileSystem.find(i => i.parentId === currentFolderId && i.name === name)){alert('Exists');return;} fileSystem.push({ id: Date.now().toString(), parentId: currentFolderId, name: name, type: createType, content: createType === 'file' ? '' : null, mime: createType === 'file' ? 'text/plain' : null, created: Date.now(), size: 0 }); saveData(); closeModal('create-modal'); render(); }
+        function submitRename() { const newName = document.getElementById('rename-input').value.trim(); if (!newName) return; const item = getItem(renameTargetId); if (item) { item.name = newName; saveData(); closeModal('rename-modal'); render(); } }
+        function deleteItem(id, silent=false) { if (!silent && !confirm('Delete?')) return; const deleteRecursive = (itemId) => { const children = fileSystem.filter(i => i.parentId === itemId); children.forEach(child => deleteRecursive(child.id)); const index = fileSystem.findIndex(i => i.id === itemId); if (index > -1) fileSystem.splice(index, 1); }; deleteRecursive(id); saveData(); render(); }
+        function triggerUpload() { document.getElementById('file-upload-input').click(); }
+        function handleFileUpload(event) { if(event.target.files.length > 0) processFiles(event.target.files); event.target.value=''; }
+        function processFiles(files) { if (isReadOnlyLocation(currentFolderId)) { alert("Read-only folder"); return; } Array.from(files).forEach(file => { const reader = new FileReader(); reader.onload = (e) => { fileSystem.push({ id: Date.now()+Math.random().toString(), parentId: currentFolderId, name: file.name, type: 'file', mime: file.type, content: e.target.result, created: Date.now(), size: file.size }); saveData(); }; reader.readAsDataURL(file); }); setTimeout(render, 500); }
+        
+        // --- DRAG ---
+        function handleExternalDragOver(e) { e.preventDefault(); if (!draggedItemId) document.getElementById('drag-overlay').classList.remove('hidden'); }
+        function handleExternalDragLeave(e) { e.preventDefault(); if (e.relatedTarget === null) document.getElementById('drag-overlay').classList.add('hidden'); }
+        function handleExternalDrop(e) { e.preventDefault(); document.getElementById('drag-overlay').classList.add('hidden'); if(draggedItemId || isReadOnlyLocation(currentFolderId)) return; if (e.dataTransfer.files.length > 0) processFiles(e.dataTransfer.files); }
+        function handleItemDragStart(e, id) { draggedItemId = id; e.dataTransfer.setData('text/plain', id); e.target.classList.add('opacity-50'); }
+        function handleItemDragEnd(e) { draggedItemId = null; e.target.classList.remove('opacity-50'); document.querySelectorAll('.drop-target').forEach(el => el.classList.remove('drop-target')); }
+        function handleItemDragOver(e, targetId) { e.preventDefault(); if (getItem(targetId)?.type === 'folder' && targetId !== draggedItemId) e.currentTarget.classList.add('drop-target'); }
+        function handleItemDragLeave(e) { e.currentTarget.classList.remove('drop-target'); }
+        function handleItemDrop(e, targetFolderId) { e.preventDefault(); e.stopPropagation(); e.currentTarget.classList.remove('drop-target'); const itemId = e.dataTransfer.getData('text/plain'); if (!itemId || itemId === targetFolderId) return; const item = getItem(itemId); if (item && !isItemReadOnly(itemId) && !isReadOnlyLocation(targetFolderId)) { item.parentId = targetFolderId; saveData(); render(); } }
+
+        // --- VIEWER & MEDIA ---
+        async function openItem(id) {
+            const item = getItem(id);
+            if (item.type === 'folder') { navigateTo(item.id); } 
+            else if (item.mime.startsWith('audio/') || item.mime.startsWith('video/') || item.mime.startsWith('image/')) {
+                // Open external Media Player
+                window.open(`media_player.html?id=${id}`, '_blank');
+            } 
+            else {
+                if (item.isRemote && !item.content && item.downloadUrl) await openRemoteItem(item);
+                else openMediaViewer(item, item.content);
+            }
+        }
+        async function openRemoteItem(item) {
+             const modal = document.getElementById('editor-modal'); document.getElementById('editor-loading').classList.remove('hidden');
+             modal.classList.remove('hidden'); document.getElementById('editor-filename').innerText = item.name;
+             try {
+                 const res = await fetch(item.downloadUrl); if(!res.ok)throw new Error();
+                 const content = await res.text();
+                 document.getElementById('editor-loading').classList.add('hidden'); openMediaViewer(item, content);
+             } catch(e) { document.getElementById('editor-loading').classList.add('hidden'); document.getElementById('editor-body').innerHTML = '<div class="text-red-500">Error loading file.</div>'; }
+        }
+        function openMediaViewer(item, content) {
+            const body = document.getElementById('editor-body'); document.getElementById('editor-filename').innerText = item.name;
+            const saveBtn = document.getElementById('editor-save-btn');
+            body.innerHTML = '';
+            if(item.isRemote || item.readOnly) saveBtn.classList.add('hidden'); else saveBtn.classList.remove('hidden');
+            let txt = content || '';
+            if(txt.startsWith('data:')) try { txt = atob(txt.split(',')[1]); } catch(e){}
+            txt = txt.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            body.innerHTML = `<textarea id="file-editor-area" class="w-full h-full bg-slate-900 text-slate-200 font-mono p-4 resize-none outline-none" ${item.readOnly?'readonly':''}>${txt}</textarea>`;
+            document.getElementById('editor-modal').classList.remove('hidden');
+            editorTargetId = item.id;
+        }
+        function saveFileContent() {
+             const item = getItem(editorTargetId);
+             if(item && !item.readOnly) {
+                 const val = document.getElementById('file-editor-area')?.value;
+                 if(val !== undefined) { item.content = val; item.size = val.length; saveData(); closeModal('editor-modal'); }
+             }
+        }
+        function exposeAPI() {
+            window.BJH = { version: '1.4.0', ls: (id=currentFolderId)=>getItemsInFolder(id), cat: (id)=>getItem(id)?.content||'', touch: ()=>{}, mkdir: ()=>{}, rm: (id)=>deleteItem(id,true) };
+        }
+        async function fetchGitHubSystem(silent = false) {
+             const btn = document.getElementById('btn-refresh'); if(!silent) btn.querySelector('i').classList.add('fa-spin');
+            try {
+                let sysFolder = fileSystem.find(i => i.parentId === 'root' && i.name === 'BJH OS System Files');
+                if (!sysFolder) { sysFolder = { id: 'sys_root', parentId: 'root', name: 'BJH OS System Files', type: 'folder', created: Date.now(), isSystem: true, readOnly: true }; fileSystem.push(sysFolder); }
+                const response = await fetch(`https://api.github.com/repos/${REPO_USER}/${REPO_NAME}/git/trees/${REPO_BRANCH}?recursive=1`);
+                if (!response.ok) throw new Error();
+                const data = await response.json(); const pathMap = { '': sysFolder.id }; let newCount = 0;
+                data.tree.forEach(item => {
+                    const parts = item.path.split('/'); const fileName = parts.pop(); const parentPath = parts.join('/');
+                    const parentId = pathMap[parentPath] || sysFolder.id; const newItemId = 'gh_' + item.sha; pathMap[item.path] = newItemId;
+                    if (!fileSystem.find(f => f.id === newItemId)) {
+                        const ext = fileName.split('.').pop().toLowerCase();
+                        let mime = 'application/octet-stream';
+                        if(['jpg','png'].includes(ext)) mime='image/'+ext; if(['mp3','wav'].includes(ext)) mime='audio/'+ext; if(['mp4'].includes(ext)) mime='video/'+ext;
+                        fileSystem.push({ id: newItemId, parentId: parentId, name: fileName, type: item.type === 'tree' ? 'folder' : 'file', created: Date.now(), size: item.size || 0, isRemote: true, readOnly: true, downloadUrl: item.type === 'blob' ? `https://raw.githubusercontent.com/${REPO_USER}/${REPO_NAME}/${REPO_BRANCH}/${item.path}` : null, content: null, mime: mime });
+                        newCount++;
+                    }
+                });
+                if(newCount > 0) { saveData(); if(!silent) alert(`Synced ${newCount} files.`); }
+            } catch (err) { if(!silent) console.log("Sync skipped"); } 
+            finally { if(!silent) { setTimeout(() => btn.querySelector('i').classList.remove('fa-spin'), 500); render(); } }
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
