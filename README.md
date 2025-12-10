@@ -19,7 +19,7 @@
 
 <!-- HERO / CTA -->
 <p align="center">
-  <a href="https://haris16-code.github.io/BJH-OS/" title="Try BJH OS live in your browser" style="text-decoration:none">
+  <a href="http://bjhos.me/BJH-OS" title="Try BJH OS live in your browser" style="text-decoration:none">
     <img alt="Launch BJH OS" src="https://img.shields.io/badge/▶️%20Try%20Live-Open%20in%20Browser-purple?style=for-the-badge">
   </a>
   &nbsp;
