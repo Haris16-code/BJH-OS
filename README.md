@@ -10,7 +10,7 @@
   <a href="https://github.com/Haris16-code/BJH-OS/blob/main/LICENSE" title="License"><img alt="License" src="https://img.shields.io/github/license/Haris16-code/BJH-OS?color=brightgreen"></a>
   <a href="https://github.com/Haris16-code/BJH-OS/issues" title="Open issues"><img alt="Issues" src="https://img.shields.io/github/issues/Haris16-code/BJH-OS?color=orange"></a>
   <a href="https://github.com/Haris16-code/BJH-OS/graphs/contributors" title="Contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/Haris16-code/BJH-OS?color=informational"></a>
-  <a href="https://haris16-code.github.io/BJH-OS/" title="Launch BJH OS (live demo)"><img alt="Live Demo" src="https://img.shields.io/badge/Launch-Demo-blue?style=for-the-badge&logo=firefox"></a>
+  <a href="http://bjhos.me/BJH-OS/" title="Launch BJH OS (live demo)"><img alt="Live Demo" src="https://img.shields.io/badge/Launch-Demo-blue?style=for-the-badge&logo=firefox"></a>
 </p>
 
 <p align="center"><strong>Run a full desktop in your browser — build apps, publish to the Apps Market, and help shape the next web-native desktop.</strong></p>
@@ -64,7 +64,7 @@ BJH OS is a lightweight, fully client-side desktop environment built with plain 
 
 ## 🧭 Quick start — Users
 Try BJH OS in seconds:
-- Live demo (open in browser): [Launch BJH OS (Demo)](https://haris16-code.github.io/BJH-OS/ "Open BJH OS demo in your browser")
+- Live demo (open in browser): [Launch BJH OS (Demo)](http://bjhos.me/BJH-OS/ "Open BJH OS demo in your browser")
 - Or run locally:
   1. git clone https://github.com/Haris16-code/BJH-OS.git
   2. cd BJH-OS
@@ -149,7 +149,7 @@ Launch day (first 48 hours — momentum matters):
 
 Social templates (copy & paste)
 - Twitter/X:
-  "▶️ Try BJH OS — a desktop that runs in your browser. No installs. Demo: https://haris16-code.github.io/BJH-OS/ ⭐ Fork & contribute: https://github.com/Haris16-code/BJH-OS #opensource #webdev"
+  "▶️ Try BJH OS — a desktop that runs in your browser. No installs. Demo: http://bjhos.me/BJH-OS/ ⭐ Fork & contribute: https://github.com/Haris16-code/BJH-OS #opensource #webdev"
 - Hacker News:
   Title: "BJH OS — A free, open-source desktop that runs in your browser (demo)"
 
@@ -157,7 +157,7 @@ Social templates (copy & paste)
 
 ## 📚 Resources
 - Repo: https://github.com/Haris16-code/BJH-OS/ "Main repository"  
-- Live demo: https://haris16-code.github.io/BJH-OS/ "Open BJH OS demo"  
+- Live demo: http://bjhos.me/BJH-OS/ "Open BJH OS demo"  
 - Developer docs: https://github.com/Haris16-code/BJH-OS/blob/main/DEV_DOCS.md "Architecture & APIs"  
 - Apps Market guide: https://github.com/Haris16-code/BJH-OS/blob/main/CONTRIBUTING_TO_BJH_OS_APPS_MARKET.md "How to publish apps"  
 - Issues: https://github.com/Haris16-code/BJH-OS/issues "Report bugs & pick tasks"  
