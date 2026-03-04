@@ -172,4 +172,4 @@ Social templates (copy & paste)
 ---
 
 Made with ❤️ in Pakistan  
-© 2025 BJH OS — by Muhammad Haris (Haris16-code)
+© 2026 BJH OS — by Muhammad Haris (Haris16-code)
